@@ -67,7 +67,7 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     for folder in pathComponents {
         let range = (folder.lowercaseString as NSString).rangeOfString("tests")
         
-        if range.location != NSNotFound {
+        if range.location != Foundation.NSNotFound {
             let currentIndex = pathComponents.indexOfObject(folder)
             let folderPathComponents: NSArray = pathComponents.subarrayWithRange(NSMakeRange(0, currentIndex))
             let folderPath = folderPathComponents.componentsJoinedByString("/")
