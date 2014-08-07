@@ -7,7 +7,7 @@ Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.co
 Setup
 ----------------
 
-Currently, set up is kind of a pain. That's because Nimble doesn't support 
+Currently, setup is kind of a pain. That's because Nimble doesn't support 
 Xcode 6 beta 5, yet. Additionally, I need them to merge my [pull request](https://github.com/Quick/Nimble/pull/16)
 making the members of one of their classes explicitly public. So, you'll need to
 use my [fork](https://github.com/AshFurrow/Nimble-Snapshots) of Nimble for now.
