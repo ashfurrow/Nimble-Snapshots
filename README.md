@@ -28,7 +28,6 @@ git submodule add git@github.com:facebook/ios-snapshot-test-case.git submodules/
 git submodule add git@github.com:AshFurrow/Nimble-Snapshots.git submodules/Nimble-Snapshots
 git submodule init
 git submodule update
-
 ```
 
 Now [follow the instructions](https://github.com/Quick/Quick#2-add-quickxcodeproj-and-nimblexcodeproj-to-your-test-target)
