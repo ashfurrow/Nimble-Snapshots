@@ -18,8 +18,8 @@ import QuartzCore
 extension UIViewController : Snapshotable {
     var snapshotObject: UIView? {
         self.beginAppearanceTransition(true, animated: false)
-            self.endAppearanceTransition()
-            return view
+        self.endAppearanceTransition()
+        return view
     }
 }
 
@@ -32,8 +32,8 @@ extension UIView : Snapshotable {
 @objc class FBSnapshotTest {
     var referenceImagesDirectory: String?
     class var sharedInstance : FBSnapshotTest {
-    struct Instance {
-        static let instance: FBSnapshotTest = FBSnapshotTest()
+        struct Instance {
+            static let instance: FBSnapshotTest = FBSnapshotTest()
         }
         return Instance.instance
     }
