@@ -13,7 +13,7 @@ import UIKit
 class BoostrapSpec: QuickSpec {
     override func spec() {
         describe("in some context", { () -> () in
-            it("records snapshot") {
+            it("has valid snapshot") {
                 let view = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: 44, height: 44)))
                 view.backgroundColor = UIColor.blueColor()
                 expect(view).to(haveValidSnapshot())
