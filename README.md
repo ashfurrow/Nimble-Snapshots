@@ -34,14 +34,14 @@ Now [follow the instructions](https://github.com/Quick/Quick#2-add-quickxcodepro
 for adding Quick and Nimble to your Xcode project. That's the easy part. You'll 
 need to drag the following files into your project's *test* target.
 
-* FBSnapshotTestCase.h
-* FBSnapshotTestCase.m
-* FBSnapshotTestController.h
-* FBSnapshotTestController.m
-* UIImage+Compare.h
-* UIImage+Compare.m
-* UIImage+Diff.h
-* UIImage+Diff.m
+* `FBSnapshotTestCase.h`
+* `FBSnapshotTestCase.m`
+* `FBSnapshotTestController.h`
+* `FBSnapshotTestController.m`
+* `UIImage+Compare.h`
+* `UIImage+Compare.m`
+* `UIImage+Diff.h`
+* `UIImage+Diff.m`
 
 Finally, drag in the `HaveValidSnapshot.swift` file from this repo. Since it 
 relies on some Objective-C code in the FBSnapshotTestCase library, you'll need 
