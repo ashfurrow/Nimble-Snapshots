@@ -37,6 +37,10 @@ extension UIView : Snapshotable {
         return Instance.instance
     }
     
+    class func setReferenceImagesDirectory(directory: String?) {
+        sharedInstance.referenceImagesDirectory = directory
+    }
+    
     class func compareSnapshot(instance: Snapshotable, snapshot: String, testCase: AnyObject, record: Bool, referenceDirectory: String) -> Bool {
         var snapshotController: FBSnapshotTestController = FBSnapshotTestController(testClass: testCase.dynamicType)
         snapshotController.recordMode = record
@@ -71,7 +75,7 @@ func _getDefaultReferenceDirectory() -> String {
         }
     }
     
-    assert(result != nil, "Could not infer reference image folder – You should provide a reference dir using setGlobalReferenceImageDir(FB_REFERENCE_IMAGE_DIR)")
+    assert(result != nil, "Could not infer reference image folder – You should provide a reference dir using FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
     
     return result!
 }
