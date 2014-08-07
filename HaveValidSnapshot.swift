@@ -47,7 +47,7 @@ extension UIView : Snapshotable {
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
         
-        assert(snapshotController.referenceImagesDirectory, "Missing value for referenceImagesDirectory - Call [[EXPExpectFBSnapshotTest instance] setReferenceImagesDirectory")
+        assert(snapshotController.referenceImagesDirectory, "Missing value for referenceImagesDirectory - Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
         
         return snapshotController.compareSnapshotOfView(instance.snapshotObject, selector: Selector(snapshot), identifier: nil, error: nil)
     }
