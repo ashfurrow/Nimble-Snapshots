@@ -7,13 +7,6 @@ Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.co
 Setup
 ----------------
 
-Currently, setup is kind of a pain. That's because Nimble doesn't support 
-Xcode 6 beta 5, yet. Additionally, I need them to merge my [pull request](https://github.com/Quick/Nimble/pull/16)
-making the members of one of their classes explicitly public. So, you'll need to
-use my [fork](https://github.com/AshFurrow/Nimble-Snapshots) of Nimble for now.
-(And since [Quick](https://github.com/Quick/Quick) doesn't support Xcode 6 beta 
-5 yet, either, you'll need a [fork](https://github.com/tokorom/Quick) that does.)
-
 This project, naturally, relies on FBSnapshotTestCase. However, due to some 
 strange errors I was getting with a CocoaPods-installed version of that library,
 I've had to resort to using git submodules. 
@@ -22,8 +15,8 @@ So add your submodules for Quick, Nimble, and FBSnapshotTestCase, as well as a
 final one for this repository.
 
 ```sh
-git submodule add git@github.com:tokorom/Quick.git submodules/Quick
-git submodule add git@github.com:AshFurrow/Nimble.git submodules/Nimble
+git submodule add git@github.com:Quick/Quick.git submodules/Quick
+git submodule add git@github.com:Quick/Nimble.git submodules/Nimble
 git submodule add git@github.com:facebook/ios-snapshot-test-case.git submodules/FBSnapshotTestCase
 git submodule add git@github.com:AshFurrow/Nimble-Snapshots.git submodules/Nimble-Snapshots
 git submodule init
