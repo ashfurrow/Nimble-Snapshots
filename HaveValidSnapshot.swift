@@ -105,9 +105,9 @@ func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotab
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let name = _sanitizedTestPath(testFileLocation, name)
+    let snapshot = _sanitizedTestPath(testFileLocation, name)
 
-    let result = FBSnapshotTest.compareSnapshot(instance, snapshot: name, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
+    let result = FBSnapshotTest.compareSnapshot(instance, snapshot: snapshot, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
     
     if !result {
         _clearFailureMessage(failureMessage)
@@ -118,15 +118,15 @@ func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotab
     
 }
 
-func _recordSnapshot(name: String, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+func _recordSnapshot(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let name = _sanitizedTestPath(testFileLocation, name)
+    let snapshot = _sanitizedTestPath(testFileLocation, name)
     
     _clearFailureMessage(failureMessage)
     
-    if FBSnapshotTest.compareSnapshot(instance, snapshot: name, testCase: instance, record: true, referenceDirectory: referenceImageDirectory) {
+    if FBSnapshotTest.compareSnapshot(instance, snapshot: snapshot, testCase: instance, record: true, referenceDirectory: referenceImageDirectory) {
         failureMessage.actualValue = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else {
         failureMessage.actualValue = "expected to record a snapshot in \(name)"
@@ -154,9 +154,8 @@ func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
 func recordSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        let name = _sanitizedTestPath(testFileLocation, nil)
         
-        return _recordSnapshot(name, actualExpression, failureMessage)
+        return _recordSnapshot(nil, actualExpression, failureMessage)
     }
 }
 
