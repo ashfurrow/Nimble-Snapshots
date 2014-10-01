@@ -79,8 +79,16 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     return result!
 }
 
-func _sanitizedTestPath(sourceLocation: String) -> String {
-    let filename = sourceLocation.pathComponents.last!
+func _sanitizedTestPath(sourceLocation: String, name: String?) -> String {
+    let suffix = { () -> String in
+        switch name {
+        case .Some(let name) where countElements(name) > 0:
+            return "_\(name)"
+        default:
+            return ""
+        }
+    }()
+    let filename = "\(sourceLocation.pathComponents.last!)\(suffix)"
     let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
     let components: NSArray = filename.componentsSeparatedByCharactersInSet(characterSet.invertedSet)
     return components.componentsJoinedByString("_")
@@ -93,12 +101,13 @@ func _clearFailureMessage(failureMessage: FailureMessage) {
     failureMessage.to = ""
 }
 
-func _performSnapshotTest(name: String, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
+    let snapshot = _sanitizedTestPath(testFileLocation, name)
 
-    let result = FBSnapshotTest.compareSnapshot(instance, snapshot: name, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
+    let result = FBSnapshotTest.compareSnapshot(instance, snapshot: snapshot, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
     
     if !result {
         _clearFailureMessage(failureMessage)
@@ -109,15 +118,15 @@ func _performSnapshotTest(name: String, actualExpression: Expression<Snapshotabl
     
 }
 
-func _recordSnapshot(name: String, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+func _recordSnapshot(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let name = _sanitizedTestPath(testFileLocation)
+    let snapshot = _sanitizedTestPath(testFileLocation, name)
     
     _clearFailureMessage(failureMessage)
     
-    if FBSnapshotTest.compareSnapshot(instance, snapshot: name, testCase: instance, record: true, referenceDirectory: referenceImageDirectory) {
+    if FBSnapshotTest.compareSnapshot(instance, snapshot: snapshot, testCase: instance, record: true, referenceDirectory: referenceImageDirectory) {
         failureMessage.actualValue = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else {
         failureMessage.actualValue = "expected to record a snapshot in \(name)"
@@ -129,9 +138,8 @@ func _recordSnapshot(name: String, actualExpression: Expression<Snapshotable>, f
 func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        let name = _sanitizedTestPath(testFileLocation)
         
-        return _performSnapshotTest(name, actualExpression, failureMessage)
+        return _performSnapshotTest(nil, actualExpression, failureMessage)
     }
 }
 
@@ -146,9 +154,8 @@ func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
 func recordSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        let name = _sanitizedTestPath(testFileLocation)
         
-        return _recordSnapshot(name, actualExpression, failureMessage)
+        return _recordSnapshot(nil, actualExpression, failureMessage)
     }
 }
 
