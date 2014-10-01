@@ -79,8 +79,16 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     return result!
 }
 
-func _sanitizedTestPath(sourceLocation: String) -> String {
-    let filename = sourceLocation.pathComponents.last!
+func _sanitizedTestPath(sourceLocation: String, name: String?) -> String {
+    let suffix = { () -> String in
+        switch name {
+        case .Some(let name) where countElements(name) > 0:
+            return "_\(name)"
+        default:
+            return ""
+        }
+    }()
+    let filename = "\(sourceLocation.pathComponents.last!)\(suffix)"
     let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
     let components: NSArray = filename.componentsSeparatedByCharactersInSet(characterSet.invertedSet)
     return components.componentsJoinedByString("_")
@@ -113,7 +121,7 @@ func _recordSnapshot(name: String, actualExpression: Expression<Snapshotable>, f
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let name = _sanitizedTestPath(testFileLocation)
+    let name = _sanitizedTestPath(testFileLocation, name)
     
     _clearFailureMessage(failureMessage)
     
@@ -129,7 +137,7 @@ func _recordSnapshot(name: String, actualExpression: Expression<Snapshotable>, f
 func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        let name = _sanitizedTestPath(testFileLocation)
+        let name = _sanitizedTestPath(testFileLocation, nil)
         
         return _performSnapshotTest(name, actualExpression, failureMessage)
     }
@@ -146,7 +154,7 @@ func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
 func recordSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        let name = _sanitizedTestPath(testFileLocation)
+        let name = _sanitizedTestPath(testFileLocation, nil)
         
         return _recordSnapshot(name, actualExpression, failureMessage)
     }
