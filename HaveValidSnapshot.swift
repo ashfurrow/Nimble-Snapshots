@@ -104,7 +104,6 @@ func _clearFailureMessage(failureMessage: FailureMessage) {
 func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
-    let name = _sanitizedTestPath(testFileLocation, name)
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
     let name = _sanitizedTestPath(testFileLocation, name)
 
