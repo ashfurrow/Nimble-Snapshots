@@ -105,6 +105,7 @@ func _performSnapshotTest(name: String, actualExpression: Expression<Snapshotabl
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
+    let name = _sanitizedTestPath(testFileLocation, name)
 
     let result = FBSnapshotTest.compareSnapshot(instance, snapshot: name, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
     

@@ -17,6 +17,7 @@ class BoostrapSpec: QuickSpec {
                 let view = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: 44, height: 44)))
                 view.backgroundColor = UIColor.blueColor()
                 expect(view).to(haveValidSnapshot())
+                expect(view).to(haveValidSnapshot(named: "something custom"))
             }
         });
     }
