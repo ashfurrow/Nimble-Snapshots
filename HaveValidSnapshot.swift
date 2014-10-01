@@ -65,10 +65,9 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     
     let pathComponents: NSArray = sourceFileName.pathComponents
     for folder in pathComponents {
-        let range = (folder.lowercaseString as NSString).rangeOfString("tests")
-        
-        if range.location != Foundation.NSNotFound {
-            let currentIndex = pathComponents.indexOfObject(folder)
+
+        if (folder.lowercaseString as NSString).hasSuffix("tests") {
+            let currentIndex = pathComponents.indexOfObject(folder) + 1
             let folderPathComponents: NSArray = pathComponents.subarrayWithRange(NSMakeRange(0, currentIndex))
             let folderPath = folderPathComponents.componentsJoinedByString("/")
             result = folderPath + "/ReferenceImages"
@@ -98,7 +97,7 @@ func _performSnapshotTest(name: String, actualExpression: Expression<Snapshotabl
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    
+
     let result = FBSnapshotTest.compareSnapshot(instance, snapshot: name, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
     
     if !result {
