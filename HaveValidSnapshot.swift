@@ -101,9 +101,10 @@ func _clearFailureMessage(failureMessage: FailureMessage) {
     failureMessage.to = ""
 }
 
-func _performSnapshotTest(name: String, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     let instance = actualExpression.evaluate()
     let testFileLocation = actualExpression.location.file
+    let name = _sanitizedTestPath(testFileLocation, name)
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
 
     let result = FBSnapshotTest.compareSnapshot(instance, snapshot: name, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
@@ -137,9 +138,8 @@ func _recordSnapshot(name: String, actualExpression: Expression<Snapshotable>, f
 func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        let name = _sanitizedTestPath(testFileLocation, nil)
         
-        return _performSnapshotTest(name, actualExpression, failureMessage)
+        return _performSnapshotTest(nil, actualExpression, failureMessage)
     }
 }
 
