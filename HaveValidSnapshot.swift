@@ -1,15 +1,8 @@
-//
-//  HaveValidSnapshot.swift
-//  Bootstrap
-//
-//  Created by Ash Furrow on 2014-08-07.
-//  Copyright (c) 2014 Artsy. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import Nimble
 import QuartzCore
+import Quick
 
 @objc protocol Snapshotable {
     var snapshotObject: UIView? { get }
@@ -37,18 +30,19 @@ extension UIView : Snapshotable {
         }
         return Instance.instance
     }
-    
+
     class func setReferenceImagesDirectory(directory: String?) {
         sharedInstance.referenceImagesDirectory = directory
     }
-    
+
     class func compareSnapshot(instance: Snapshotable, snapshot: String, testCase: AnyObject, record: Bool, referenceDirectory: String) -> Bool {
-        var snapshotController: FBSnapshotTestController = FBSnapshotTestController(testClass: testCase.dynamicType)
+        var snapshotController: FBSnapshotTestController = FBSnapshotTestController(testClass: _currentXCTestSubclass())
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
-        
+        snapshotController.renderAsLayer = true
+
         assert(snapshotController.referenceImagesDirectory != nil, "Missing value for referenceImagesDirectory - Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
-        
+
         return snapshotController.compareSnapshotOfView(instance.snapshotObject, selector: Selector(snapshot), identifier: nil, error: nil)
     }
 }
@@ -57,12 +51,12 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
     }
-    
+
     // Search the test file's path to find the first folder with the substring "tests"
     // then append "/ReferenceImages" and use that
-    
+
     var result: NSString?
-    
+
     let pathComponents: NSArray = sourceFileName.pathComponents
     for folder in pathComponents {
 
@@ -73,24 +67,35 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
             result = folderPath + "/ReferenceImages"
         }
     }
-    
+
     assert(result != nil, "Could not infer reference image folder – You should provide a reference dir using FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
-    
+
     return result!
 }
 
-func _sanitizedTestPath(sourceLocation: String, name: String?) -> String {
-    let suffix = { () -> String in
-        switch name {
-        case .Some(let name) where countElements(name) > 0:
-            return "_\(name)"
-        default:
-            return ""
-        }
-    }()
-    let filename = "\(sourceLocation.pathComponents.last!)\(suffix)"
+func _currentXCTestSubclass() -> AnyClass {
+    let quickExample = World.sharedWorld().currentExampleMetadata
+    let fullFilename = quickExample!.example.callsite.file.pathComponents.last!
+    let filename = fullFilename.stringByReplacingOccurrencesOfString(".swift", withString: "")
+    let bundle = NSBundle(forClass: FBSnapshotTest.self)
+    let bundleName = bundle.bundlePath.pathComponents.last!.stringByReplacingOccurrencesOfString(".xctest", withString: "")
+
+    let potentialClassString = "\(bundleName).\(filename)"
+    if let testCaseSubclassClass: AnyClass = NSClassFromString(potentialClassString) {
+        return testCaseSubclassClass
+    }
+
+    assert(false, "The class name and the file name need to match for the snapshot tests.")
+    return NSString.self
+}
+
+func _sanitizedTestName() -> String {
+    let quickExample = World.sharedWorld().currentExampleMetadata
+    var filename = quickExample!.example.name
+    filename = filename.stringByReplacingOccurrencesOfString("root example group, ", withString: "")
     let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
     let components: NSArray = filename.componentsSeparatedByCharactersInSet(characterSet.invertedSet)
+
     return components.componentsJoinedByString("_")
 }
 
@@ -102,43 +107,48 @@ func _clearFailureMessage(failureMessage: FailureMessage) {
 }
 
 func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
-    let instance = actualExpression.evaluate()
+    let instance = actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshot = _sanitizedTestPath(testFileLocation, name)
+    let snapshotName = _sanitizedTestName()
 
-    let result = FBSnapshotTest.compareSnapshot(instance, snapshot: snapshot, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
-    
+    let result = FBSnapshotTest.compareSnapshot(instance, snapshot: snapshotName, testCase: instance, record: false, referenceDirectory: referenceImageDirectory)
+
     if !result {
         _clearFailureMessage(failureMessage)
         failureMessage.actualValue = "expected a matching snapshot in \(name)"
     }
-    
+
     return result
-    
+
 }
 
 func _recordSnapshot(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
-    let instance = actualExpression.evaluate()
+    let instance = actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshot = _sanitizedTestPath(testFileLocation, name)
-    
+    let snapshotName = _sanitizedTestName()
+
     _clearFailureMessage(failureMessage)
-    
-    if FBSnapshotTest.compareSnapshot(instance, snapshot: snapshot, testCase: instance, record: true, referenceDirectory: referenceImageDirectory) {
+
+    if FBSnapshotTest.compareSnapshot(instance, snapshot: snapshotName, testCase: instance, record: true, referenceDirectory: referenceImageDirectory) {
         failureMessage.actualValue = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else {
         failureMessage.actualValue = "expected to record a snapshot in \(name)"
     }
-    
+
     return false
 }
+
+internal var switchChecksWithRecords = false
 
 func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        
+        if (switchChecksWithRecords) {
+            return _recordSnapshot(nil, actualExpression, failureMessage)
+        }
+
         return _performSnapshotTest(nil, actualExpression, failureMessage)
     }
 }
@@ -146,6 +156,9 @@ func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
 func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
+        if (switchChecksWithRecords) {
+            return _recordSnapshot(name, actualExpression, failureMessage)
+        }
 
         return _performSnapshotTest(name, actualExpression, failureMessage)
     }
@@ -154,7 +167,7 @@ func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
 func recordSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
-        
+
         return _recordSnapshot(nil, actualExpression, failureMessage)
     }
 }
