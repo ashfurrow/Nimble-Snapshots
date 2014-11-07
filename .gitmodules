@@ -1,12 +1,12 @@
 [submodule "submodules/Nimble"]
 	path = submodules/Nimble
-	url = git@github.com:Quick/Nimble.git
+	url = https://github.com/Quick/Nimble.git
 [submodule "submodules/Quick"]
 	path = submodules/Quick
-	url = git@github.com:Quick/Quick.git
+	url = https://github.com/Quick/Quick.git
 [submodule "Bootstrap/submodules/ios-snapshot-test-case"]
 	path = Bootstrap/submodules/ios-snapshot-test-case
-	url = git@github.com:facebook/ios-snapshot-test-case.git
+	url = https://github.com/facebook/ios-snapshot-test-case.git
 [submodule "submodules/ios-snapshot-test-case"]
 	path = submodules/ios-snapshot-test-case
-	url = git@github.com:facebook/ios-snapshot-test-case.git
+	url = https://github.com/facebook/ios-snapshot-test-case.git
