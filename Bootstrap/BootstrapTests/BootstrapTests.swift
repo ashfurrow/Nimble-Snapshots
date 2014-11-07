@@ -10,7 +10,7 @@ import Quick
 import Nimble
 import UIKit
 
-class BoostrapSpec: QuickSpec {
+class BootstrapTests: QuickSpec {
     override func spec() {
         describe("in some context", { () -> () in
             it("has valid snapshot") {
