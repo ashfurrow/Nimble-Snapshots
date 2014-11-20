@@ -1,14 +1,6 @@
-//
-//  BootstrapTests.swift
-//  BootstrapTests
-//
-//  Created by Ash Furrow on 2014-08-07.
-//  Copyright (c) 2014 Artsy. All rights reserved.
-//
-
 import Quick
 import Nimble
-import UIKit
+import Nimble_Snapshots
 
 class BootstrapTests: QuickSpec {
     override func spec() {
@@ -19,6 +11,6 @@ class BootstrapTests: QuickSpec {
                 expect(view).to(haveValidSnapshot())
                 expect(view).to(haveValidSnapshot(named: "something custom"))
             }
-        });
+        })
     }
 }
