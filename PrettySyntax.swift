@@ -23,3 +23,7 @@ public func ==(lhs: Expectation<Snapshotable>, rhs: Snapshot) {
 public func 📷(snapshottable: Snapshotable) {
     expect(snapshottable).to(recordSnapshot())
 }
+
+public func 📷(snapshottable: Snapshotable, named name: String) {
+    expect(snapshottable).to(recordSnapshot(named: name))
+}
