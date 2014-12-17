@@ -6,47 +6,14 @@ Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.co
 
 ![](http://static.ashfurrow.com/gifs/click.gif)
 
-Setup
-----------------
+Using This Library
+------------------
+You'll need the [Quick](http://github.com/Quick/Quick), [Nimble](http://github.com/Quick/Nimble),
+and FBSnapshotTestCase linked into your test target (through submodules, Carthage,
+or pre-release CocoaPods). Next, add this library (either with CocoaPods, as a 
+new framework, or just the two `.swift` files). Now you can 
 
-This project, naturally, relies on FBSnapshotTestCase. However, due to some 
-strange errors I was getting with a CocoaPods-installed version of that library,
-I've had to resort to using git submodules. 
-
-So add your submodules for Quick, Nimble, and FBSnapshotTestCase, as well as a 
-final one for this repository.
-
-```sh
-git submodule add git@github.com:Quick/Quick.git submodules/Quick
-git submodule add git@github.com:Quick/Nimble.git submodules/Nimble
-git submodule add git@github.com:facebook/ios-snapshot-test-case.git submodules/FBSnapshotTestCase
-git submodule add git@github.com:AshFurrow/Nimble-Snapshots.git submodules/Nimble-Snapshots
-git submodule init
-git submodule update
-```
-
-Now [follow the instructions](https://github.com/Quick/Quick#2-add-quickxcodeproj-and-nimblexcodeproj-to-your-test-target)
-for adding Quick and Nimble to your Xcode project. That's the easy part. You'll 
-need to drag the following files into your project's *test* target.
-
-* `FBSnapshotTestCase.h`
-* `FBSnapshotTestCase.m`
-* `FBSnapshotTestController.h`
-* `FBSnapshotTestController.m`
-* `UIImage+Compare.h`
-* `UIImage+Compare.m`
-* `UIImage+Diff.h`
-* `UIImage+Diff.m`
-
-Finally, drag in the `HaveValidSnapshot.swift` file from this repo. Since it 
-relies on some Objective-C code in the FBSnapshotTestCase library, you'll need 
-to add the following line to an [Objective-C bridging header](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_79).
-
-```objc
-#import "FBSnapshotTestController.h"
-```
-
-Alrighty! We're all set. Your tests will look something like the following.
+Your tests will look something like the following.
 
 ```swift
 import Quick
@@ -63,6 +30,28 @@ class MySpec: QuickSpec {
         });
     }
 }
+```
+
+There are some options for testing the validity of snapshots. Snapshots can be
+given a name:
+
+```swift
+expect(view).to(haveValidSnapshot(named: "some custom name"))
+```
+
+We also have a prettier syntax for custom-named snapshots:
+
+```swift
+expect(view) == snapshot"some custom name")
+```
+
+To record snapshots, just replace `haveValidSnapshot()` with `recordSnapshot()`
+and `haveValidSnapshot(named:)` with `recordSnapshot(named:)`. We also have a 
+handy emoji operator. 
+
+```swift
+📷(view)
+📷(view, "some custom name")
 ```
 
 If you have any questions or run into any trouble, feel free to open an issue

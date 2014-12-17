@@ -4,7 +4,7 @@ pod 'Artsy+UIColors'
 
 target 'BootstrapTests' do
 
-	pod 'FBSnapshotTestCase', :git => "https://github.com/ashfurrow/ios-snapshot-test-case.git"
+  pod 'FBSnapshotTestCase', :git => "https://github.com/ashfurrow/ios-snapshot-test-case.git"
   pod 'Quick', :git => "https://github.com/orta/Quick", :branch => "podspec"
   pod 'Nimble', :git => "https://github.com/ashfurrow/Nimble", :branch => "podspec"
   pod 'Nimble-Snapshots', :path => "../"
