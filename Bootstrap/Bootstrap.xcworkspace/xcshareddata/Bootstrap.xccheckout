@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>240E7BCE-1632-4E1B-BAA5-92C340A32DB5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Bootstrap</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>67FE24996EF9E9D24BC7440061043FF7509B069F</key>
+		<string>https://github.com/AshFurrow/Nimble-Snapshots.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Bootstrap/Bootstrap.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>67FE24996EF9E9D24BC7440061043FF7509B069F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AshFurrow/Nimble-Snapshots.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>67FE24996EF9E9D24BC7440061043FF7509B069F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>67FE24996EF9E9D24BC7440061043FF7509B069F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Nimble-Snapshots</string>
+		</dict>
+	</array>
+</dict>
+</plist>
