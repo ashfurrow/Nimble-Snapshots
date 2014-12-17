@@ -15,4 +15,5 @@ Pod::Spec.new do |s|
   s.frameworks  = "Foundation", "XCTest"
   s.dependency "FBSnapshotTestCase"
   s.dependency "Nimble"
+  s.dependency "Quick"
 end
