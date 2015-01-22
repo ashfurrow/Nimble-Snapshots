@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/ashfurrow/Nimble-Snapshots.git", :tag => "#{s.version}" }
   s.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift"
+  s.requires_arc = true
   s.frameworks  = "Foundation", "XCTest"
   s.dependency "FBSnapshotTestCase"
   s.dependency "Nimble"
