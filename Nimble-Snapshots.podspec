@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version      = "0.2"
   s.summary      = "Nimble matchers for FBSnapshotTestCase"
   s.description  = <<-DESC
-                   Nimble matchers for FBSnapshotTestCase. Highly derivative of Expecta Matchers for FBSnapshotTestCase.
+                   Nimble matchers for FBSnapshotTestCase. Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
                    DESC
   s.homepage     = "https://github.com/ashfurrow/Nimble-Snapshots"
   s.license      = { :type => "MIT", :file => "LICENSE" }
