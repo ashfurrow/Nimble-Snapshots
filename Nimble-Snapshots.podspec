@@ -14,7 +14,5 @@ Pod::Spec.new do |s|
   s.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift"
   s.requires_arc = true
   s.frameworks  = "Foundation", "XCTest"
-  s.dependency "FBSnapshotTestCase"
-  s.dependency "Nimble"
-  s.dependency "Quick"
+  s.dependencies = ["FBSnapshotTestCase", "Nimble", "Quick"]
 end
