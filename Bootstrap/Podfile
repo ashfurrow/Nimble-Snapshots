@@ -3,11 +3,6 @@
 pod 'Artsy+UIColors'
 
 target 'BootstrapTests' do
-
-  pod 'FBSnapshotTestCase'
-  pod 'Quick'
-  pod 'Nimble'
   pod 'Nimble-Snapshots', :path => "../"
-
 end
 

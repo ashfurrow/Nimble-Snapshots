@@ -12,10 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - Artsy+UIColors
-  - FBSnapshotTestCase
-  - Nimble
   - Nimble-Snapshots (from `../`)
-  - Quick
 
 EXTERNAL SOURCES:
   Nimble-Snapshots:

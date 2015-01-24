@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ashfurrow/Nimble-Snapshots.svg)](https://travis-ci.org/ashfurrow/Nimble-Snapshots)
+
 Nimble-Snapshots
 =============================
 
@@ -6,18 +8,35 @@ Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.co
 
 ![](http://static.ashfurrow.com/gifs/click.gif)
 
-Using This Library
-------------------
-You'll need the [Quick](http://github.com/Quick/Quick), [Nimble](http://github.com/Quick/Nimble),
-and FBSnapshotTestCase linked into your test target (through submodules, Carthage,
-or pre-release CocoaPods). Next, add this library (either with CocoaPods, as a 
-new framework, or just the two `.swift` files). Now you can 
+Installing
+----------
+
+You need to be using CocoaPods 0.36 Beta 1 or higher. Your podfile should look
+something like the following.
+
+```rb
+platform :ios, '8.0'
+
+source 'https://github.com/CocoaPods/Specs.git'
+
+# Whichever pods you need for your app go here.
+
+target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
+  pod 'Nimble-Snapshots'
+end
+```
+
+Then run `pod install`. 
+
+Use
+---
 
 Your tests will look something like the following.
 
 ```swift
 import Quick
 import Nimble
+import Nimble_Snapshots
 import UIKit
 
 class MySpec: QuickSpec {
@@ -25,7 +44,7 @@ class MySpec: QuickSpec {
         describe("in some context", { () -> () in
             it("has valid snapshot") {
                 let view = ... // some view you want to test
-                expect(view).to(haveValidSnapshot())
+                expect(view).to( haveValidSnapshot() )
             }
         });
     }
@@ -36,7 +55,7 @@ There are some options for testing the validity of snapshots. Snapshots can be
 given a name:
 
 ```swift
-expect(view).to(haveValidSnapshot(named: "some custom name"))
+expect(view).to (haveValidSnapshot(named: "some custom name") )
 ```
 
 We also have a prettier syntax for custom-named snapshots:
