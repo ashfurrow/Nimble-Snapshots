@@ -1,13 +1,13 @@
 osx_image: xcode611
 language: objective-c
 before_script:
-  - bundle install
+  - cd Bootstrap ; bundle install ; cd ..
   - cd Bootstrap ; bundle exec pod install ; cd ..
   - export LANG=en_US.UTF-8
   - gem i cocoapods --no-ri --no-rdoc
   - brew update
   - brew uninstall xctool
   - brew install xctool
-xcode_workspace: Bootstrap/ARAnalyticsTests.xcworkspace
-xcode_scheme: ARAnalyticsBootstrapiOS
+xcode_workspace: Bootstrap/Bootstrap.xcworkspace
+xcode_scheme: Bootstrap
 xcode_sdk: iphonesimulator
