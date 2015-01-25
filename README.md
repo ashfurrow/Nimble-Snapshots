@@ -6,7 +6,9 @@ Nimble-Snapshots
 [Nimble](https://github.com/Quick/Nimble) matchers for [FBSnapshotTestCase](https://github.com/facebook/ios-snapshot-test-case).
 Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta). 
 
-![](http://static.ashfurrow.com/gifs/click.gif)
+<p align="center">
+<img src="http://static.ashfurrow.com/gifs/click.gif" />
+</p>
 
 Installing
 ----------
