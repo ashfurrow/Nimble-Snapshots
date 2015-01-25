@@ -63,7 +63,7 @@ expect(view).to (haveValidSnapshot(named: "some custom name") )
 We also have a prettier syntax for custom-named snapshots:
 
 ```swift
-expect(view) == snapshot"some custom name")
+expect(view) == snapshot("some custom name")
 ```
 
 To record snapshots, just replace `haveValidSnapshot()` with `recordSnapshot()`
