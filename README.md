@@ -57,7 +57,7 @@ There are some options for testing the validity of snapshots. Snapshots can be
 given a name:
 
 ```swift
-expect(view).to (haveValidSnapshot(named: "some custom name") )
+expect(view).to( haveValidSnapshot(named: "some custom name") )
 ```
 
 We also have a prettier syntax for custom-named snapshots:
