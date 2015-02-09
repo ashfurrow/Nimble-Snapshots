@@ -20,6 +20,10 @@ class BootstrapTests: QuickSpec {
             it("has a valid pretty-syntax snapshot") {
                 expect(view) == snapshot("something custom")
             }
+
+            it("has a valid pretty-snytax snapshot without specifying a name") {
+                expect(view) == snapshot()
+            }
         })
     }
 }

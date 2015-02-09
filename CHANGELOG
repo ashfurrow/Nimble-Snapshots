@@ -1,7 +1,13 @@
 # Nimble-Snapshots
 
+## 0.3
+
+* Adds pretty syntax support for snapshots with unspecified names - @ashfurrow
+
+## 0.2
+
 * Ensure all ReferenceImages folders are in the same root folder - @orta
 
 ## 0.1
 
-* Updated to official repos of Quick and Nimble for beta 5 support – @ashfurrow
+* Updated to official repos of Quick and Nimble for beta 5 support - @ashfurrow
