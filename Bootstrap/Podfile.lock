@@ -4,7 +4,7 @@ PODS:
   - EDColor (0.4.0)
   - FBSnapshotTestCase (1.5)
   - Nimble (0.3.0)
-  - Nimble-Snapshots (0.2):
+  - Nimble-Snapshots (0.3):
     - FBSnapshotTestCase (~> 1.5)
     - Nimble (~> 0.3)
     - Quick (~> 0.2)
@@ -23,7 +23,7 @@ SPEC CHECKSUMS:
   EDColor: bcdb8600b7a456f4408ce1d7e7fc001588919254
   FBSnapshotTestCase: e2914fbaabccea1dcc773d6a16b1c24540642488
   Nimble: a4d9d978129e83d73e33b7d8bce57443bd556068
-  Nimble-Snapshots: dc11aec7fcd6c5f7b2f062bad23fe74094003d67
+  Nimble-Snapshots: 727fb13569953b96247053978125c528ea8c492c
   Quick: 7b89ff625e72ef931c2a9ef2f25ac3a9d2457763
 
 COCOAPODS: 0.36.0.beta.1
