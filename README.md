@@ -7,7 +7,7 @@ Nimble-Snapshots
 Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta). 
 
 <p align="center">
-<img src="http://static.ashfurrow.com/gifs/click.gif" />
+<img src="http://gifs.ashfurrow.com/click.gif" />
 </p>
 
 Installing
