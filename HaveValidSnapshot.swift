@@ -40,7 +40,6 @@ extension UIView : Snapshotable {
         var snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
-        snapshotController.renderAsLayer = true
 
         assert(snapshotController.referenceImagesDirectory != nil, "Missing value for referenceImagesDirectory - Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
 
@@ -71,7 +70,7 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
 
     assert(result != nil, "Could not infer reference image folder – You should provide a reference dir using FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
 
-    return result!
+    return result! as String
 }
 
 func _testFileName() -> String {
