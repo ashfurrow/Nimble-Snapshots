@@ -15,6 +15,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.frameworks  = "Foundation", "XCTest"
   s.dependency "FBSnapshotTestCase", "~>1.7"
-  s.dependency "Nimble", "~> 0.3"
-  s.dependency "Quick", "~> 0.2"
+  s.dependency "Nimble", "~> 0.4"
+  s.dependency "Quick", "~> 0.3"
 end
