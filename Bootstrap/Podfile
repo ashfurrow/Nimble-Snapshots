@@ -1,6 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/artsy/Specs.git'
 
+use_frameworks!
+
 # Need one pod
 pod 'Artsy+UIColors'
 
