@@ -1,5 +1,9 @@
 # Nimble-Snapshots
 
+## 0.4
+
+* Updates Quick and Numble to latest (requires Xcode 6.3+) - @andreamazz
+
 ## 0.3
 
 * Adds pretty syntax support for snapshots with unspecified names - @ashfurrow
