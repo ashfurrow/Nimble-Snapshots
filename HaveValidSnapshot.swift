@@ -42,8 +42,13 @@ extension UIView : Snapshotable {
         snapshotController.referenceImagesDirectory = referenceDirectory
 
         assert(snapshotController.referenceImagesDirectory != nil, "Missing value for referenceImagesDirectory - Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
-
-        return snapshotController.compareSnapshotOfView(instance.snapshotObject, selector: Selector(snapshot), identifier: nil, error: nil)
+        do {
+            try snapshotController.compareSnapshotOfView(instance.snapshotObject, selector: Selector(snapshot), identifier: nil)
+        }
+        catch {
+            return false;
+        }
+        return true;
     }
 }
 
@@ -138,10 +143,10 @@ public func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
         if (switchChecksWithRecords) {
-            return _recordSnapshot(nil, actualExpression, failureMessage)
+            return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
         }
 
-        return _performSnapshotTest(nil, actualExpression, failureMessage)
+        return _performSnapshotTest(nil, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
@@ -149,10 +154,10 @@ public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
         if (switchChecksWithRecords) {
-            return _recordSnapshot(name, actualExpression, failureMessage)
+            return _recordSnapshot(name, actualExpression: actualExpression, failureMessage: failureMessage)
         }
 
-        return _performSnapshotTest(name, actualExpression, failureMessage)
+        return _performSnapshotTest(name, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
@@ -160,12 +165,12 @@ public func recordSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         let testFileLocation = actualExpression.location.file
 
-        return _recordSnapshot(nil, actualExpression, failureMessage)
+        return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
 public func recordSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        return _recordSnapshot(name, actualExpression, failureMessage)
+        return _recordSnapshot(name, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
