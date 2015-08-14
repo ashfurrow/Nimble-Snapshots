@@ -24,6 +24,9 @@ extension UIView : Snapshotable {
 }
 
 @objc class FBSnapshotTest : NSObject {
+
+    var currentExampleMetadata: ExampleMetadata?
+
     var referenceImagesDirectory: String?
     class var sharedInstance : FBSnapshotTest {
         struct Instance {
@@ -79,7 +82,7 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
 }
 
 func _testFileName() -> String {
-    let name = World.sharedWorld().currentExampleMetadata!.example.callsite.file
+    let name = FBSnapshotTest.sharedInstance.currentExampleMetadata!.example.callsite.file as NSString
     let type = ".\(name.pathExtension)"
     let sanitizedName = name.lastPathComponent.stringByReplacingOccurrencesOfString(type, withString: "")
 
@@ -87,7 +90,7 @@ func _testFileName() -> String {
 }
 
 func _sanitizedTestName() -> String {
-    let quickExample = World.sharedWorld().currentExampleMetadata
+    let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata
     var filename = quickExample!.example.name
     filename = filename.stringByReplacingOccurrencesOfString("root example group, ", withString: "")
     let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")

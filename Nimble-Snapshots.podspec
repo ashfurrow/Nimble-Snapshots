@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/ashfurrow"
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/ashfurrow/Nimble-Snapshots.git", :tag => "#{s.version}" }
-  s.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift"
+  s.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift", "NimbleSnapshotsConfiguration.swift"
   s.requires_arc = true
   s.frameworks  = "Foundation", "XCTest"
   s.dependency "FBSnapshotTestCase", "~>1.7"
