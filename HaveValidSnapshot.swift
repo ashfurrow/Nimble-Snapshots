@@ -62,7 +62,7 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
 
     var result: NSString?
 
-    let pathComponents: NSArray = sourceFileName.pathComponents
+    let pathComponents: NSArray = (sourceFileName as NSString).pathComponents
     for folder in pathComponents {
 
         if (folder.lowercaseString as NSString).hasSuffix("tests") {
