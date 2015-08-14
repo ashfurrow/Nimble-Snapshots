@@ -141,7 +141,6 @@ internal var switchChecksWithRecords = false
 
 public func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        let testFileLocation = actualExpression.location.file
         if (switchChecksWithRecords) {
             return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
         }
@@ -152,7 +151,6 @@ public func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
 
 public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        let testFileLocation = actualExpression.location.file
         if (switchChecksWithRecords) {
             return _recordSnapshot(name, actualExpression: actualExpression, failureMessage: failureMessage)
         }
@@ -163,8 +161,6 @@ public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
 
 public func recordSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        let testFileLocation = actualExpression.location.file
-
         return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
