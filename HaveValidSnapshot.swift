@@ -37,7 +37,7 @@ extension UIView : Snapshotable {
     }
 
     class func compareSnapshot(instance: Snapshotable, snapshot: String, record: Bool, referenceDirectory: String) -> Bool {
-        var snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
+        let snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
 
