@@ -23,7 +23,7 @@ extension UIView : Snapshotable {
     }
 }
 
-@objc class FBSnapshotTest {
+@objc class FBSnapshotTest : NSObject {
     var referenceImagesDirectory: String?
     class var sharedInstance : FBSnapshotTest {
         struct Instance {
