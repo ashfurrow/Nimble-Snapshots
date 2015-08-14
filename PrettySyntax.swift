@@ -10,7 +10,7 @@ public struct Snapshot {
     }
 }
 
-public func snapshot(_ name: String? = nil) -> Snapshot {
+public func snapshot(name: String? = nil) -> Snapshot {
     return Snapshot(name: name)
 }
 
