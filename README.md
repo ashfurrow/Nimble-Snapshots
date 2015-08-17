@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ashfurrow/Nimble-Snapshots.svg)](https://travis-ci.org/ashfurrow/Nimble-Snapshots)
+<!-- Hiding until we have Swift 2 on CI: [![Build Status](https://travis-ci.org/ashfurrow/Nimble-Snapshots.svg)](https://travis-ci.org/ashfurrow/Nimble-Snapshots) -->
 
 Nimble-Snapshots
 =============================
