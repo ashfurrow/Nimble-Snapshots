@@ -23,7 +23,10 @@ extension UIView : Snapshotable {
     }
 }
 
-@objc class FBSnapshotTest {
+@objc class FBSnapshotTest : NSObject {
+
+    var currentExampleMetadata: ExampleMetadata?
+
     var referenceImagesDirectory: String?
     class var sharedInstance : FBSnapshotTest {
         struct Instance {
@@ -37,7 +40,7 @@ extension UIView : Snapshotable {
     }
 
     class func compareSnapshot(instance: Snapshotable, snapshot: String, record: Bool, referenceDirectory: String) -> Bool {
-        var snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
+        let snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
 
@@ -62,7 +65,7 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
 
     var result: NSString?
 
-    let pathComponents: NSArray = sourceFileName.pathComponents
+    let pathComponents: NSArray = (sourceFileName as NSString).pathComponents
     for folder in pathComponents {
 
         if (folder.lowercaseString as NSString).hasSuffix("tests") {
@@ -79,7 +82,7 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
 }
 
 func _testFileName() -> String {
-    let name = World.sharedWorld().currentExampleMetadata!.example.callsite.file
+    let name = FBSnapshotTest.sharedInstance.currentExampleMetadata!.example.callsite.file as NSString
     let type = ".\(name.pathExtension)"
     let sanitizedName = name.lastPathComponent.stringByReplacingOccurrencesOfString(type, withString: "")
 
@@ -87,7 +90,7 @@ func _testFileName() -> String {
 }
 
 func _sanitizedTestName() -> String {
-    let quickExample = World.sharedWorld().currentExampleMetadata
+    let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata
     var filename = quickExample!.example.name
     filename = filename.stringByReplacingOccurrencesOfString("root example group, ", withString: "")
     let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
@@ -104,7 +107,7 @@ func _clearFailureMessage(failureMessage: FailureMessage) {
 }
 
 func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
-    let instance = actualExpression.evaluate()!
+    let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
     let snapshotName = name ?? _sanitizedTestName()
@@ -121,7 +124,7 @@ func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotab
 }
 
 func _recordSnapshot(name: String?, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
-    let instance = actualExpression.evaluate()!
+    let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
     let snapshotName = name ?? _sanitizedTestName()
@@ -141,7 +144,6 @@ internal var switchChecksWithRecords = false
 
 public func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        let testFileLocation = actualExpression.location.file
         if (switchChecksWithRecords) {
             return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
         }
@@ -152,7 +154,6 @@ public func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
 
 public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        let testFileLocation = actualExpression.location.file
         if (switchChecksWithRecords) {
             return _recordSnapshot(name, actualExpression: actualExpression, failureMessage: failureMessage)
         }
@@ -163,8 +164,6 @@ public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
 
 public func recordSnapshot() -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        let testFileLocation = actualExpression.location.file
-
         return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
