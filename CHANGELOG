@@ -1,5 +1,9 @@
 # Nimble-Snapshots
 
+## 1.0.0
+
+* Swift 2 support - @tibr
+
 ## 0.4
 
 * Updates Quick and Numble to latest (requires Xcode 6.3+) - @andreamazz
