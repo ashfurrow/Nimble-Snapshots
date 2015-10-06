@@ -57,7 +57,7 @@ extension UIView : Snapshotable {
 
 var testFolderSuffixes = ["tests", "specs"]
 public func setNimbleTestFolder(testFolder: String) {
-    testFolderSuffixes = [testFolder.lowercaseString]
+    testFolderSuffixes = [testFolder]
 }
 
 func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
@@ -74,7 +74,7 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     for folder in pathComponents {
         var found = false
         for suffix in testFolderSuffixes {
-            if (folder.lowercaseString as NSString).hasSuffix(suffix) {
+            if (folder.lowercaseString as NSString).hasSuffix(suffix.lowercaseString) {
                 found = true
                 break
             }
