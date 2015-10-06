@@ -55,6 +55,11 @@ extension UIView : Snapshotable {
     }
 }
 
+var testFolderSuffixes = ["tests", "specs"]
+public func setNimbleTestFolder(testFolder: String) {
+    testFolderSuffixes = [testFolder.lowercaseString]
+}
+
 func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
@@ -67,8 +72,15 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
 
     let pathComponents: NSArray = (sourceFileName as NSString).pathComponents
     for folder in pathComponents {
+        var found = false
+        for suffix in testFolderSuffixes {
+            if (folder.lowercaseString as NSString).hasSuffix(suffix) {
+                found = true
+                break
+            }
+        }
 
-        if (folder.lowercaseString as NSString).hasSuffix("tests") {
+        if found {
             let currentIndex = pathComponents.indexOfObject(folder) + 1
             let folderPathComponents: NSArray = pathComponents.subarrayWithRange(NSMakeRange(0, currentIndex))
             let folderPath = folderPathComponents.componentsJoinedByString("/")
