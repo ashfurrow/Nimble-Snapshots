@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Nimble-Snapshots"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "Nimble matchers for FBSnapshotTestCase"
   s.description  = <<-DESC
                    Nimble matchers for FBSnapshotTestCase. Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift", "NimbleSnapshotsConfiguration.swift"
   s.requires_arc = true
   s.frameworks  = "Foundation", "XCTest"
-  s.dependency "FBSnapshotTestCase", "~>1.7"
-  s.dependency "Nimble", "~> 2.0.0-rc.2"
-  s.dependency "Quick", "~> 0.5"
+  s.dependency "FBSnapshotTestCase"
+  s.dependency "Nimble", "~> 2.0.0"
+  s.dependency "Quick", "~> 0.6.0"
 end
