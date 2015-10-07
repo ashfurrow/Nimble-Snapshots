@@ -2,28 +2,40 @@ PODS:
   - Artsy+UIColors (1.0.0):
     - EDColor (~> 0.4)
   - EDColor (0.4.0)
-  - FBSnapshotTestCase (1.8.1)
-  - Nimble (2.0.0-rc.2)
-  - Nimble-Snapshots (1.0.0):
-    - FBSnapshotTestCase (~> 1.7)
-    - Nimble (~> 2.0.0-rc.2)
-    - Quick (~> 0.5)
-  - Quick (0.5.1)
+  - FBSnapshotTestCase (2.0.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.0.4)
+  - FBSnapshotTestCase/Core (2.0.4)
+  - FBSnapshotTestCase/SwiftSupport (2.0.4):
+    - FBSnapshotTestCase/Core
+  - Nimble (2.0.0)
+  - Nimble-Snapshots (1.1.0):
+    - FBSnapshotTestCase
+    - Nimble (~> 2.0.0)
+    - Quick (~> 0.6.0)
+  - Quick (0.6.0)
 
 DEPENDENCIES:
   - Artsy+UIColors
+  - FBSnapshotTestCase (from `https://github.com/esttorhe/ios-snapshot-test-case`)
   - Nimble-Snapshots (from `../`)
 
 EXTERNAL SOURCES:
+  FBSnapshotTestCase:
+    :git: https://github.com/esttorhe/ios-snapshot-test-case
   Nimble-Snapshots:
     :path: "../"
+
+CHECKOUT OPTIONS:
+  FBSnapshotTestCase:
+    :commit: 0cdfde54758083f055bbd5cde793632ede518189
+    :git: https://github.com/esttorhe/ios-snapshot-test-case
 
 SPEC CHECKSUMS:
   Artsy+UIColors: 7a4c987885a8d8da3e22672a3232761f929dd2b6
   EDColor: 89d19a013279a5604d61650721c15f20fefaaf00
-  FBSnapshotTestCase: 3dc3899168747a0319c5278f5b3445c13a6532dd
-  Nimble: e3cf5e73a491daf21c2bc88783dbfc55ce8b8e02
-  Nimble-Snapshots: c16dd279a4840ec06288198fafd53f3c17750ff3
-  Quick: 7426537a99e75076d6930c5b6da58006e4a9f38a
+  FBSnapshotTestCase: 6c9fe22920e7bc8a98b6b3703ba24cd5ba0978ce
+  Nimble: 472e75466819eb8c06299233e87c694a9b51328a
+  Nimble-Snapshots: 50ae0c021e7baa601d0778c24b0523c79eb8233a
+  Quick: 563686dbcf0ae0f9f7401ac9cd2d786ee1b7f3d7
 
 COCOAPODS: 0.38.2
