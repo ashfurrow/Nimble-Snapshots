@@ -39,9 +39,9 @@ extension UIView : Snapshotable {
         sharedInstance.referenceImagesDirectory = directory
     }
 
-    class func compareSnapshot(instance: Snapshotable, recordWithModelAndOSInName: Bool=false, snapshot: String, record: Bool, referenceDirectory: String) -> Bool {
+    class func compareSnapshot(instance: Snapshotable, isDeviceAgnostic: Bool=false, snapshot: String, record: Bool, referenceDirectory: String) -> Bool {
         let snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
-        snapshotController.recordModelAndOSInName = recordWithModelAndOSInName
+        snapshotController.deviceAgnostic = isDeviceAgnostic
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
 
@@ -107,13 +107,13 @@ func _clearFailureMessage(failureMessage: FailureMessage) {
     failureMessage.to = ""
 }
 
-func _performSnapshotTest(name: String?, recordWithModelAndOSInName: Bool=false, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+func _performSnapshotTest(name: String?, isDeviceAgnostic: Bool=false, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
     let snapshotName = name ?? _sanitizedTestName()
 
-    let result = FBSnapshotTest.compareSnapshot(instance, recordWithModelAndOSInName: recordWithModelAndOSInName, snapshot: snapshotName, record: false, referenceDirectory: referenceImageDirectory)
+    let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, snapshot: snapshotName, record: false, referenceDirectory: referenceImageDirectory)
 
     if !result {
         _clearFailureMessage(failureMessage)
@@ -124,7 +124,7 @@ func _performSnapshotTest(name: String?, recordWithModelAndOSInName: Bool=false,
 
 }
 
-func _recordSnapshot(name: String?, recordWithModelAndOSInName: Bool=false, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+func _recordSnapshot(name: String?, isDeviceAgnostic: Bool=false, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
@@ -132,7 +132,7 @@ func _recordSnapshot(name: String?, recordWithModelAndOSInName: Bool=false, actu
 
     _clearFailureMessage(failureMessage)
 
-    if FBSnapshotTest.compareSnapshot(instance, recordWithModelAndOSInName: recordWithModelAndOSInName, snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory) {
+    if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory) {
         failureMessage.actualValue = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else {
         failureMessage.actualValue = "expected to record a snapshot in \(name)"
@@ -163,13 +163,13 @@ public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     }
 }
 
-public func haveValidSnapshotWithModelAndOSInName(named name: String?=nil) -> MatcherFunc<Snapshotable> {
+public func haveValidDeviceAgnosticSnapshot(named name: String?=nil) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         if (switchChecksWithRecords) {
-          return _recordSnapshot(name, recordWithModelAndOSInName: true, actualExpression: actualExpression, failureMessage: failureMessage)
+          return _recordSnapshot(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
         }
         
-      return _performSnapshotTest(name, recordWithModelAndOSInName: true, actualExpression: actualExpression, failureMessage: failureMessage)
+      return _performSnapshotTest(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
@@ -185,8 +185,8 @@ public func recordSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     }
 }
 
-public func recordSnapshotWithModelAndOSInName(named name: String?=nil) -> MatcherFunc<Snapshotable> {
+public func recordDeviceAgnosticSnapshot(named name: String?=nil) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-      return _recordSnapshot(name, recordWithModelAndOSInName: true, actualExpression: actualExpression, failureMessage: failureMessage)
+      return _recordSnapshot(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }

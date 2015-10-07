@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FBSnapshotTestCase:
-    :commit: 0cdfde54758083f055bbd5cde793632ede518189
+    :commit: ccba20df010dd3b0b82765270814efa3c0b55539
     :git: https://github.com/esttorhe/ios-snapshot-test-case
 
 SPEC CHECKSUMS:
