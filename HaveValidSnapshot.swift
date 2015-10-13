@@ -128,7 +128,12 @@ func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotab
 
     if !result {
         _clearFailureMessage(failureMessage)
-        failureMessage.actualValue = "expected a matching snapshot in \(name)"
+        if let name = name {
+            failureMessage.actualValue = "expected a matching snapshot in \(name)"
+        }
+        else {
+            failureMessage.actualValue = "expected a matching snapshot"
+        }
     }
 
     return result
