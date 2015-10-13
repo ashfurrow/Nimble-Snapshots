@@ -102,9 +102,9 @@ func _testFileName() -> String {
     return sanitizedName
 }
 
-func _sanitizedTestName() -> String {
+func _sanitizedTestName(name: String?) -> String {
     let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata
-    var filename = quickExample!.example.name
+    var filename = name ?? quickExample!.example.name
     filename = filename.stringByReplacingOccurrencesOfString("root example group, ", withString: "")
     let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
     let components: NSArray = filename.componentsSeparatedByCharactersInSet(characterSet.invertedSet)
@@ -123,7 +123,7 @@ func _performSnapshotTest(name: String?, isDeviceAgnostic: Bool=false, actualExp
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = name ?? _sanitizedTestName()
+    let snapshotName = _sanitizedTestName(name)
 
     let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, snapshot: snapshotName, record: false, referenceDirectory: referenceImageDirectory)
 
@@ -140,7 +140,7 @@ func _recordSnapshot(name: String?, isDeviceAgnostic: Bool=false, actualExpressi
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = name ?? _sanitizedTestName()
+    let snapshotName = _sanitizedTestName(name)
 
     _clearFailureMessage(failureMessage)
 
