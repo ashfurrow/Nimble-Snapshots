@@ -55,6 +55,11 @@ extension UIView : Snapshotable {
     }
 }
 
+var testFolderSuffixes = ["tests", "specs"]
+public func setNimbleTestFolder(testFolder: String) {
+    testFolderSuffixes = [testFolder]
+}
+
 func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
@@ -67,8 +72,15 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
 
     let pathComponents: NSArray = (sourceFileName as NSString).pathComponents
     for folder in pathComponents {
+        var found = false
+        for suffix in testFolderSuffixes {
+            if (folder.lowercaseString as NSString).hasSuffix(suffix.lowercaseString) {
+                found = true
+                break
+            }
+        }
 
-        if (folder.lowercaseString as NSString).hasSuffix("tests") {
+        if found {
             let currentIndex = pathComponents.indexOfObject(folder) + 1
             let folderPathComponents: NSArray = pathComponents.subarrayWithRange(NSMakeRange(0, currentIndex))
             let folderPath = folderPathComponents.componentsJoinedByString("/")
@@ -89,9 +101,9 @@ func _testFileName() -> String {
     return sanitizedName
 }
 
-func _sanitizedTestName() -> String {
+func _sanitizedTestName(name: String?) -> String {
     let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata
-    var filename = quickExample!.example.name
+    var filename = name ?? quickExample!.example.name
     filename = filename.stringByReplacingOccurrencesOfString("root example group, ", withString: "")
     let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
     let components: NSArray = filename.componentsSeparatedByCharactersInSet(characterSet.invertedSet)
@@ -110,13 +122,18 @@ func _performSnapshotTest(name: String?, actualExpression: Expression<Snapshotab
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = name ?? _sanitizedTestName()
+    let snapshotName = _sanitizedTestName(name)
 
     let result = FBSnapshotTest.compareSnapshot(instance, snapshot: snapshotName, record: false, referenceDirectory: referenceImageDirectory)
 
     if !result {
         _clearFailureMessage(failureMessage)
-        failureMessage.actualValue = "expected a matching snapshot in \(name)"
+        if let name = name {
+            failureMessage.actualValue = "expected a matching snapshot in \(name)"
+        }
+        else {
+            failureMessage.actualValue = "expected a matching snapshot"
+        }
     }
 
     return result
@@ -127,7 +144,7 @@ func _recordSnapshot(name: String?, actualExpression: Expression<Snapshotable>, 
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = name ?? _sanitizedTestName()
+    let snapshotName = _sanitizedTestName(name)
 
     _clearFailureMessage(failureMessage)
 
@@ -142,17 +159,7 @@ func _recordSnapshot(name: String?, actualExpression: Expression<Snapshotable>, 
 
 internal var switchChecksWithRecords = false
 
-public func haveValidSnapshot() -> MatcherFunc<Snapshotable> {
-    return MatcherFunc { actualExpression, failureMessage in
-        if (switchChecksWithRecords) {
-            return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
-        }
-
-        return _performSnapshotTest(nil, actualExpression: actualExpression, failureMessage: failureMessage)
-    }
-}
-
-public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
+public func haveValidSnapshot(named name: String? = nil) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         if (switchChecksWithRecords) {
             return _recordSnapshot(name, actualExpression: actualExpression, failureMessage: failureMessage)
@@ -162,13 +169,7 @@ public func haveValidSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
     }
 }
 
-public func recordSnapshot() -> MatcherFunc<Snapshotable> {
-    return MatcherFunc { actualExpression, failureMessage in
-        return _recordSnapshot(nil, actualExpression: actualExpression, failureMessage: failureMessage)
-    }
-}
-
-public func recordSnapshot(named name: String) -> MatcherFunc<Snapshotable> {
+public func recordSnapshot(named name: String? = nil) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         return _recordSnapshot(name, actualExpression: actualExpression, failureMessage: failureMessage)
     }
