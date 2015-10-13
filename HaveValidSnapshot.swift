@@ -129,7 +129,12 @@ func _performSnapshotTest(name: String?, isDeviceAgnostic: Bool=false, actualExp
 
     if !result {
         _clearFailureMessage(failureMessage)
-        failureMessage.actualValue = "expected a matching snapshot in \(name)"
+        if let name = name {
+            failureMessage.actualValue = "expected a matching snapshot in \(name)"
+        }
+        else {
+            failureMessage.actualValue = "expected a matching snapshot"
+        }
     }
 
     return result
