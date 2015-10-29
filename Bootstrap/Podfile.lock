@@ -2,17 +2,17 @@ PODS:
   - Artsy+UIColors (1.0.0):
     - EDColor (~> 0.4)
   - EDColor (0.4.0)
-  - FBSnapshotTestCase (2.0.5):
-    - FBSnapshotTestCase/SwiftSupport (= 2.0.5)
-  - FBSnapshotTestCase/Core (2.0.5)
-  - FBSnapshotTestCase/SwiftSupport (2.0.5):
+  - FBSnapshotTestCase (2.0.7):
+    - FBSnapshotTestCase/SwiftSupport (= 2.0.7)
+  - FBSnapshotTestCase/Core (2.0.7)
+  - FBSnapshotTestCase/SwiftSupport (2.0.7):
     - FBSnapshotTestCase/Core
-  - Nimble (2.0.0)
-  - Nimble-Snapshots (1.1.0):
-    - FBSnapshotTestCase (~> 2.0.5)
-    - Nimble (~> 2.0.0)
-    - Quick (~> 0.6.0)
-  - Quick (0.6.0)
+  - Nimble (3.0.0)
+  - Nimble-Snapshots (1.2.0):
+    - FBSnapshotTestCase (~> 2.0.7)
+    - Nimble
+    - Quick
+  - Quick (0.8.0)
 
 DEPENDENCIES:
   - Artsy+UIColors
@@ -25,9 +25,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Artsy+UIColors: 7a4c987885a8d8da3e22672a3232761f929dd2b6
   EDColor: 89d19a013279a5604d61650721c15f20fefaaf00
-  FBSnapshotTestCase: 6917deb01d0556dd544536f9eb34e0cf26f904d5
-  Nimble: 472e75466819eb8c06299233e87c694a9b51328a
-  Nimble-Snapshots: 80fdc78129bdcc25d8387a5b876d3dc88a5a4cf1
-  Quick: 563686dbcf0ae0f9f7401ac9cd2d786ee1b7f3d7
+  FBSnapshotTestCase: 7e85180d0d141a0cf472352edda7e80d7eaeb547
+  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
+  Nimble-Snapshots: b2bfaaa9674f652dfd79ff66baf42a40b3b57b4b
+  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
 
 COCOAPODS: 0.38.2
