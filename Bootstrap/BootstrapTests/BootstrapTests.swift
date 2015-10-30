@@ -6,9 +6,9 @@ class BootstrapTests: QuickSpec {
     override func spec() {
         describe("in some context", { () -> () in
             var view: UIView!
-            setNimbleTestFolder("tests")
 
             beforeEach {
+                setNimbleTestFolder("tests")
                 view = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: 44, height: 44)))
                 view.backgroundColor = UIColor.blueColor()
             }
