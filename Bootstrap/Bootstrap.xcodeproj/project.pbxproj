@@ -12,8 +12,8 @@
 		5E28C2B71993C6FF0066DB4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E28C2B51993C6FF0066DB4D /* Main.storyboard */; };
 		5E28C2B91993C6FF0066DB4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E28C2B81993C6FF0066DB4D /* Images.xcassets */; };
 		5EDEF1DE1A1E5780004D7BAB /* BootstrapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDEF1DD1A1E5780004D7BAB /* BootstrapTests.swift */; };
-		75349360E61893E348863C17 /* Pods_BootstrapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6AC46E04FD3DD50EBAB6A43 /* Pods_BootstrapTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		F6BB19F9C9EF23ACD36A4305 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A57DFE7C77534A99563B1C8B /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		75349360E61893E348863C17 /* Pods_BootstrapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6AC46E04FD3DD50EBAB6A43 /* Pods_BootstrapTests.framework */; };
+		F6BB19F9C9EF23ACD36A4305 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A57DFE7C77534A99563B1C8B /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
