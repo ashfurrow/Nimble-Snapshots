@@ -56,7 +56,9 @@ extension UIView : Snapshotable {
     }
 }
 
+// Note that these must be lower case.
 var testFolderSuffixes = ["tests", "specs"]
+
 public func setNimbleTestFolder(testFolder: String) {
     testFolderSuffixes = [testFolder]
 }
@@ -66,32 +68,27 @@ func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
         return globalReference
     }
 
-    // Search the test file's path to find the first folder with the substring "tests"
-    // then append "/ReferenceImages" and use that
+    // Search the test file's path to find the first folder with a test suffix,
+    // then append "/ReferenceImages" and use that.
 
-    var result: NSString?
-
+    // Grab the file's path
     let pathComponents: NSArray = (sourceFileName as NSString).pathComponents
-    for folder in pathComponents {
-        var found = false
-        for suffix in testFolderSuffixes {
-            if (folder.lowercaseString as NSString).hasSuffix(suffix.lowercaseString) {
-                found = true
-                break
-            }
-        }
 
-        if found {
-            let currentIndex = pathComponents.indexOfObject(folder) + 1
-            let folderPathComponents: NSArray = pathComponents.subarrayWithRange(NSMakeRange(0, currentIndex))
-            let folderPath = folderPathComponents.componentsJoinedByString("/")
-            result = folderPath + "/ReferenceImages"
-        }
+    // Find the directory in the path that ends with a test suffix.
+    let testPath = pathComponents.filter { component -> Bool in
+        return testFolderSuffixes.filter { component.lowercaseString.hasSuffix($0) }.count > 0
+        }.first
+
+    guard let testDirectory = testPath else {
+        fatalError("Could not infer reference image folder – You should provide a reference dir using FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
     }
 
-    assert(result != nil, "Could not infer reference image folder – You should provide a reference dir using FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
+    // Recombine the path components and append our own image directory.
+    let currentIndex = pathComponents.indexOfObject(testDirectory) + 1
+    let folderPathComponents: NSArray = pathComponents.subarrayWithRange(NSMakeRange(0, currentIndex))
+    let folderPath = folderPathComponents.componentsJoinedByString("/")
 
-    return result! as String
+    return folderPath + "/ReferenceImages"
 }
 
 func _testFileName() -> String {
@@ -173,10 +170,10 @@ public func haveValidSnapshot(named name: String? = nil) -> MatcherFunc<Snapshot
 public func haveValidDeviceAgnosticSnapshot(named name: String?=nil) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         if (switchChecksWithRecords) {
-          return _recordSnapshot(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
+            return _recordSnapshot(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
         }
-        
-      return _performSnapshotTest(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
+
+        return _performSnapshotTest(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
@@ -188,6 +185,6 @@ public func recordSnapshot(named name: String? = nil) -> MatcherFunc<Snapshotabl
 
 public func recordDeviceAgnosticSnapshot(named name: String?=nil) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-      return _recordSnapshot(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
+        return _recordSnapshot(name, isDeviceAgnostic: true, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
