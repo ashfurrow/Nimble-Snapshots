@@ -60,7 +60,7 @@ extension UIView : Snapshotable {
 var testFolderSuffixes = ["tests", "specs"]
 
 public func setNimbleTestFolder(testFolder: String) {
-    testFolderSuffixes = [testFolder]
+    testFolderSuffixes = [testFolder.lowercaseString]
 }
 
 func _getDefaultReferenceDirectory(sourceFileName: String) -> String {
