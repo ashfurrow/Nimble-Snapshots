@@ -1,5 +1,9 @@
 # Nimble-Snapshots
 
+## 2.0.0
+
+* Name sanitizing, custom folders and more housekeeping - @colinta
+
 ## 1.2.0
 
 * Device diagnostic code – @esttorhe
