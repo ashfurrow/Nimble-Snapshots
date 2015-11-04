@@ -46,8 +46,13 @@ extension UIView : Snapshotable {
         snapshotController.referenceImagesDirectory = referenceDirectory
 
         assert(snapshotController.referenceImagesDirectory != nil, "Missing value for referenceImagesDirectory - Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
+
+        // Need to force a draw before we call down to the underlying snapshots library.
+        let view = instance.snapshotObject
+        view?.drawViewHierarchyInRect(view!.bounds, afterScreenUpdates: true)
+
         do {
-            try snapshotController.compareSnapshotOfView(instance.snapshotObject, selector: Selector(snapshot), identifier: nil)
+            try snapshotController.compareSnapshotOfView(view, selector: Selector(snapshot), identifier: nil)
         }
         catch {
             return false;
