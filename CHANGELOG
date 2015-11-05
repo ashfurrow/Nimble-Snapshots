@@ -1,5 +1,7 @@
 # Nimble-Snapshots
 
+* 3.0.0
+
 * Calls through to `drawViewHierarchyInRect` on every snapshot prior to snapshot being made – @ashfurrow
 
 ## 2.0.1
