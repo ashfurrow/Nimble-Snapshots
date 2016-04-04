@@ -25,7 +25,7 @@ class BootstrapTests: QuickSpec {
             it("has a valid pretty-snytax snapshot without specifying a name") {
                 expect(view) == snapshot()
             }
-          
+
             it("has a valid snapshot with model and OS in name") {
                 expect(view).to(haveValidDeviceAgnosticSnapshot())
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS"))
