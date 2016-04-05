@@ -1,33 +1,52 @@
 PODS:
-  - Artsy+UIColors (1.0.0):
-    - EDColor (~> 0.4)
-  - EDColor (0.4.0)
-  - FBSnapshotTestCase (2.0.7):
-    - FBSnapshotTestCase/SwiftSupport (= 2.0.7)
-  - FBSnapshotTestCase/Core (2.0.7)
-  - FBSnapshotTestCase/SwiftSupport (2.0.7):
+  - FBSnapshotTestCase (2.1.0):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.0)
+  - FBSnapshotTestCase/Core (2.1.0)
+  - FBSnapshotTestCase/SwiftSupport (2.1.0):
     - FBSnapshotTestCase/Core
+  - Forgeries (0.6.1):
+    - Forgeries/Core (= 0.6.1)
+  - Forgeries/Core (0.6.1)
   - Nimble (3.2.0)
-  - Nimble-Snapshots (3.0.0):
-    - FBSnapshotTestCase (~> 2.0.7)
+  - Nimble-Snapshots (3.0.1):
+    - FBSnapshotTestCase (~> 2.0)
     - Nimble
     - Quick
   - Quick (0.9.1)
 
 DEPENDENCIES:
-  - Artsy+UIColors
+  - Forgeries (from `https://github.com/ashfurrow/Forgeries.git`, branch `no_ocmock`)
+  - Nimble (from `https://github.com/Quick/Nimble.git`)
   - Nimble-Snapshots (from `../`)
+  - Quick (from `https://github.com/Quick/Quick.git`)
 
 EXTERNAL SOURCES:
+  Forgeries:
+    :branch: no_ocmock
+    :git: https://github.com/ashfurrow/Forgeries.git
+  Nimble:
+    :git: https://github.com/Quick/Nimble.git
   Nimble-Snapshots:
     :path: "../"
+  Quick:
+    :git: https://github.com/Quick/Quick.git
+
+CHECKOUT OPTIONS:
+  Forgeries:
+    :commit: 47a3593b442a658731952a78524211c0ec29a5f5
+    :git: https://github.com/ashfurrow/Forgeries.git
+  Nimble:
+    :commit: d4cbf8d5b85933480e8b319f1aac63236fe789aa
+    :git: https://github.com/Quick/Nimble.git
+  Quick:
+    :commit: 3a1d88fb81476001c62f086dbd94bb0f5354f1a3
+    :git: https://github.com/Quick/Quick.git
 
 SPEC CHECKSUMS:
-  Artsy+UIColors: 7a4c987885a8d8da3e22672a3232761f929dd2b6
-  EDColor: 89d19a013279a5604d61650721c15f20fefaaf00
-  FBSnapshotTestCase: 7e85180d0d141a0cf472352edda7e80d7eaeb547
-  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
-  Nimble-Snapshots: ab41dd737dcd33a0b0cb005a30465fef70b7207a
+  FBSnapshotTestCase: 366ecd378511d7716c79991cd8067d1eed23578d
+  Forgeries: f5c991dda5977f42d11fa9313fd1e17bc3edbb27
+  Nimble: 2a0cfc75e3d7e80a715a9fbe35f84f37a200b785
+  Nimble-Snapshots: 0d64486715a613293ac5c9af6140b97eb9b0ae76
   Quick: a5221fc21788b6aeda934805e68b061839bc3165
 
 COCOAPODS: 0.39.0

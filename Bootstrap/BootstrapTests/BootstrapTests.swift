@@ -22,7 +22,12 @@ class BootstrapTests: QuickSpec {
                 expect(view) == snapshot("something custom")
             }
 
-            it("has a valid pretty-snytax snapshot without specifying a name") {
+            it("has a valid pretty-synxtax snapshot with emoji") {
+                // Recorded with 📷(view)
+                expect(view) == snapshot()
+            }
+
+            it("has a valid pretty-synxtax emoji without specifying a name") {
                 expect(view) == snapshot()
             }
 

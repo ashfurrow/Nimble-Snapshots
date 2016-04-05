@@ -4,14 +4,18 @@ import Nimble
 
 public struct Snapshot {
     let name: String?
+    let file: FileString
+    let line: UInt
 
-    init(name: String?) {
+    init(name: String?, file: FileString, line: UInt) {
         self.name = name
+        self.file = file
+        self.line = line
     }
 }
 
-public func snapshot(name: String? = nil) -> Snapshot {
-    return Snapshot(name: name)
+public func snapshot(name: String? = nil, file: FileString = #file, line: UInt = #line) -> Snapshot {
+    return Snapshot(name: name, file: file, line: line)
 }
 
 public func ==(lhs: Expectation<Snapshotable>, rhs: Snapshot) {
@@ -24,10 +28,10 @@ public func ==(lhs: Expectation<Snapshotable>, rhs: Snapshot) {
 
 // MARK: - Nicer syntax using emoji
 
-public func 📷(snapshottable: Snapshotable) {
-    expect(snapshottable).to(recordSnapshot())
+public func 📷(snapshottable: Snapshotable, file: FileString = #file, line: UInt = #line) {
+    expect(snapshottable, file: file, line: line).to(recordSnapshot())
 }
 
-public func 📷(snapshottable: Snapshotable, named name: String) {
-    expect(snapshottable).to(recordSnapshot(named: name))
+public func 📷(snapshottable: Snapshotable, named name: String, file: FileString = #file, line: UInt = #line) {
+    expect(snapshottable, file: file, line: line).to(recordSnapshot(named: name))
 }
