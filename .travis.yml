@@ -4,4 +4,4 @@ before_script:
   - cd Bootstrap ; bundle install ; cd ..
   - cd Bootstrap ; bundle exec pod install ; cd ..
   - export LANG=en_US.UTF-8
-script: set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination "name=iPad Air,OS=9.1" clean build test | xcpretty --color --simple
+script: set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination "name=iPhone 6,OS=9.3" clean build test | xcpretty --color --simple
