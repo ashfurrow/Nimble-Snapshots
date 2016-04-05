@@ -4,18 +4,14 @@ import Nimble
 
 public struct Snapshot {
     let name: String?
-    let file: FileString
-    let line: UInt
 
-    init(name: String?, file: FileString, line: UInt) {
+    init(name: String?) {
         self.name = name
-        self.file = file
-        self.line = line
     }
 }
 
-public func snapshot(name: String? = nil, file: FileString = #file, line: UInt = #line) -> Snapshot {
-    return Snapshot(name: name, file: file, line: line)
+public func snapshot(name: String? = nil) -> Snapshot {
+    return Snapshot(name: name)
 }
 
 public func ==(lhs: Expectation<Snapshotable>, rhs: Snapshot) {
