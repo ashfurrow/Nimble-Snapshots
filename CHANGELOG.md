@@ -2,39 +2,24 @@
 
 ## 4.0.1
 
-* Nimble-Snapshots does not call `view?.drawViewHierarchyInRect(bounds, afterScreenUpdates: true)` on your views. - @orta
+* Nimble-Snapshots does not call `view?.drawViewHierarchyInRect(bounds, afterScreenUpdates: true)` on your views by default. - @orta
 
   If this is something that you need in order to get your snapshots passing, you should look at two options:
 
   - Adding the view to an existing window, then calling `drawViewHierarchyInRect:afterScreenUpdates:` - this
-    is the technique that is used inside `FBSnapshotTestController`:
+    is the technique that is used inside `FBSnapshotTestController`, which we now expose as an option in `recordSnapshot`
+    and `haveValidSnapshot` as `usesDrawRect`
 
-  ```objc
-    UIWindow *window = [view isKindOfClass:[UIWindow class]] ? (UIWindow *)view : view.window;
-    BOOL removeFromSuperview = NO;
-    if (!window) {
-        window = [[UIApplication sharedApplication] fb_strictKeyWindow];
-    }
+    ``` swift
+        expect(imageView).to( recordSnapshot(usesDrawRect: true) )
+        expect(imageView).to( haveValidSnapshot(usesDrawRect: true) )
+    ```
 
-    if (!view.window && view != window) {
-        [window addSubview:view];
-        removeFromSuperview = YES;
-    }
+    You can get more info on the [technique on this issue](https://github.com/facebook/ios-snapshot-test-case/issues/91) 
 
-    UIGraphicsBeginImageContextWithOptions(bounds.size, NO, 0);
-    [view layoutIfNeeded];
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
 
-    UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-  ```
-
-  - Spending time looking in how you can remove Async code from your App. There
-    are a bunch of examples in https://github.com/orta/pragmatic-testing
-
-  If support for this is super critical for someone, I'd accept a well tested config that allows toggling
-  `FBSnapshotController`'s `usesDrawViewHierarchyInRect` bool, which should trigger this too.
-
+  - Spending time looking in how you can remove Async code from your App. Or look for places where you are relying on a view structure
+    which isn't set up in your tests. There are a bunch of examples in https://github.com/orta/pragmatic-testing on removing Async.
 
 ## 3.0.1
 

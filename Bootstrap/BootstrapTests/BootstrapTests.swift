@@ -23,7 +23,8 @@ class BootstrapTests: QuickSpec {
             }
 
             it("has a valid pretty-synxtax snapshot with emoji") {
-                // Recorded with 📷(view)
+                // Recorded with:
+                // 📷(view)
                 expect(view) == snapshot()
             }
 
@@ -34,6 +35,18 @@ class BootstrapTests: QuickSpec {
             it("has a valid snapshot with model and OS in name") {
                 expect(view).to(haveValidDeviceAgnosticSnapshot())
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS"))
+            }
+
+            // The easiest way to test this is a to have a view that is changed by UIAppearance
+            // https://github.com/facebook/ios-snapshot-test-case/issues/91
+            // If this is not using drawRect it will fail
+
+            it("has a valid snapshot when draw rect is turned on ") {
+                UIButton.appearance().tintColor = UIColor.redColor()
+                let imageView = UIButton(type: .ContactAdd)
+
+                // expect(imageView).to( recordSnapshot(usesDrawRect: true) )
+                expect(imageView).to( haveValidSnapshot(usesDrawRect: true) )
             }
         })
     }
