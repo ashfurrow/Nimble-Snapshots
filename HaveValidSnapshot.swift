@@ -49,7 +49,10 @@ extension UIView : Snapshotable {
 
         // Need to force a draw before we call down to the underlying snapshots library.
         let view = instance.snapshotObject
-        view?.drawViewHierarchyInRect(view!.bounds, afterScreenUpdates: true)
+        let bounds = view!.bounds
+//        UIGraphicsBeginImageContextWithOptions(bounds.size, true, UIScreen.mainScreen().scale);
+        view?.drawViewHierarchyInRect(bounds, afterScreenUpdates: true)
+//        UIGraphicsEndImageContext()
 
         do {
             try snapshotController.compareSnapshotOfView(view, selector: Selector(snapshot), identifier: nil)
@@ -131,16 +134,10 @@ func _performSnapshotTest(name: String?, isDeviceAgnostic: Bool=false, actualExp
 
     if !result {
         _clearFailureMessage(failureMessage)
-        if let name = name {
-            failureMessage.actualValue = "expected a matching snapshot in \(name)"
-        }
-        else {
-            failureMessage.actualValue = "expected a matching snapshot"
-        }
+        failureMessage.actualValue = "expected a matching snapshot in \(snapshotName)"
     }
 
     return result
-
 }
 
 func _recordSnapshot(name: String?, isDeviceAgnostic: Bool=false, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
@@ -152,7 +149,7 @@ func _recordSnapshot(name: String?, isDeviceAgnostic: Bool=false, actualExpressi
     _clearFailureMessage(failureMessage)
 
     if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory) {
-        failureMessage.actualValue = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
+        failureMessage.actualValue = "snapshot \(name ?? snapshotName) successfully recorded, replace recordSnapshot with a check"
     } else {
         failureMessage.actualValue = "expected to record a snapshot in \(name)"
     }

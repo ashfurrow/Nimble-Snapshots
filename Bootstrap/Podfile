@@ -1,12 +1,13 @@
-source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/artsy/Specs.git'
-
 use_frameworks!
 
 # Need one pod
-pod 'Artsy+UIColors'
+pod 'Forgeries', git: "https://github.com/ashfurrow/Forgeries.git", branch: "no_ocmock"
 
 target 'BootstrapTests' do
+  # Waiting on 9.3 support to be released
+  pod 'Quick', git: 'https://github.com/Quick/Quick.git'
+  pod 'Nimble', git: 'https://github.com/Quick/Nimble.git'
+
   pod 'Nimble-Snapshots', :path => "../"
 end
 

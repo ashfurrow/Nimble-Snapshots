@@ -24,10 +24,10 @@ public func ==(lhs: Expectation<Snapshotable>, rhs: Snapshot) {
 
 // MARK: - Nicer syntax using emoji
 
-public func 📷(snapshottable: Snapshotable) {
-    expect(snapshottable).to(recordSnapshot())
+public func 📷(snapshottable: Snapshotable, file: FileString = #file, line: UInt = #line) {
+    expect(snapshottable, file: file, line: line).to(recordSnapshot())
 }
 
-public func 📷(snapshottable: Snapshotable, named name: String) {
-    expect(snapshottable).to(recordSnapshot(named: name))
+public func 📷(snapshottable: Snapshotable, named name: String, file: FileString = #file, line: UInt = #line) {
+    expect(snapshottable, file: file, line: line).to(recordSnapshot(named: name))
 }
