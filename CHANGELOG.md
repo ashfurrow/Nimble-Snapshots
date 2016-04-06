@@ -2,6 +2,11 @@
 
 ## 4.0.1
 
+* Adds `recordSnapshot(name=nil)` so you can use `expect(thing) == recordSnapshot()` as this feels much nicer than
+  writing `expect(thing).to( recordSnapshot() )` - I'm still not over this `to( thing() )`' bit in Quick. Looks messy. - @orta
+
+## 4.0.0
+
 * Nimble-Snapshots does not call `view?.drawViewHierarchyInRect(bounds, afterScreenUpdates: true)` on your views by default. - @orta
 
   If this is something that you need in order to get your snapshots passing, you should look at two options:
