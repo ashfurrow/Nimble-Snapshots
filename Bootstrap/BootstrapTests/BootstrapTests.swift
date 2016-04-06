@@ -48,6 +48,12 @@ class BootstrapTests: QuickSpec {
                 // expect(imageView).to( recordSnapshot(usesDrawRect: true) )
                 expect(imageView).to( haveValidSnapshot(usesDrawRect: true) )
             }
+
+            it("handles recording with recordSnapshot") {
+                // Recorded with:
+                // expect(view) == recordSnapshot()
+                expect(view) == snapshot()
+            }
         })
     }
 }
