@@ -8,6 +8,7 @@ class BootstrapTests: QuickSpec {
             var view: UIView!
 
             beforeEach {
+                setNimbleTolerance(0)
                 setNimbleTestFolder("tests")
                 view = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: 44, height: 44)))
                 view.backgroundColor = UIColor.blueColor()
@@ -52,6 +53,12 @@ class BootstrapTests: QuickSpec {
             it("handles recording with recordSnapshot") {
                 // Recorded with:
                 // expect(view) == recordSnapshot()
+                expect(view) == snapshot()
+            }
+
+            it("respects tolerance") {
+                // Image for this test has 0.5pt column (of 44pt) that is wrong.
+                setNimbleTolerance(1)
                 expect(view) == snapshot()
             }
         })

@@ -1,5 +1,7 @@
 # Nimble-Snapshots
 
+* Adds `tolerance` so you can specify tolerance of reference image differences – @mpurland
+
 ## 4.0.1
 
 * Adds `recordSnapshot(name=nil)` so you can use `expect(thing) == recordSnapshot()` as this feels much nicer than
