@@ -1,5 +1,7 @@
 # Nimble-Snapshots
 
+## 4.1.0
+
 * Adds `tolerance` so you can specify tolerance of reference image differences – @mpurland
 
 ## 4.0.1
