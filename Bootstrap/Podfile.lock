@@ -8,7 +8,7 @@ PODS:
     - Forgeries/Core (= 0.6.1)
   - Forgeries/Core (0.6.1)
   - Nimble (3.2.0)
-  - Nimble-Snapshots (4.0.1):
+  - Nimble-Snapshots (4.1.0):
     - FBSnapshotTestCase (~> 2.0)
     - Nimble
     - Quick
@@ -46,7 +46,7 @@ SPEC CHECKSUMS:
   FBSnapshotTestCase: 366ecd378511d7716c79991cd8067d1eed23578d
   Forgeries: f5c991dda5977f42d11fa9313fd1e17bc3edbb27
   Nimble: 2a0cfc75e3d7e80a715a9fbe35f84f37a200b785
-  Nimble-Snapshots: 2d15a585b816f7d14947ed6e172218f9d0980ea8
+  Nimble-Snapshots: 2da4d2ec829b458d6886c06812c52493fce284c9
   Quick: a5221fc21788b6aeda934805e68b061839bc3165
 
 COCOAPODS: 0.39.0
