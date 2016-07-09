@@ -1,7 +1,7 @@
 use_frameworks!
 
 # Need one pod
-pod 'Forgeries', git: "https://github.com/ashfurrow/Forgeries.git", branch: "no_ocmock"
+pod 'Forgeries'
 
 target 'BootstrapTests' do
   # Waiting on 9.3 support to be released
