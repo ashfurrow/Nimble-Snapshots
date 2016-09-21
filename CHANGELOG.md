@@ -1,5 +1,7 @@
 # Nimble-Snapshots
 
+* Adds Swift 2.3/3.0 support - @carezone
+
 ## 4.1.0
 
 * Adds `tolerance` so you can specify tolerance of reference image differences – @mpurland
