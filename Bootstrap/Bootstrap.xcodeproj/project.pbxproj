@@ -16,8 +16,9 @@
 		60F242F71CB3B64300387AA1 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 60F242F31CB3B64300387AA1 /* CHANGELOG.md */; };
 		60F242F81CB3B64300387AA1 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 60F242F41CB3B64300387AA1 /* LICENSE */; };
 		60F242F91CB3B64300387AA1 /* Nimble-Snapshots.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 60F242F51CB3B64300387AA1 /* Nimble-Snapshots.podspec */; };
-		60F242FA1CB3B64300387AA1 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 60F242F61CB3B64300387AA1 /* README.md */; };
 		C63B5DDA26F71A257C30F713 /* Pods_BootstrapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D94D9F88FB2A2621AAAD2E60 /* Pods_BootstrapTests.framework */; };
+		D44D1EFF1D9D87A9006DCD0C /* DynamicTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D1EFE1D9D87A9006DCD0C /* DynamicTypeTests.swift */; };
+		D44D1F011D9D87CC006DCD0C /* DynamicTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D1F001D9D87CC006DCD0C /* DynamicTypeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		60F242F51CB3B64300387AA1 /* Nimble-Snapshots.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Nimble-Snapshots.podspec"; path = "../Nimble-Snapshots.podspec"; sourceTree = "<group>"; };
 		60F242F61CB3B64300387AA1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A57DFE7C77534A99563B1C8B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D44D1EFE1D9D87A9006DCD0C /* DynamicTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTypeTests.swift; sourceTree = "<group>"; };
+		D44D1F001D9D87CC006DCD0C /* DynamicTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTypeView.swift; sourceTree = "<group>"; };
 		D94D9F88FB2A2621AAAD2E60 /* Pods_BootstrapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BootstrapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -110,6 +113,7 @@
 			children = (
 				5E28C2B11993C6FE0066DB4D /* AppDelegate.swift */,
 				5E28C2B31993C6FE0066DB4D /* ViewController.swift */,
+				D44D1F001D9D87CC006DCD0C /* DynamicTypeView.swift */,
 				5E28C2B51993C6FF0066DB4D /* Main.storyboard */,
 				5E28C2B81993C6FF0066DB4D /* Images.xcassets */,
 				5E28C2AF1993C6FE0066DB4D /* Supporting Files */,
@@ -130,6 +134,7 @@
 			children = (
 				11BFADFB1BE4196100F74D8E /* ACustomFolder */,
 				5EDEF1DD1A1E5780004D7BAB /* BootstrapTests.swift */,
+				D44D1EFE1D9D87A9006DCD0C /* DynamicTypeTests.swift */,
 				5EDEF1DB1A1E5780004D7BAB /* Supporting Files */,
 			);
 			path = BootstrapTests;
@@ -318,9 +323,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60F242FA1CB3B64300387AA1 /* README.md in Sources */,
 				5E28C2B41993C6FE0066DB4D /* ViewController.swift in Sources */,
 				5E28C2B21993C6FE0066DB4D /* AppDelegate.swift in Sources */,
+				D44D1F011D9D87CC006DCD0C /* DynamicTypeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D44D1EFF1D9D87A9006DCD0C /* DynamicTypeTests.swift in Sources */,
 				11BFADFD1BE4196100F74D8E /* BootstrapCustomFolderTests.swift in Sources */,
 				5EDEF1DE1A1E5780004D7BAB /* BootstrapTests.swift in Sources */,
 			);
@@ -393,7 +399,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -433,7 +439,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -449,6 +455,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				INFOPLIST_FILE = Bootstrap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.artsy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -465,6 +472,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				INFOPLIST_FILE = Bootstrap/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.artsy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -490,7 +498,6 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BootstrapTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.artsy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -511,7 +518,6 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BootstrapTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.artsy.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
