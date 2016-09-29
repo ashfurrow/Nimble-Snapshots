@@ -21,7 +21,8 @@ class DynamicTypeTests: QuickSpec {
                 }
 
                 expect(view).to(haveValidDynamicTypeSnapshot())
-                expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom"))
+                let name = "something custom_\(version.majorVersion)_\(version.minorVersion)"
+                expect(view).to(haveValidDynamicTypeSnapshot(named: name))
             }
 
             it("has a valid snapshot for a single content size category (iOS 9)") {
@@ -31,7 +32,8 @@ class DynamicTypeTests: QuickSpec {
                 }
 
                 expect(view).to(haveValidDynamicTypeSnapshot(sizes: [UIContentSizeCategoryExtraLarge]))
-                expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom", sizes: [UIContentSizeCategoryExtraLarge]))
+                let name = "something custom_\(version.majorVersion)_\(version.minorVersion)"
+                expect(view).to(haveValidDynamicTypeSnapshot(named: name, sizes: [UIContentSizeCategoryExtraLarge]))
             }
 
             it("has a valid snapshot for all content size categories (iOS 10)") {
