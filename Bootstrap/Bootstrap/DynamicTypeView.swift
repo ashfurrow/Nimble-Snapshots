@@ -40,8 +40,6 @@ public final class DynamicTypeView: UIView {
             return
         }
 
-        print("category is now \(category)")
-
         label.font = .preferredFontForTextStyle(UIFontTextStyleTitle1)
         label.text = category.stringByReplacingOccurrencesOfString("UICTContentSizeCategory", withString: "")
     }
