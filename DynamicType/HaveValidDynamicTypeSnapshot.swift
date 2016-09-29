@@ -34,7 +34,7 @@ func combineMatchers<T>(matchers: [MatcherFunc<T>], ignoreFailures: Bool = false
 }
 
 public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil, sizes: [UIContentSizeCategory] = allContentSizeCategories()) -> MatcherFunc<Snapshotable> {
-    let mock = MockedApplication()
+    let mock = NBSMockedApplication()
 
     let matchers: [MatcherFunc<Snapshotable>] = sizes.map { category in
         let sanitizedName = _sanitizedTestName(name)
@@ -53,7 +53,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
 }
 
 public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: Bool = false, sizes: [UIContentSizeCategory] = allContentSizeCategories()) -> MatcherFunc<Snapshotable> {
-    let mock = MockedApplication()
+    let mock = NBSMockedApplication()
 
     let matchers: [MatcherFunc<Snapshotable>] = sizes.map { category in
         let sanitizedName = _sanitizedTestName(name)

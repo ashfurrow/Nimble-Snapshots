@@ -1,14 +1,14 @@
-#import "MockedApplication.h"
+#import "NBSMockedApplication.h"
 #import <OCMock/OCMock.h>
 
-@interface MockedApplication ()
+@interface NBSMockedApplication ()
 
 @property (nonatomic, strong) id applicationMock;
 @property (nonatomic, strong) id fontMock;
 
 @end
 
-@implementation MockedApplication
+@implementation NBSMockedApplication
 
 /* On iOS 9, +[UIFont preferredFontForTextStyle:] uses -[UIApplication preferredContentSizeCategory]
     to get the content size category. However, this changed on iOS 10. While I haven't found what UIFont uses to get

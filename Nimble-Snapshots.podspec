@@ -24,7 +24,6 @@ Pod::Spec.new do |s|
 
   s.subspec "DynamicType" do |ss|
     ss.source_files  = "DynamicType/*.{swift,m,h}"
-    # ss.private_header_files = "DynamicType/MockedApplication.h"
     ss.frameworks = "UIKit"
 
     ss.dependency "Nimble-Snapshots/Core"
