@@ -59,6 +59,42 @@ class DynamicTypeTests: QuickSpec {
                 let name = "something custom_\(version.majorVersion)_\(version.minorVersion)"
                 expect(view).to(haveValidDynamicTypeSnapshot(named: name, sizes: [UIContentSizeCategoryExtraLarge]))
             }
+
+            it("has a valid pretty-syntax snapshot (iOS 9)") {
+                let version = NSProcessInfo.processInfo().operatingSystemVersion
+                guard version.majorVersion == 9 && version.minorVersion == 3 else {
+                    return
+                }
+
+                expect(view) == dynamicTypeSnapshot()
+            }
+
+            it("has a valid pretty-syntax snapshot (iOS 10)") {
+                let version = NSProcessInfo.processInfo().operatingSystemVersion
+                guard version.majorVersion == 10 && version.minorVersion == 0 else {
+                    return
+                }
+
+                expect(view) == dynamicTypeSnapshot()
+            }
+
+            it("has a valid pretty-syntax snapshot for only one size category (iOS 9)") {
+                let version = NSProcessInfo.processInfo().operatingSystemVersion
+                guard version.majorVersion == 9 && version.minorVersion == 3 else {
+                    return
+                }
+
+                expect(view) == dynamicTypeSnapshot(sizes: [UIContentSizeCategoryExtraLarge])
+            }
+
+            it("has a valid pretty-syntax snapshot for only one size category (iOS 10)") {
+                let version = NSProcessInfo.processInfo().operatingSystemVersion
+                guard version.majorVersion == 10 && version.minorVersion == 0 else {
+                    return
+                }
+
+                expect(view) == dynamicTypeSnapshot(sizes: [UIContentSizeCategoryExtraLarge])
+            }
         })
     }
 }
