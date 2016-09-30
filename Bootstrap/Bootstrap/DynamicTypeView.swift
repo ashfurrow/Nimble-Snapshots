@@ -11,7 +11,7 @@ public final class DynamicTypeView: UIView {
         backgroundColor = .whiteColor()
         translatesAutoresizingMaskIntoConstraints = false
 
-        label.font = .preferredFontForTextStyle(UIFontTextStyleTitle1)
+        label.font = .preferredFontForTextStyle(UIFontTextStyleBody)
         label.text = "Example"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .Center
@@ -40,7 +40,7 @@ public final class DynamicTypeView: UIView {
             return
         }
 
-        label.font = .preferredFontForTextStyle(UIFontTextStyleTitle1)
+        label.font = .preferredFontForTextStyle(UIFontTextStyleBody)
         label.text = category.stringByReplacingOccurrencesOfString("UICTContentSizeCategory", withString: "")
     }
     
