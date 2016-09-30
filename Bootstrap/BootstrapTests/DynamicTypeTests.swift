@@ -95,6 +95,11 @@ class DynamicTypeTests: QuickSpec {
 
                 expect(view) == dynamicTypeSnapshot(sizes: [UIContentSizeCategoryExtraLarge])
             }
+
+            it("has a valid snapshot with model and OS in name") {
+                expect(view).to(haveValidDynamicTypeSnapshot(isDeviceAgnostic: true))
+                expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS", isDeviceAgnostic: true))
+            }
         })
     }
 }
