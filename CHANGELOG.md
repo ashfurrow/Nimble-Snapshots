@@ -1,5 +1,33 @@
 # Nimble-Snapshots
 
+* Adds support for testing dynamic type - @marcelofabri
+  
+  You need the use the new subspec to enjoy this new feature:
+
+    ```ruby
+    pod 'Nimble-Snapshots/DynamicType'
+    ```
+
+  Then you can use the new `haveValidDynamicTypeSnapshot` and `recordDynamicTypeSnapshot` matchers to use it:
+
+    ```swift
+    // expect(view).to(recordDynamicTypeSnapshot()
+    expect(view).to(haveValidDynamicTypeSnapshot())
+
+    // You can also just test some sizes:
+    expect(view).to(haveValidDynamicTypeSnapshot(sizes: [UIContentSizeCategoryExtraLarge]))
+
+    // If you prefer the == syntax, we got you covered too:
+    expect(view) == dynamicTypeSnapshot()
+    expect(view) == dynamicTypeSnapshot(sizes: [UIContentSizeCategoryExtraLarge])
+    ```
+
+  Note that this will post an `UIContentSizeCategoryDidChangeNotification`, so your views/view controllers
+  need to observe that and update themselves.
+
+  For more info on usage, check the [dynamic type tests](Bootstrap/BootstrapTests/DynamicTypeTests.swift).
+    
+* Removes support for Xcode 7.3 and Swift 2.2 - @marcelofabri
 * Adds Swift 2.3/3.0 support - @carezone
 
 ## 4.1.0
