@@ -1,0 +1,13 @@
+use_frameworks!
+
+# Need one pod
+pod 'Forgeries'
+
+target 'BootstrapSwift3Tests' do
+  pod 'Quick', '~> 0.10.0'
+  pod 'Nimble', '~> 5.0.0'
+  pod 'FBSnapshotTestCase', git: 'https://github.com/facebook/ios-snapshot-test-case.git'
+
+  pod 'Nimble-Snapshots/DynamicType', :path => "../"
+end
+
