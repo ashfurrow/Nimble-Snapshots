@@ -17,10 +17,10 @@ func shortCategoryName(category: UIContentSizeCategory) -> String {
     return category.stringByReplacingOccurrencesOfString("UICTContentSizeCategory", withString: "")
 }
 
-func combineMatchers<T>(matchers: [MatcherFunc<T>], ignoreFailures: Bool = false, deferred: () -> Void) -> MatcherFunc<T> {
+func combineMatchers<T>(matchers: [MatcherFunc<T>], ignoreFailures: Bool = false, deferred: (() -> Void)? = nil) -> MatcherFunc<T> {
     return MatcherFunc { actualExpression, failureMessage in
         defer {
-            deferred()
+            deferred?()
         }
 
         return try matchers.reduce(true) { acc, matcher -> Bool in
@@ -32,7 +32,7 @@ func combineMatchers<T>(matchers: [MatcherFunc<T>], ignoreFailures: Bool = false
     }
 }
 
-public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil, sizes: [UIContentSizeCategory] = allContentSizeCategories()) -> MatcherFunc<Snapshotable> {
+public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil, sizes: [UIContentSizeCategory] = allContentSizeCategories(), isDeviceAgnostic: Bool = false) -> MatcherFunc<Snapshotable> {
     let mock = NBSMockedApplication()
 
     let matchers: [MatcherFunc<Snapshotable>] = sizes.map { category in
@@ -42,7 +42,14 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
         return MatcherFunc { actualExpression, failureMessage in
             mock.mockPrefferedContentSizeCategory(category as String)
 
-            return try haveValidSnapshot(named: nameWithCategory, usesDrawRect: usesDrawRect, tolerance: tolerance).matches(actualExpression, failureMessage: failureMessage)
+            let matcher: MatcherFunc<Snapshotable>
+            if isDeviceAgnostic {
+                matcher = haveValidDeviceAgnosticSnapshot(named: nameWithCategory, usesDrawRect: usesDrawRect, tolerance: tolerance)
+            } else {
+                matcher = haveValidSnapshot(named: nameWithCategory, usesDrawRect: usesDrawRect, tolerance: tolerance)
+            }
+
+            return try matcher.matches(actualExpression, failureMessage: failureMessage)
         }
     }
 
@@ -51,7 +58,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
     }
 }
 
-public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: Bool = false, sizes: [UIContentSizeCategory] = allContentSizeCategories()) -> MatcherFunc<Snapshotable> {
+public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: Bool = false, sizes: [UIContentSizeCategory] = allContentSizeCategories(), isDeviceAgnostic: Bool = false) -> MatcherFunc<Snapshotable> {
     let mock = NBSMockedApplication()
 
     let matchers: [MatcherFunc<Snapshotable>] = sizes.map { category in
@@ -61,7 +68,14 @@ public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: B
         return MatcherFunc { actualExpression, failureMessage in
             mock.mockPrefferedContentSizeCategory(category as String)
 
-            return try recordSnapshot(named: nameWithCategory, usesDrawRect: usesDrawRect).matches(actualExpression, failureMessage: failureMessage)
+            let matcher: MatcherFunc<Snapshotable>
+            if isDeviceAgnostic {
+                matcher = recordDeviceAgnosticSnapshot(named: nameWithCategory, usesDrawRect: usesDrawRect)
+            } else {
+                matcher = recordSnapshot(named: nameWithCategory, usesDrawRect: usesDrawRect)
+            }
+
+            return try matcher.matches(actualExpression, failureMessage: failureMessage)
         }
     }
 
