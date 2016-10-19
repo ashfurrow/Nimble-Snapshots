@@ -1,5 +1,7 @@
 # Nimble-Snapshots
 
+## 4.3.0
+
 * Adds support for testing dynamic type - @marcelofabri
   
   You need the use the new subspec to enjoy this new feature:
