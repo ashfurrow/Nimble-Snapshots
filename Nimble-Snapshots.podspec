@@ -12,9 +12,21 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
   s.source       = { :git => "https://github.com/ashfurrow/Nimble-Snapshots.git", :tag => s.version }
-  s.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift", "NimbleSnapshotsConfiguration.swift"
+  s.default_subspec = "Core"
   s.frameworks  = "Foundation", "XCTest"
-  s.dependency "FBSnapshotTestCase", "~> 2.0"
-  s.dependency "Nimble"
-  s.dependency "Quick"
+
+  s.subspec "Core" do |ss|
+    ss.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift", "NimbleSnapshotsConfiguration.swift"
+    ss.dependency "FBSnapshotTestCase", "~> 2.0"
+    ss.dependency "Nimble"
+    ss.dependency "Quick"
+  end
+
+  s.subspec "DynamicType" do |ss|
+    ss.source_files  = "DynamicType/*.{swift,m,h}"
+    ss.frameworks = "UIKit"
+
+    ss.dependency "Nimble-Snapshots/Core"
+    ss.dependency "OCMock", "~> 3.3"
+  end
 end
