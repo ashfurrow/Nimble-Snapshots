@@ -29,4 +29,11 @@ Pod::Spec.new do |s|
     ss.dependency "Nimble-Snapshots/Core"
     ss.dependency "OCMock", "~> 3.3"
   end
+
+  s.subspec "DynamicSize" do |ss|
+    ss.source_files  = "DynamicSize/*.{swift}"
+    ss.frameworks = "UIKit"
+
+    ss.dependency "Nimble-Snapshots/Core"
+  end
 end

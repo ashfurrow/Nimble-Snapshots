@@ -17,6 +17,27 @@ class BootstrapSwift3Tests: QuickSpec {
             it("has a valid snapshot") {
                 expect(view).to(haveValidSnapshot())
             }
+            
+            it("has a valid snapshot to all sizes") {
+                
+                let sizes = ["SmallSize": CGSize(width: 44, height: 44),
+                             "MediumSize": CGSize(width: 88, height: 88),
+                             "LargeSize": CGSize(width: 132, height: 132)]
+                
+                
+                expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
+//                expect(view).to(recordDynamicSizeSnapshot(sizes: sizes))
+            }
+            
+            it("has a valid snapshot to all sizes (using == operator)") {
+                
+                let sizes = ["SmallSize": CGSize(width: 44, height: 44),
+                             "MediumSize": CGSize(width: 88, height: 88),
+                             "LargeSize": CGSize(width: 132, height: 132)]
+                
+                expect(view) == snapshot(sizes: sizes)
+//                expect(view) == recordSnapshot(sizes: sizes)
+            }
         }
     }
 }
