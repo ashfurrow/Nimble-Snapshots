@@ -155,7 +155,7 @@ func _getTolerance() -> CGFloat {
 }
 
 func _clearFailureMessage(_ failureMessage: FailureMessage) {
-    failureMessage.actualValue = ""
+    failureMessage.actualValue = nil
     failureMessage.expected = ""
     failureMessage.postfixMessage = ""
     failureMessage.to = ""
@@ -172,7 +172,7 @@ func _performSnapshotTest(_ name: String?, isDeviceAgnostic: Bool=false, usesDra
 
     if !result {
         _clearFailureMessage(failureMessage)
-        failureMessage.actualValue = "expected a matching snapshot in \(snapshotName)"
+        failureMessage.expected = "expected a matching snapshot in \(snapshotName)"
     }
 
     return result
@@ -188,9 +188,9 @@ func _recordSnapshot(_ name: String?, isDeviceAgnostic: Bool=false, usesDrawRect
     _clearFailureMessage(failureMessage)
 
     if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory, tolerance: tolerance) {
-        failureMessage.actualValue = "snapshot \(name ?? snapshotName) successfully recorded, replace recordSnapshot with a check"
+        failureMessage.expected = "snapshot \(name ?? snapshotName) successfully recorded, replace recordSnapshot with a check"
     } else {
-        failureMessage.actualValue = "expected to record a snapshot in \(name)"
+        failureMessage.expected = "expected to record a snapshot in \(name)"
     }
 
     return false
