@@ -1,5 +1,7 @@
 # Nimble-Snapshots
 
+* Improved failure messages by removing the prefix ", got" - @MP0w
+
 ## 4.3.0
 
 * Adds support for testing dynamic type - @marcelofabri
