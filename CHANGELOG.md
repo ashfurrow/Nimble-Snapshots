@@ -1,5 +1,7 @@
 # Nimble-Snapshots
 
+## 4.4.0
+
 * Improved failure messages by removing the prefix ", got" - @MP0w
 
 ## 4.3.0
