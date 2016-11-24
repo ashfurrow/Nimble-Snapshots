@@ -212,3 +212,4 @@ public func ==(lhs: Expectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
         lhs.to(haveValidDynamicSizeSnapshot(named: rhs.name, sizes: rhs.sizes, resizeMode: rhs.resizeMode))
     }
 }
+
