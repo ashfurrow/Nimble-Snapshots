@@ -46,6 +46,8 @@ implement the `ViewResizer` protocol and resize yourself.
   
 For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests/DynamicSizeTests.swift).
 
+* Improved failure messages by removing the prefix ", got" - @MP0w
+
 ## 4.3.0
 
 * Adds support for testing dynamic type - @marcelofabri
