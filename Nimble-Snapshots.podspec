@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Nimble-Snapshots"
-  s.version      = "4.3.0"
+  s.version      = "4.4.0"
   s.summary      = "Nimble matchers for FBSnapshotTestCase"
   s.description  = <<-DESC
                    Nimble matchers for FBSnapshotTestCase. Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
@@ -28,5 +28,12 @@ Pod::Spec.new do |s|
 
     ss.dependency "Nimble-Snapshots/Core"
     ss.dependency "OCMock", "~> 3.3"
+  end
+
+  s.subspec "DynamicSize" do |ss|
+    ss.source_files  = "DynamicSize/*.{swift}"
+    ss.frameworks = "UIKit"
+
+    ss.dependency "Nimble-Snapshots/Core"
   end
 end

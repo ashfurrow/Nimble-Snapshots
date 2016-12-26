@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11BFADFD1BE4196100F74D8E /* BootstrapCustomFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BFADFC1BE4196100F74D8E /* BootstrapCustomFolderTests.swift */; };
+		1DD47A581DD2AA04004B53FA /* DynamicSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD47A571DD2AA04004B53FA /* DynamicSizeTests.swift */; };
 		5E28C2B21993C6FE0066DB4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E28C2B11993C6FE0066DB4D /* AppDelegate.swift */; };
 		5E28C2B41993C6FE0066DB4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E28C2B31993C6FE0066DB4D /* ViewController.swift */; };
 		5E28C2B71993C6FF0066DB4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E28C2B51993C6FF0066DB4D /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		11BFADFC1BE4196100F74D8E /* BootstrapCustomFolderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootstrapCustomFolderTests.swift; sourceTree = "<group>"; };
+		1DD47A571DD2AA04004B53FA /* DynamicSizeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeTests.swift; sourceTree = "<group>"; };
 		1EC736F7C5B9AC0B1BFB0BFC /* Pods-BootstrapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BootstrapTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BootstrapTests/Pods-BootstrapTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DBE2A15129FF879DA1B1D09 /* Pods-BootstrapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BootstrapTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BootstrapTests/Pods-BootstrapTests.release.xcconfig"; sourceTree = "<group>"; };
 		5E28C2AC1993C6FE0066DB4D /* Bootstrap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bootstrap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +138,7 @@
 				5EDEF1DD1A1E5780004D7BAB /* BootstrapTests.swift */,
 				D44D1EFE1D9D87A9006DCD0C /* DynamicTypeTests.swift */,
 				5EDEF1DB1A1E5780004D7BAB /* Supporting Files */,
+				1DD47A571DD2AA04004B53FA /* DynamicSizeTests.swift */,
 			);
 			path = BootstrapTests;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DD47A581DD2AA04004B53FA /* DynamicSizeTests.swift in Sources */,
 				D44D1EFF1D9D87A9006DCD0C /* DynamicTypeTests.swift in Sources */,
 				11BFADFD1BE4196100F74D8E /* BootstrapCustomFolderTests.swift in Sources */,
 				5EDEF1DE1A1E5780004D7BAB /* BootstrapTests.swift in Sources */,

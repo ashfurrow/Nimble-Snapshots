@@ -93,8 +93,8 @@ First, you'll need to change you Podfile to import the Dynamic Type subspec:
 
 ```ruby
 pod 'Nimble-Snapshots/DynamicType'
- ```
- 
+```
+
 Then you can use the `haveValidDynamicTypeSnapshot` and 
 `recordDynamicTypeSnapshot` matchers:
 
@@ -115,3 +115,52 @@ so your views/view controllers need to observe that and update themselves.
 
 For more info on usage, check out the 
 [dynamic type tests](Bootstrap/BootstrapTests/DynamicTypeTests.swift).
+
+
+
+## Dynamic Size
+
+Testing the same view with many sizes is easy but error prone. It easy to fix one test 
+on change and forget the others. For this we create a easy way to tests all sizes at same time.
+
+First, you'll need to change you Podfile to import the Dynamic Size subspec:
+
+```ruby
+pod 'Nimble-Snapshots/DynamicSize'
+```
+
+Then you can use the new `haveValidDynamicSizeSnapshot` and `recordDynamicSizeSnapshot` matchers to use it:
+
+```swift
+let sizes = ["SmallSize": CGSize(width: 44, height: 44),
+"MediumSize": CGSize(width: 88, height: 88),
+"LargeSize": CGSize(width: 132, height: 132)]
+
+// expect(view).to(recordDynamicSizeSnapshot(sizes: sizes))
+expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
+
+// You can also just test some sizes:
+expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
+
+// If you prefer the == syntax, we got you covered too:
+expect(view) == dynamicSizeSnapshot(sizes: sizes)
+expect(view) == dynamicSizeSnapshot(sizes: sizes)
+```
+
+By default, the size will be set on the view using the frame property. To change this behavior
+you can use the `ResizeMode` enum:
+
+```swift
+public enum ResizeMode {
+  case frame
+  case constrains
+  case block(resizeBlock: (UIView, CGSize)->())
+  case custom(ViewResizer: ViewResizer)
+}
+```
+To use the enum you can `expect(view) == dynamicSizeSnapshot(sizes: sizes, resizeMode: newResizeMode)`.
+For custom behavior you can use `ResizeMode.block`. The block will be call on every resize. Or you can 
+implement the `ViewResizer` protocol and resize yourself.
+The custom behavier can be used to record the views too.
+
+For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests/DynamicSizeTests.swift).
