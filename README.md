@@ -2,7 +2,7 @@ Nimble-Snapshots [![Build Status](https://travis-ci.org/ashfurrow/Nimble-Snapsho
 =============================
 
 [Nimble](https://github.com/Quick/Nimble) matchers for [FBSnapshotTestCase](https://github.com/facebook/ios-snapshot-test-case).
-Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta). 
+Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
 
 <p align="center">
 <img src="http://gifs.ashfurrow.com/click.gif" />
@@ -10,6 +10,8 @@ Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.co
 
 Installing
 ----------
+
+## CocoaPods
 
 You need to be using CocoaPods 0.36 Beta 1 or higher. Your Podfile should look
 something like the following.
@@ -26,7 +28,21 @@ target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
 end
 ```
 
-Then run `pod install`. 
+Then run `pod install`.
+
+## Carthage
+
+You need to be using Carthage 0.18 or higher. Your Cartfile should look
+something like the following.
+
+```rb
+github "Quick/Quick" ~> 0.9.3
+github "Quick/Nimble" ~> 4.1
+github "facebook/ios-snapshot-test-case" ~> 2.1.3
+github "Wallapop/Nimble-Snapshots"  ~> 4.4.0
+```
+
+Then run `carthage bootstrap --platform iOS --toolchain com.apple.dt.toolchain.Swift_2_3`.
 
 Use
 ---
@@ -65,8 +81,8 @@ expect(view) == snapshot("some custom name")
 ```
 
 To record snapshots, just replace `haveValidSnapshot()` with `recordSnapshot()`
-and `haveValidSnapshot(named:)` with `recordSnapshot(named:)`. We also have a 
-handy emoji operator. 
+and `haveValidSnapshot(named:)` with `recordSnapshot(named:)`. We also have a
+handy emoji operator.
 
 ```swift
 📷(view)
@@ -75,18 +91,18 @@ handy emoji operator.
 
 By default, this pod will put the reference images inside a `ReferenceImages`
 directory; we try to put this in a place that makes sense (inside your unit
-tests directory). If we can't figure it out, or if you want to use your own 
+tests directory). If we can't figure it out, or if you want to use your own
 directory instead, call `setNimbleTestFolder()` with the name of the directory
-in your unit test's path that we should use. For example, if the tests are in 
+in your unit test's path that we should use. For example, if the tests are in
 `App/AppTesting/`, you can call it with `AppTesting`.
 
 If you have any questions or run into any trouble, feel free to open an issue
-on this repo. 
+on this repo.
 
 ## Dynamic Type
 
-Testing Dynamic Type manually is boring and no one seems to remember doing it 
-when implementing a view/screen, so you can have snapshot tests according to 
+Testing Dynamic Type manually is boring and no one seems to remember doing it
+when implementing a view/screen, so you can have snapshot tests according to
 content size categories.
 
 First, you'll need to change you Podfile to import the Dynamic Type subspec:
@@ -95,7 +111,7 @@ First, you'll need to change you Podfile to import the Dynamic Type subspec:
 pod 'Nimble-Snapshots/DynamicType'
 ```
 
-Then you can use the `haveValidDynamicTypeSnapshot` and 
+Then you can use the `haveValidDynamicTypeSnapshot` and
 `recordDynamicTypeSnapshot` matchers:
 
 ```swift
@@ -110,17 +126,17 @@ expect(view) == dynamicTypeSnapshot()
 expect(view) == dynamicTypeSnapshot(sizes: [UIContentSizeCategoryExtraLarge])
 ```
 
-Note that this will post an `UIContentSizeCategoryDidChangeNotification`, 
+Note that this will post an `UIContentSizeCategoryDidChangeNotification`,
 so your views/view controllers need to observe that and update themselves.
 
-For more info on usage, check out the 
+For more info on usage, check out the
 [dynamic type tests](Bootstrap/BootstrapTests/DynamicTypeTests.swift).
 
 
 
 ## Dynamic Size
 
-Testing the same view with many sizes is easy but error prone. It easy to fix one test 
+Testing the same view with many sizes is easy but error prone. It easy to fix one test
 on change and forget the others. For this we create a easy way to tests all sizes at same time.
 
 First, you'll need to change you Podfile to import the Dynamic Size subspec:
@@ -159,7 +175,7 @@ public enum ResizeMode {
 }
 ```
 To use the enum you can `expect(view) == dynamicSizeSnapshot(sizes: sizes, resizeMode: newResizeMode)`.
-For custom behavior you can use `ResizeMode.block`. The block will be call on every resize. Or you can 
+For custom behavior you can use `ResizeMode.block`. The block will be call on every resize. Or you can
 implement the `ViewResizer` protocol and resize yourself.
 The custom behavier can be used to record the views too.
 
