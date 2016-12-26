@@ -13,7 +13,7 @@ Installing
 
 ## CocoaPods
 
-You need to be using CocoaPods 0.36 Beta 1 or higher. Your Podfile should look
+You need to be using CocoaPods 0.36 Beta 1 or higher. Your `Podfile` should look
 something like the following.
 
 ```rb
@@ -28,21 +28,43 @@ target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
 end
 ```
 
-Then run `pod install`.
+Then run:
+```
+$ pod install
+```
 
 ## Carthage
 
-You need to be using Carthage 0.18 or higher. Your Cartfile should look
+You need to be using Carthage 0.18 or higher. Your `Cartfile` (or `Cartfile.private`) should look
 something like the following.
+
+#### Swift 2.3
 
 ```rb
 github "Quick/Quick" ~> 0.9.3
 github "Quick/Nimble" ~> 4.1
-github "facebook/ios-snapshot-test-case" ~> 2.1.3
+github "facebook/ios-snapshot-test-case" "2.1.3"
 github "Wallapop/Nimble-Snapshots"  ~> 4.4.0
 ```
 
-Then run `carthage bootstrap --platform iOS --toolchain com.apple.dt.toolchain.Swift_2_3`.
+Then run:
+```
+$ carthage bootstrap --platform iOS --toolchain com.apple.dt.toolchain.Swift_2_3
+```
+
+#### Swift 3.0
+
+```rb
+github "Quick/Quick" ~> 1.0.0
+github "Quick/Nimble" ~> 5.1.1
+github "facebook/ios-snapshot-test-case" "2.1.4"
+github "Wallapop/Nimble-Snapshots"  ~> 4.4.0
+```
+
+Then run:
+```
+$ carthage bootstrap --platform iOS --toolchain com.apple.dt.toolchain.Swift_3_0
+```
 
 Use
 ---
