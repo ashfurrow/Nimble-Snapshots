@@ -8,5 +8,5 @@ target 'BootstrapTests' do
   pod 'Nimble', '~> 4.1.0'
 
   pod 'Nimble-Snapshots/DynamicType', :path => "../"
+  pod 'Nimble-Snapshots/DynamicSize', :path => "../"
 end
-
