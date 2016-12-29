@@ -1,5 +1,13 @@
 # Nimble-Snapshots
 
+## 4.4.2
+
+* Adds support for Carthage (Swift 3.0) - @juolgon & @lascorbe
+
+## 4.4.1
+
+* Adds support for Carthage (Swift 2.3) - @juolgon & @lascorbe
+
 ## 4.4.0
 
 * Adds support for testing dynamic sizes - @bruno.mazzo
@@ -19,7 +27,7 @@
 
   // expect(view).to(recordDynamicSizeSnapshot(sizes: sizes))
   expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
-  
+
   // You can also just test some sizes:
   expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
 
@@ -40,10 +48,10 @@ you can use the `ResizeMode` enum:
   }
   ```
   To use the enum you can `expect(view) == dynamicSizeSnapshot(sizes: sizes, resizeMode: newResizeMode)`.
-  For custom behavior you can use `ResizeMode.block`. The block will be call on every resize. Or you can 
+  For custom behavior you can use `ResizeMode.block`. The block will be call on every resize. Or you can
 implement the `ViewResizer` protocol and resize yourself.
   The custom behavier can be use to record the views too.
-  
+
 For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests/DynamicSizeTests.swift).
 
 * Improved failure messages by removing the prefix ", got" - @MP0w
@@ -51,7 +59,7 @@ For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests
 ## 4.3.0
 
 * Adds support for testing dynamic type - @marcelofabri
-  
+
   You need the use the new subspec to enjoy this new feature:
 
     ```ruby
@@ -76,7 +84,7 @@ For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests
   need to observe that and update themselves.
 
   For more info on usage, check the [dynamic type tests](Bootstrap/BootstrapTests/DynamicTypeTests.swift).
-    
+
 * Removes support for Xcode 7.3 and Swift 2.2 - @marcelofabri
 * Adds Swift 2.3/3.0 support - @carezone
 
@@ -104,7 +112,7 @@ For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests
         expect(imageView).to( haveValidSnapshot(usesDrawRect: true) )
     ```
 
-    You can get more info on the [technique on this issue](https://github.com/facebook/ios-snapshot-test-case/issues/91) 
+    You can get more info on the [technique on this issue](https://github.com/facebook/ios-snapshot-test-case/issues/91)
 
 
   - Spending time looking in how you can remove Async code from your App. Or look for places where you are relying on a view structure

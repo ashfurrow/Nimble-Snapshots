@@ -11,3 +11,7 @@ Bootstrap/Bootstrap.xcworkspace/xcuserdata/
 BootstrapSwift3/BootstrapSwift3.xcodeproj/xcuserdata/
 BootstrapSwift3/BootstrapSwift3.xcworkspace/xcuserdata/
 BootstrapSwift3/BootstrapSwift3.xcodeproj/project.xcworkspace/xcuserdata
+
+# Carthage
+Carthage/Checkouts
+Carthage/Build
