@@ -26,13 +26,11 @@ class DynamicSizeTests: QuickSpec {
                 }
                 
                 it("has a valid snapshot to all sizes") {
-    
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes))
                 }
                 
                 it("has a valid snapshot to all sizes (using == operator)") {
-            
                     expect(view) == snapshot(sizes: sizes)
 //                    expect(view) == recordSnapshot(sizes: sizes)
                 }
@@ -47,13 +45,11 @@ class DynamicSizeTests: QuickSpec {
                 }
                 
                 it("has a valid snapshot to all sizes") {
-                    
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, resizeMode: .constrains))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, resizeMode: .constrains))
                 }
                 
                 it("has a valid snapshot to all sizes (using == operator)") {
-                    
                     expect(view) == snapshot(sizes: sizes, resizeMode: .constrains)
 //                    expect(view) == recordSnapshot(sizes: sizes, resizeMode: .constrains)
                 }
@@ -124,7 +120,6 @@ class DynamicSizeTests: QuickSpec {
                 }
                 
                 it("has a valid snapshot to all sizes (using == operator)") {
-                    
                     let resizer = CustomResizer()
                     expect(view) == snapshot(sizes: sizes, resizeMode: .custom(ViewResizer: resizer))
                     expect(resizer.used) == 3

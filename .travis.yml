@@ -1,12 +1,12 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode8.2
 
 before_script:
-  - cd Bootstrap ; bundle install ; cd ..
+  - bundle install
   - cd Bootstrap ; bundle exec pod install --repo-update ; cd ..
   - cd BootstrapSwift3 ; bundle exec pod install ; cd ..
   - export LANG=en_US.UTF-8
 script:
   - set -o pipefail
-  - xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination "name=iPhone 6,OS=9.3" -destination "name=iPhone 6,OS=10.0" clean build test | xcpretty --color --simple
-  - xcodebuild -workspace 'BootstrapSwift3/BootstrapSwift3.xcworkspace' -sdk 'iphonesimulator' -scheme 'BootstrapSwift3' -destination "name=iPhone 6,OS=10.0" clean build test | xcpretty --color --simple
+  - xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination "id=E40727B3-41FB-4D6E-B4CB-BFA87109EB12" clean build test | xcpretty --color --simple
+  - xcodebuild -workspace 'BootstrapSwift3/BootstrapSwift3.xcworkspace' -sdk 'iphonesimulator' -scheme 'BootstrapSwift3' -destination "id=E40727B3-41FB-4D6E-B4CB-BFA87109EB12" clean build test | xcpretty --color --simple
