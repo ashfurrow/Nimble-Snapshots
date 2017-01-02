@@ -8,5 +8,5 @@ before_script:
   - export LANG=en_US.UTF-8
 script:
   - set -o pipefail
-  - xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination "name=iPhone 7,OS=10.2" clean build test | xcpretty --color --simple
-  - xcodebuild -workspace 'BootstrapSwift3/BootstrapSwift3.xcworkspace' -sdk 'iphonesimulator' -scheme 'BootstrapSwift3' -destination "name=iPhone 7,OS=10.2" clean build test | xcpretty --color --simple
+  - xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination "id=E40727B3-41FB-4D6E-B4CB-BFA87109EB12" clean build test | xcpretty --color --simple
+  - xcodebuild -workspace 'BootstrapSwift3/BootstrapSwift3.xcworkspace' -sdk 'iphonesimulator' -scheme 'BootstrapSwift3' -destination "id=E40727B3-41FB-4D6E-B4CB-BFA87109EB12" clean build test | xcpretty --color --simple
