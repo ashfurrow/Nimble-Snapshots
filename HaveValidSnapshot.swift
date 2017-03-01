@@ -122,15 +122,16 @@ func _getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
 }
 
 func _testFileName() -> String {
-	guard let name = FBSnapshotTest.sharedInstance.currentExampleMetadata?.example.callsite.file as NSString else {
+	guard let name = FBSnapshotTest.sharedInstance.currentExampleMetadata?.example.callsite.file else {
 		fatalError("Test matchers must be called from inside a test block")
 	}
+    let nsName = name as NSString
 	
-    let type = ".\(name.pathExtension)"
+    let type = ".\(nsName.pathExtension)"
     #if swift(>=3.0)
-        let sanitizedName = name.lastPathComponent.replacingOccurrences(of: type, with: "")
+        let sanitizedName = nsName.lastPathComponent.replacingOccurrences(of: type, with: "")
     #else
-        let sanitizedName = name.lastPathComponent.stringByReplacingOccurrencesOfString(type, withString: "")
+        let sanitizedName = nsName.lastPathComponent.stringByReplacingOccurrencesOfString(type, withString: "")
     #endif
 
     return sanitizedName
