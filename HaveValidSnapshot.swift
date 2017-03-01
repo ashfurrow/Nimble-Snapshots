@@ -122,7 +122,10 @@ func _getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
 }
 
 func _testFileName() -> String {
-    let name = FBSnapshotTest.sharedInstance.currentExampleMetadata!.example.callsite.file as NSString
+	guard let name = FBSnapshotTest.sharedInstance.currentExampleMetadata?.example.callsite.file as NSString else {
+		fatalError("Test matchers must be called from inside a test block")
+	}
+	
     let type = ".\(name.pathExtension)"
     #if swift(>=3.0)
         let sanitizedName = name.lastPathComponent.replacingOccurrences(of: type, with: "")
@@ -134,8 +137,11 @@ func _testFileName() -> String {
 }
 
 func _sanitizedTestName(_ name: String?) -> String {
-    let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata
-    var filename = name ?? quickExample!.example.name
+	guard let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata else {
+		fatalError("Test matchers must be called from inside a test block")
+	}
+	
+    var filename = name ?? quickExample.example.name
     #if swift(>=3.0)
         filename = filename.replacingOccurrences(of: "root example group, ", with: "")
         let characterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
