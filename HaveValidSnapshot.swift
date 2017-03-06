@@ -29,7 +29,7 @@ extension UIView : Snapshotable {
 
     var referenceImagesDirectory: String?
     var tolerance: CGFloat = 0
-    
+
     class var sharedInstance : FBSnapshotTest {
         struct Instance {
             static let instance: FBSnapshotTest = FBSnapshotTest()
@@ -47,7 +47,7 @@ extension UIView : Snapshotable {
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
         snapshotController.usesDrawViewHierarchyInRect = usesDrawRect
-        
+
         assert(snapshotController.referenceImagesDirectory != nil, "Missing value for referenceImagesDirectory - Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
 
         do {
@@ -66,6 +66,8 @@ private var testFolderSuffixes = ["tests", "specs"]
 public func setNimbleTestFolder(_ testFolder: String) {
     testFolderSuffixes = [testFolder.lowercased()]
 }
+
+var currentFilename: String?
 
 public func setNimbleTolerance(_ tolerance: CGFloat) {
     FBSnapshotTest.sharedInstance.tolerance = tolerance
@@ -102,11 +104,11 @@ func _getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
 }
 
 func _testFileName() -> String {
-	guard let name = FBSnapshotTest.sharedInstance.currentExampleMetadata?.example.callsite.file else {
+	guard let name = currentFileName() else {
 		fatalError("Test matchers must be called from inside a test block")
 	}
     let nsName = name as NSString
-	
+
     let type = ".\(nsName.pathExtension)"
     let sanitizedName = nsName.lastPathComponent.replacingOccurrences(of: type, with: "")
 
@@ -114,11 +116,11 @@ func _testFileName() -> String {
 }
 
 func _sanitizedTestName(_ name: String?) -> String {
-	guard let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata else {
+	guard let testName = currentTestName() else {
 		fatalError("Test matchers must be called from inside a test block")
 	}
-	
-    var filename = name ?? quickExample.example.name
+
+    var filename = name ?? testName
     filename = filename.replacingOccurrences(of: "root example group, ", with: "")
     let characterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
     let components = filename.components(separatedBy: characterSet.inverted)
@@ -159,7 +161,7 @@ func _recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRe
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
     let snapshotName = _sanitizedTestName(name)
     let tolerance = _getTolerance()
-    
+
     _clearFailureMessage(failureMessage)
 
     if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory, tolerance: tolerance) {
@@ -171,9 +173,36 @@ func _recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRe
     return false
 }
 
+private func currentTestName() -> String? {
+    if let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata {
+        return quickExample.example.name
+    }
+
+    if let testCase = CurrentTestCaseTracker.shared.currentTestCase {
+        return testCase.name
+    }
+
+    return nil
+}
+
+private func currentFileName() -> String? {
+    if let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata {
+        return quickExample.example.callsite.file
+    }
+
+    if let testCase = CurrentTestCaseTracker.shared.currentTestCase {
+        return currentFilename
+    }
+
+    return nil
+}
+
 internal var switchChecksWithRecords = false
 
-public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil) -> MatcherFunc<Snapshotable> {
+public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil,
+                              file: String = #file) -> MatcherFunc<Snapshotable> {
+    currentFilename = file
+
     return MatcherFunc { actualExpression, failureMessage in
         if (switchChecksWithRecords) {
             return _recordSnapshot(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage)
@@ -183,7 +212,10 @@ public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = fa
     }
 }
 
-public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil) -> MatcherFunc<Snapshotable> {
+public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil,
+                                            file: String = #file) -> MatcherFunc<Snapshotable> {
+    currentFilename = file
+
     return MatcherFunc { actualExpression, failureMessage in
         if (switchChecksWithRecords) {
             return _recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage)
@@ -193,13 +225,19 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawR
     }
 }
 
-public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
+public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false,
+                           file: String = #file) -> MatcherFunc<Snapshotable> {
+    currentFilename = file
+
     return MatcherFunc { actualExpression, failureMessage in
         return _recordSnapshot(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
-public func recordDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
+public func recordDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false,
+                                         file: String = #file) -> MatcherFunc<Snapshotable> {
+    currentFilename = file
+
     return MatcherFunc { actualExpression, failureMessage in
         return _recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage)
     }
