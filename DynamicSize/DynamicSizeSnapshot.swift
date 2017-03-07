@@ -42,20 +42,12 @@ struct FrameViewResizer: ViewResizer {
 
 struct BlockViewResizer: ViewResizer {
     
-    let resizeBlock: (UIView, CGSize)->()
-    
-    #if swift(>=3.0)
-    init(block: @escaping (UIView, CGSize)->()) {
+    let resizeBlock: (UIView, CGSize) -> Void
+
+    init(block: @escaping (UIView, CGSize) -> Void) {
         self.resizeBlock = block
     }
-    #else
-    init(block: (UIView, CGSize)->()) {
-        self.resizeBlock = block
-    }
-    #endif
-    
-    
-    
+
     func resize(view view: UIView, for size: CGSize) {
         self.resizeBlock(view, size)
     }
@@ -70,12 +62,9 @@ class ConstraintViewResizer: ViewResizer {
         
         sizesConstrains.heightConstrain.constant = size.height
         sizesConstrains.widthConstrain.constant = size.width
-        
-        #if swift(>=3.0)
-            NSLayoutConstraint.activate([sizesConstrains.heightConstrain, sizesConstrains.widthConstrain])
-        #else
-            NSLayoutConstraint.activateConstraints([sizesConstrains.heightConstrain, sizesConstrains.widthConstrain])
-        #endif
+
+        NSLayoutConstraint.activate([sizesConstrains.heightConstrain,
+                                     sizesConstrains.widthConstrain])
         
 
         view.layoutIfNeeded()
@@ -95,18 +84,12 @@ class ConstraintViewResizer: ViewResizer {
     }
     
     func findConstrains(of view: UIView) -> SizeConstrainsWrapper {
-        var height: NSLayoutConstraint? = nil
-        var width: NSLayoutConstraint? = nil
-        
-        #if swift(>=3.0)
-            var heightLayout = NSLayoutAttribute.height
-            var widthLayout = NSLayoutAttribute.width
-            var equalRelation = NSLayoutRelation.equal
-        #else
-            var heightLayout = NSLayoutAttribute.Height
-            var widthLayout = NSLayoutAttribute.Width
-            var equalRelation = NSLayoutRelation.Equal
-        #endif
+        var height: NSLayoutConstraint?
+        var width: NSLayoutConstraint?
+
+        var heightLayout = NSLayoutAttribute.height
+        var widthLayout = NSLayoutAttribute.width
+        var equalRelation = NSLayoutRelation.equal
         
         for constrain in view.constraints {
             if constrain.firstAttribute.rawValue == heightLayout.rawValue && constrain.relation.rawValue == equalRelation.rawValue && constrain.secondItem == nil {
