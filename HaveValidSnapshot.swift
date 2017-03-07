@@ -43,11 +43,7 @@ extension UIView : Snapshotable {
 
     class func compareSnapshot(_ instance: Snapshotable, isDeviceAgnostic: Bool=false, usesDrawRect: Bool=false, snapshot: String, record: Bool, referenceDirectory: String, tolerance: CGFloat) -> Bool {
         let snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
-        #if swift(>=3.0)
-            snapshotController.isDeviceAgnostic = isDeviceAgnostic
-        #else
-            snapshotController.deviceAgnostic = isDeviceAgnostic
-        #endif
+        snapshotController.isDeviceAgnostic = isDeviceAgnostic
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
         snapshotController.usesDrawViewHierarchyInRect = usesDrawRect
@@ -55,16 +51,12 @@ extension UIView : Snapshotable {
         assert(snapshotController.referenceImagesDirectory != nil, "Missing value for referenceImagesDirectory - Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
 
         do {
-            #if swift(>=3.0)
-                try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject, selector: Selector(snapshot), identifier: nil, tolerance: tolerance)
-            #else
-                try snapshotController.compareSnapshotOfViewOrLayer(instance.snapshotObject, selector: Selector(snapshot), identifier: nil, tolerance: tolerance)
-            #endif
+            try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject, selector: Selector(snapshot), identifier: nil, tolerance: tolerance)
         }
         catch {
-            return false;
+            return false
         }
-        return true;
+        return true
     }
 }
 
@@ -72,11 +64,7 @@ extension UIView : Snapshotable {
 var testFolderSuffixes = ["tests", "specs"]
 
 public func setNimbleTestFolder(_ testFolder: String) {
-    #if swift(>=3.0)
-        testFolderSuffixes = [testFolder.lowercased()]
-    #else
-        testFolderSuffixes = [testFolder.lowercaseString]
-    #endif
+    testFolderSuffixes = [testFolder.lowercased()]
 }
 
 public func setNimbleTolerance(_ tolerance: CGFloat) {
@@ -95,28 +83,20 @@ func _getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     let pathComponents: NSArray = (sourceFileName as NSString).pathComponents as NSArray
 
     // Find the directory in the path that ends with a test suffix.
-    let testPath = pathComponents.filter { component -> Bool in
-        #if swift(>=3.0)
-            return testFolderSuffixes.filter { (component as AnyObject).lowercased.hasSuffix($0) }.count > 0
-        #else
-            return testFolderSuffixes.filter { component.lowercaseString.hasSuffix($0) }.count > 0
-        #endif
-        }.first
+    let testPath = pathComponents.first { component -> Bool in
+        return !testFolderSuffixes.filter {
+            (component as AnyObject).lowercased.hasSuffix($0)
+        }.isEmpty
+    }
 
     guard let testDirectory = testPath else {
         fatalError("Could not infer reference image folder – You should provide a reference dir using FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
     }
 
     // Recombine the path components and append our own image directory.
-    #if swift(>=3.0)
-        let currentIndex = pathComponents.index(of: testDirectory) + 1
-        let folderPathComponents: NSArray = pathComponents.subarray(with: NSMakeRange(0, currentIndex)) as NSArray
-        let folderPath = folderPathComponents.componentsJoined(by: "/")
-    #else
-      let currentIndex = pathComponents.indexOfObject(testDirectory) + 1
-        let folderPathComponents: NSArray = pathComponents.subarrayWithRange(NSMakeRange(0, currentIndex))
-        let folderPath = folderPathComponents.componentsJoinedByString("/")
-    #endif
+    let currentIndex = pathComponents.index(of: testDirectory) + 1
+    let folderPathComponents: NSArray = pathComponents.subarray(with: NSMakeRange(0, currentIndex)) as NSArray
+    let folderPath = folderPathComponents.componentsJoined(by: "/")
 
     return folderPath + "/ReferenceImages"
 }
@@ -128,11 +108,7 @@ func _testFileName() -> String {
     let nsName = name as NSString
 	
     let type = ".\(nsName.pathExtension)"
-    #if swift(>=3.0)
-        let sanitizedName = nsName.lastPathComponent.replacingOccurrences(of: type, with: "")
-    #else
-        let sanitizedName = nsName.lastPathComponent.stringByReplacingOccurrencesOfString(type, withString: "")
-    #endif
+    let sanitizedName = nsName.lastPathComponent.replacingOccurrences(of: type, with: "")
 
     return sanitizedName
 }
@@ -143,18 +119,10 @@ func _sanitizedTestName(_ name: String?) -> String {
 	}
 	
     var filename = name ?? quickExample.example.name
-    #if swift(>=3.0)
-        filename = filename.replacingOccurrences(of: "root example group, ", with: "")
-        let characterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
-        let components = filename.components(separatedBy: characterSet.inverted)
-        return components.joined(separator: "_")
-    #else
-        filename = filename.stringByReplacingOccurrencesOfString("root example group, ", withString: "")
-        let characterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
-        let components: NSArray = filename.componentsSeparatedByCharactersInSet(characterSet.invertedSet)
-
-        return components.componentsJoinedByString("_")
-    #endif
+    filename = filename.replacingOccurrences(of: "root example group, ", with: "")
+    let characterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
+    let components = filename.components(separatedBy: characterSet.inverted)
+    return components.joined(separator: "_")
 }
 
 func _getTolerance() -> CGFloat {
