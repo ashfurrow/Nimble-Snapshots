@@ -4,31 +4,17 @@ import UIKit
 import FBSnapshotTestCase
 
 func allContentSizeCategories() -> [UIContentSizeCategory] {
-    #if swift(>=3.0)
-        return [
-            .extraSmall, .small, .medium,
-            .large, .extraLarge, .extraExtraLarge,
-            .extraExtraExtraLarge, .accessibilityMedium,
-            .accessibilityLarge, .accessibilityExtraLarge,
-            .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge
-        ]
-    #else
-        return [
-            UIContentSizeCategoryExtraSmall, UIContentSizeCategorySmall, UIContentSizeCategoryMedium,
-            UIContentSizeCategoryLarge, UIContentSizeCategoryExtraLarge, UIContentSizeCategoryExtraExtraLarge,
-            UIContentSizeCategoryExtraExtraExtraLarge, UIContentSizeCategoryAccessibilityMedium,
-            UIContentSizeCategoryAccessibilityLarge, UIContentSizeCategoryAccessibilityExtraLarge,
-            UIContentSizeCategoryAccessibilityExtraExtraLarge, UIContentSizeCategoryAccessibilityExtraExtraExtraLarge
-        ]
-    #endif
+    return [
+        .extraSmall, .small, .medium,
+        .large, .extraLarge, .extraExtraLarge,
+        .extraExtraExtraLarge, .accessibilityMedium,
+        .accessibilityLarge, .accessibilityExtraLarge,
+        .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge
+    ]
 }
 
 func shortCategoryName(_ category: UIContentSizeCategory) -> String {
-    #if swift(>=3.0)
-        return category.rawValue.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
-    #else
-        return category.stringByReplacingOccurrencesOfString("UICTContentSizeCategory", withString: "")
-    #endif
+    return category.rawValue.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
 }
 
 func combineMatchers<T>(_ matchers: [MatcherFunc<T>], ignoreFailures: Bool = false, deferred: (() -> Void)? = nil) -> MatcherFunc<T> {
@@ -54,11 +40,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
         return MatcherFunc { actualExpression, failureMessage in
-            #if swift(>=3.0)
-                mock.mockPrefferedContentSizeCategory(category)
-            #else
-                mock.mockPrefferedContentSizeCategory(category as String)
-            #endif
+            mock.mockPrefferedContentSizeCategory(category)
 
             let matcher: MatcherFunc<Snapshotable>
             if isDeviceAgnostic {
@@ -84,11 +66,7 @@ public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: B
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
         return MatcherFunc { actualExpression, failureMessage in
-            #if swift(>=3.0)
-                mock.mockPrefferedContentSizeCategory(category)
-            #else
-                mock.mockPrefferedContentSizeCategory(category as String)
-            #endif
+            mock.mockPrefferedContentSizeCategory(category)
 
             let matcher: MatcherFunc<Snapshotable>
             if isDeviceAgnostic {

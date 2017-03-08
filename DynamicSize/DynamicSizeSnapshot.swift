@@ -8,7 +8,7 @@ import Quick
 public enum ResizeMode {
     case frame
     case constrains
-    case block(resizeBlock: (UIView, CGSize)->())
+    case block(resizeBlock: (UIView, CGSize) -> Void)
     case custom(ViewResizer: ViewResizer)
     
     func viewResizer() -> ViewResizer {
@@ -35,27 +35,19 @@ public protocol ViewResizer {
 
 struct FrameViewResizer: ViewResizer {
     func resize(view view: UIView, for size: CGSize) {
-        view.frame = CGRect(origin: CGPoint.zero, size: size)
+        view.frame = CGRect(origin: .zero, size: size)
         view.layoutIfNeeded()
     }
 }
 
 struct BlockViewResizer: ViewResizer {
     
-    let resizeBlock: (UIView, CGSize)->()
-    
-    #if swift(>=3.0)
-    init(block: @escaping (UIView, CGSize)->()) {
+    let resizeBlock: (UIView, CGSize) -> Void
+
+    init(block: @escaping (UIView, CGSize) -> Void) {
         self.resizeBlock = block
     }
-    #else
-    init(block: (UIView, CGSize)->()) {
-        self.resizeBlock = block
-    }
-    #endif
-    
-    
-    
+
     func resize(view view: UIView, for size: CGSize) {
         self.resizeBlock(view, size)
     }
@@ -70,20 +62,16 @@ class ConstraintViewResizer: ViewResizer {
         
         sizesConstrains.heightConstrain.constant = size.height
         sizesConstrains.widthConstrain.constant = size.width
-        
-        #if swift(>=3.0)
-            NSLayoutConstraint.activate([sizesConstrains.heightConstrain, sizesConstrains.widthConstrain])
-        #else
-            NSLayoutConstraint.activateConstraints([sizesConstrains.heightConstrain, sizesConstrains.widthConstrain])
-        #endif
-        
+
+        NSLayoutConstraint.activate([sizesConstrains.heightConstrain,
+                                     sizesConstrains.widthConstrain])
 
         view.layoutIfNeeded()
 
         //iOS 9+ BUG: Before the first draw, iOS will not calculate the layout, it add a _UITemporaryLayoutWidth equals to 
         // its bounds and create a conflict. So to it do all the layout we create a Window and add it as subview
         if view.bounds.width != size.width || view.bounds.width != size.width {
-            let window = UIWindow(frame: CGRect(origin: CGPoint.zero, size: size))
+            let window = UIWindow(frame: CGRect(origin: .zero, size: size))
             let viewController = UIViewController()
             viewController.view = UIView()
             viewController.view.addSubview(view)
@@ -95,18 +83,13 @@ class ConstraintViewResizer: ViewResizer {
     }
     
     func findConstrains(of view: UIView) -> SizeConstrainsWrapper {
-        var height: NSLayoutConstraint? = nil
-        var width: NSLayoutConstraint? = nil
-        
-        #if swift(>=3.0)
-            var heightLayout = NSLayoutAttribute.height
-            var widthLayout = NSLayoutAttribute.width
-            var equalRelation = NSLayoutRelation.equal
-        #else
-            var heightLayout = NSLayoutAttribute.Height
-            var widthLayout = NSLayoutAttribute.Width
-            var equalRelation = NSLayoutRelation.Equal
-        #endif
+        var height: NSLayoutConstraint?
+        var width: NSLayoutConstraint?
+
+        var heightLayout = NSLayoutAttribute.height
+        var widthLayout = NSLayoutAttribute.width
+        var equalRelation = NSLayoutRelation.equal
+
         
         for constrain in view.constraints {
             if constrain.firstAttribute.rawValue == heightLayout.rawValue && constrain.relation.rawValue == equalRelation.rawValue && constrain.secondItem == nil {
@@ -152,13 +135,13 @@ public func snapshot(_ name: String? = nil, sizes: [String: CGSize], resizeMode:
     return DynamicSizeSnapshot(name: name, record: false, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func haveValidDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], usesDrawRect: Bool=false, tolerance: CGFloat? = nil, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
+public func haveValidDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], usesDrawRect: Bool = false, tolerance: CGFloat? = nil, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         return performDynamicSizeSnapshotTest(name, sizes: sizes, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage, tolerance: tolerance, isRecord: false, resizeMode: resizeMode)
     }
 }
 
-func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], isDeviceAgnostic: Bool=false, usesDrawRect: Bool=false, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage, tolerance: CGFloat? = nil, isRecord: Bool, resizeMode: ResizeMode) -> Bool {
+func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false, actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage, tolerance: CGFloat? = nil, isRecord: Bool, resizeMode: ResizeMode) -> Bool {
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
@@ -198,7 +181,7 @@ public func recordSnapshot(_ name: String? = nil, sizes: [String: CGSize], resiz
     return DynamicSizeSnapshot(name: name, record: true, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func recordDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], usesDrawRect: Bool=false, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
+public func recordDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], usesDrawRect: Bool = false, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
         return performDynamicSizeSnapshotTest(name, sizes: sizes, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage, isRecord: true, resizeMode: resizeMode)
     }
