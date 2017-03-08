@@ -4,8 +4,9 @@ use_frameworks!
 pod 'Forgeries'
 
 target 'BootstrapTests' do
-  pod 'Quick', '~> 0.9.3'
-  pod 'Nimble', '~> 4.1.0'
+  pod 'Quick', '~> 1.1.0'
+  pod 'Nimble', '~> 6.0.1'
+  pod 'FBSnapshotTestCase', git: 'https://github.com/facebook/ios-snapshot-test-case.git'
 
   pod 'Nimble-Snapshots/DynamicType', :path => "../"
   pod 'Nimble-Snapshots/DynamicSize', :path => "../"
