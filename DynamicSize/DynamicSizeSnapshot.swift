@@ -29,12 +29,12 @@ public enum ResizeMode {
 }
 
 public protocol ViewResizer {
-    func resize(view view: UIView, for size: CGSize)
+    func resize(view: UIView, for size: CGSize)
 }
 
 
 struct FrameViewResizer: ViewResizer {
-    func resize(view view: UIView, for size: CGSize) {
+    func resize(view: UIView, for size: CGSize) {
         view.frame = CGRect(origin: .zero, size: size)
         view.layoutIfNeeded()
     }
@@ -48,7 +48,7 @@ struct BlockViewResizer: ViewResizer {
         self.resizeBlock = block
     }
 
-    func resize(view view: UIView, for size: CGSize) {
+    func resize(view: UIView, for size: CGSize) {
         self.resizeBlock(view, size)
     }
 }
@@ -57,7 +57,7 @@ class ConstraintViewResizer: ViewResizer {
     
     typealias SizeConstrainsWrapper = (heightConstrain: NSLayoutConstraint, widthConstrain: NSLayoutConstraint)
     
-    func resize(view view: UIView, for size: CGSize) {
+    func resize(view: UIView, for size: CGSize) {
         let sizesConstrains = findConstrains(of: view)
         
         sizesConstrains.heightConstrain.constant = size.height
@@ -86,9 +86,9 @@ class ConstraintViewResizer: ViewResizer {
         var height: NSLayoutConstraint?
         var width: NSLayoutConstraint?
 
-        var heightLayout = NSLayoutAttribute.height
-        var widthLayout = NSLayoutAttribute.width
-        var equalRelation = NSLayoutRelation.equal
+        let heightLayout = NSLayoutAttribute.height
+        let widthLayout = NSLayoutAttribute.width
+        let equalRelation = NSLayoutRelation.equal
 
         
         for constrain in view.constraints {
