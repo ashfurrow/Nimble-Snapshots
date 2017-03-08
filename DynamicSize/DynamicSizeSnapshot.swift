@@ -135,9 +135,9 @@ public func snapshot(_ name: String? = nil, sizes: [String: CGSize], resizeMode:
     return DynamicSizeSnapshot(name: name, record: false, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func haveValidDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], usesDrawRect: Bool = false, tolerance: CGFloat? = nil, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
+public func haveValidDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false, tolerance: CGFloat? = nil, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        return performDynamicSizeSnapshotTest(name, sizes: sizes, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage, tolerance: tolerance, isRecord: false, resizeMode: resizeMode)
+        return performDynamicSizeSnapshotTest(name, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage, tolerance: tolerance, isRecord: false, resizeMode: resizeMode)
     }
 }
 
@@ -181,9 +181,9 @@ public func recordSnapshot(_ name: String? = nil, sizes: [String: CGSize], resiz
     return DynamicSizeSnapshot(name: name, record: true, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func recordDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], usesDrawRect: Bool = false, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
+public func recordDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize], isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false, resizeMode: ResizeMode = .frame) -> MatcherFunc<Snapshotable> {
     return MatcherFunc { actualExpression, failureMessage in
-        return performDynamicSizeSnapshotTest(name, sizes: sizes, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage, isRecord: true, resizeMode: resizeMode)
+        return performDynamicSizeSnapshotTest(name, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage, isRecord: true, resizeMode: resizeMode)
     }
 }
 
