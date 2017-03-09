@@ -41,8 +41,13 @@ extension UIView : Snapshotable {
         sharedInstance.referenceImagesDirectory = directory
     }
 
-    class func compareSnapshot(_ instance: Snapshotable, isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false, snapshot: String, record: Bool, referenceDirectory: String, tolerance: CGFloat) -> Bool {
-        let snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: _testFileName())
+    class func compareSnapshot(_ instance: Snapshotable, isDeviceAgnostic: Bool = false,
+                               usesDrawRect: Bool = false, snapshot: String, record: Bool,
+                               referenceDirectory: String, tolerance: CGFloat,
+                               filename: String) -> Bool {
+
+        let testName = parseFilename(filename: filename)
+        let snapshotController = FBSnapshotTestController(testName: testName)!
         snapshotController.isDeviceAgnostic = isDeviceAgnostic
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
@@ -67,8 +72,6 @@ public func setNimbleTestFolder(_ testFolder: String) {
     testFolderSuffixes = [testFolder.lowercased()]
 }
 
-var currentFilename: String?
-
 public func setNimbleTolerance(_ tolerance: CGFloat) {
     FBSnapshotTest.sharedInstance.tolerance = tolerance
 }
@@ -82,7 +85,7 @@ func _getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     // then append "/ReferenceImages" and use that.
 
     // Grab the file's path
-    let pathComponents: NSArray = (sourceFileName as NSString).pathComponents as NSArray
+    let pathComponents = (sourceFileName as NSString).pathComponents as NSArray
 
     // Find the directory in the path that ends with a test suffix.
     let testPath = pathComponents.first { component -> Bool in
@@ -103,11 +106,8 @@ func _getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     return folderPath + "/ReferenceImages"
 }
 
-func _testFileName() -> String {
-	guard let name = currentFileName() else {
-		fatalError("Test matchers must be called from inside a test block")
-	}
-    let nsName = name as NSString
+private func parseFilename(filename: String) -> String {
+    let nsName = filename as NSString
 
     let type = ".\(nsName.pathExtension)"
     let sanitizedName = nsName.lastPathComponent.replacingOccurrences(of: type, with: "")
@@ -145,7 +145,7 @@ func _performSnapshotTest(_ name: String?, isDeviceAgnostic: Bool = false, usesD
     let snapshotName = _sanitizedTestName(name)
     let tolerance = tolerance ?? _getTolerance()
 
-    let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false, referenceDirectory: referenceImageDirectory, tolerance: tolerance)
+    let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false, referenceDirectory: referenceImageDirectory, tolerance: tolerance, filename: actualExpression.location.file)
 
     if !result {
         _clearFailureMessage(failureMessage)
@@ -164,7 +164,7 @@ func _recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRe
 
     _clearFailureMessage(failureMessage)
 
-    if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory, tolerance: tolerance) {
+    if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory, tolerance: tolerance, filename: actualExpression.location.file) {
         failureMessage.expected = "snapshot \(name ?? snapshotName) successfully recorded, replace recordSnapshot with a check"
     } else {
         failureMessage.expected = "expected to record a snapshot in \(name)"
@@ -185,23 +185,9 @@ private func currentTestName() -> String? {
     return nil
 }
 
-private func currentFileName() -> String? {
-    if let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata {
-        return quickExample.example.callsite.file
-    }
-
-    if let testCase = CurrentTestCaseTracker.shared.currentTestCase {
-        return currentFilename
-    }
-
-    return nil
-}
-
 internal var switchChecksWithRecords = false
 
-public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil,
-                              file: String = #file) -> MatcherFunc<Snapshotable> {
-    currentFilename = file
+public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil) -> MatcherFunc<Snapshotable> {
 
     return MatcherFunc { actualExpression, failureMessage in
         if (switchChecksWithRecords) {
@@ -212,9 +198,7 @@ public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = fa
     }
 }
 
-public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil,
-                                            file: String = #file) -> MatcherFunc<Snapshotable> {
-    currentFilename = file
+public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false, tolerance: CGFloat? = nil) -> MatcherFunc<Snapshotable> {
 
     return MatcherFunc { actualExpression, failureMessage in
         if (switchChecksWithRecords) {
@@ -225,18 +209,14 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawR
     }
 }
 
-public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false,
-                           file: String = #file) -> MatcherFunc<Snapshotable> {
-    currentFilename = file
+public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
 
     return MatcherFunc { actualExpression, failureMessage in
         return _recordSnapshot(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
-public func recordDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false,
-                                         file: String = #file) -> MatcherFunc<Snapshotable> {
-    currentFilename = file
+public func recordDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
 
     return MatcherFunc { actualExpression, failureMessage in
         return _recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect, actualExpression: actualExpression, failureMessage: failureMessage)
