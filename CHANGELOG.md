@@ -3,6 +3,7 @@
 ## master
 
 * Drops support for Swift 2.3 - @marcelofabri
+* Adds device agnostic support for testing dynamic sizes - @fsaragoca
 
 ## 4.4.2
 
