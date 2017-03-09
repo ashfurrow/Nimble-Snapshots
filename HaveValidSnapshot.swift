@@ -179,7 +179,8 @@ private func currentTestName() -> String? {
     }
 
     if let testCase = CurrentTestCaseTracker.shared.currentTestCase {
-        return testCase.name
+        let characterSet = CharacterSet(charactersIn: "[]+-")
+        return testCase.name?.components(separatedBy: characterSet).joined()
     }
 
     return nil
