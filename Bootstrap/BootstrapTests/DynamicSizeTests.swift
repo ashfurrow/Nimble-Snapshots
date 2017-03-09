@@ -5,7 +5,7 @@ import Bootstrap
 
 class DynamicSizeTests: QuickSpec {
     override func spec() {
-        describe("in some context", {
+        describe("in some context") {
             
             var view: UIView!
             let sizes = ["SmallSize": CGSize(width: 44, height: 44),
@@ -22,7 +22,7 @@ class DynamicSizeTests: QuickSpec {
                 
                 beforeEach {
                     view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
-                    view.backgroundColor = UIColor.blueColor()
+                    view.backgroundColor = .blue
                 }
                 
                 it("has a valid snapshot to all sizes") {
@@ -39,7 +39,7 @@ class DynamicSizeTests: QuickSpec {
             context("using new constrains") {
                 beforeEach {
                     view = UIView()
-                    view.backgroundColor = UIColor.blueColor()
+                    view.backgroundColor = .blue
                     view.autoresizingMask = []
                     view.translatesAutoresizingMaskIntoConstraints = false
                 }
@@ -58,11 +58,11 @@ class DynamicSizeTests: QuickSpec {
             context("using constrains from view") {
                 beforeEach {
                     view = UIView()
-                    view.backgroundColor = UIColor.blueColor()
+                    view.backgroundColor = .blue
                     view.autoresizingMask = []
                     view.translatesAutoresizingMaskIntoConstraints = false
-                    view.widthAnchor.constraintEqualToConstant(10).active = true
-                    view.heightAnchor.constraintEqualToConstant(10).active = true
+                    view.widthAnchor.constraint(equalToConstant: 10).isActive = true
+                    view.heightAnchor.constraint(equalToConstant: 10).isActive = true
                 }
                 
                 it("has a valid snapshot to all sizes") {
@@ -79,12 +79,12 @@ class DynamicSizeTests: QuickSpec {
             context("using block") {
                 beforeEach {
                     view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
-                    view.backgroundColor = UIColor.blueColor()
+                    view.backgroundColor = .blue
                 }
                 
                 it("has a valid snapshot to all sizes") {
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
-                        view.frame = CGRect(origin: CGPoint.zero, size: size)
+                        view.frame = CGRect(origin: .zero, size: size)
                         view.layoutIfNeeded()
                     })))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
@@ -95,7 +95,7 @@ class DynamicSizeTests: QuickSpec {
                 
                 it("has a valid snapshot to all sizes (using == operator)") {
                     expect(view) == snapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
-                        view.frame = CGRect(origin: CGPoint.zero, size: size)
+                        view.frame = CGRect(origin: .zero, size: size)
                         view.layoutIfNeeded()
                     }))
 //                    expect(view) == recordSnapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
@@ -109,7 +109,7 @@ class DynamicSizeTests: QuickSpec {
             context("using custom resizer") {
                 beforeEach {
                     view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
-                    view.backgroundColor = UIColor.blueColor()
+                    view.backgroundColor = .blue
                 }
                 
                 it("has a valid snapshot to all sizes") {
@@ -127,15 +127,15 @@ class DynamicSizeTests: QuickSpec {
                 }
             }
 
-        })
+        }
     }
 }
 
 class CustomResizer: ViewResizer {
     var used = 0
     
-    func resize(view view: UIView, for size: CGSize) {
-        view.frame = CGRect(origin: CGPoint.zero, size: size)
+    func resize(view: UIView, for size: CGSize) {
+        view.frame = CGRect(origin: .zero, size: size)
         view.layoutIfNeeded()
         used += 1
     }

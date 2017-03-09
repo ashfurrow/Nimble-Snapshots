@@ -8,40 +8,40 @@ public final class DynamicTypeView: UIView {
         label = UILabel()
         super.init(frame: frame)
 
-        backgroundColor = .whiteColor()
+        backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
 
-        label.font = .preferredFontForTextStyle(UIFontTextStyleBody)
+        label.font = .preferredFont(forTextStyle: .body)
         label.text = "Example"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .Center
+        label.textAlignment = .center
         addSubview(label)
 
         setNeedsUpdateConstraints()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateFonts),
-                                                         name: UIContentSizeCategoryDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFonts),
+                                                         name: .UIContentSizeCategoryDidChange, object: nil)
     }
 
     private var createdConstraints = false
     public override func updateConstraints() {
         if !createdConstraints {
-            label.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-            label.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-            label.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-            label.topAnchor.constraintEqualToAnchor(topAnchor).active = true
+            label.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            label.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+            label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            label.topAnchor.constraint(equalTo: topAnchor).isActive = true
         }
 
         super.updateConstraints()
     }
 
-    func updateFonts(notification: NSNotification) {
+    func updateFonts(_ notification: Notification) {
         guard let category = notification.userInfo?[UIContentSizeCategoryNewValueKey] as? String else {
             return
         }
 
-        label.font = .preferredFontForTextStyle(UIFontTextStyleBody)
-        label.text = category.stringByReplacingOccurrencesOfString("UICTContentSizeCategory", withString: "")
+        label.font = .preferredFont(forTextStyle: .body)
+        label.text = category.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
     }
     
     public required init?(coder aDecoder: NSCoder) {

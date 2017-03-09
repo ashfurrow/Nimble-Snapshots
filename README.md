@@ -38,22 +38,6 @@ $ pod install
 You need to be using Carthage 0.18 or higher. Your `Cartfile` (or `Cartfile.private`) should look
 something like the following.
 
-#### Swift 2.3
-
-```rb
-github "Quick/Quick" ~> 0.9.3
-github "Quick/Nimble" ~> 4.1
-github "facebook/ios-snapshot-test-case" "2.1.3"
-github "Wallapop/Nimble-Snapshots"  ~> 4.4.0
-```
-
-Then run:
-```
-$ carthage bootstrap --platform iOS --toolchain com.apple.dt.toolchain.Swift_2_3
-```
-
-#### Swift 3.0
-
 ```rb
 github "Quick/Quick" ~> 1.0.0
 github "Quick/Nimble" ~> 5.1.1
@@ -79,12 +63,12 @@ import UIKit
 
 class MySpec: QuickSpec {
     override func spec() {
-        describe("in some context", { () -> () in
+        describe("in some context") {
             it("has valid snapshot") {
                 let view = ... // some view you want to test
                 expect(view).to( haveValidSnapshot() )
             }
-        })
+        }
     }
 }
 ```
