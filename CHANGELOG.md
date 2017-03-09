@@ -1,5 +1,9 @@
 # Nimble-Snapshots
 
+## master
+
+* Drops support for Swift 2.3 - @marcelofabri
+
 ## 4.4.2
 
 * Adds support for Carthage (Swift 3.0) - @juolgon & @lascorbe
