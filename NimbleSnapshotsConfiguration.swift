@@ -4,8 +4,12 @@ import XCTest
 class FBSnapshotTestConfiguration: QuickConfiguration {
 
     override class func configure(_ configuration: Configuration) {
-        configuration.beforeEach { (exampleMetadata: ExampleMetadata) -> () in
+        configuration.beforeEach { exampleMetadata in
             FBSnapshotTest.sharedInstance.currentExampleMetadata = exampleMetadata
+        }
+
+        configuration.afterEach { (_: ExampleMetadata) in
+            FBSnapshotTest.sharedInstance.currentExampleMetadata = nil
         }
     }
 }
