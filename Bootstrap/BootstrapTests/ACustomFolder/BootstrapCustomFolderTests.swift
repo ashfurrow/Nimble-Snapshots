@@ -1,6 +1,6 @@
-import Quick
 import Nimble
 import Nimble_Snapshots
+import Quick
 
 class BootstrapCustomFormatTests: QuickSpec {
     override func spec() {
@@ -20,7 +20,7 @@ class BootstrapCustomFormatTests: QuickSpec {
             it("finds the snapshots using a custom images directory") {
                 expect(view).to(haveValidSnapshot())
             }
-          
+
             it("finds device agnostic snapshots with custom images directory") {
                 expect(view).to(haveValidDeviceAgnosticSnapshot())
             }

@@ -20,7 +20,7 @@ public func recordSnapshot(_ name: String? = nil) -> Snapshot {
     return Snapshot(name: name, record: true)
 }
 
-public func ==(lhs: Expectation<Snapshotable>, rhs: Snapshot) {
+public func == (lhs: Expectation<Snapshotable>, rhs: Snapshot) {
     if let name = rhs.name {
         if rhs.record {
             lhs.to(recordSnapshot(named: name))

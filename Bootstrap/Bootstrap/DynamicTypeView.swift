@@ -43,7 +43,7 @@ public final class DynamicTypeView: UIView {
         label.font = .preferredFont(forTextStyle: .body)
         label.text = category.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
