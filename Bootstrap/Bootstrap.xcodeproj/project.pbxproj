@@ -20,6 +20,7 @@
 		C63B5DDA26F71A257C30F713 /* Pods_BootstrapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D94D9F88FB2A2621AAAD2E60 /* Pods_BootstrapTests.framework */; };
 		D44D1EFF1D9D87A9006DCD0C /* DynamicTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D1EFE1D9D87A9006DCD0C /* DynamicTypeTests.swift */; };
 		D44D1F011D9D87CC006DCD0C /* DynamicTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D1F001D9D87CC006DCD0C /* DynamicTypeView.swift */; };
+		D4E1BD851E7164DD00F0A4B5 /* WithoutQuickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1BD841E7164DD00F0A4B5 /* WithoutQuickTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		A57DFE7C77534A99563B1C8B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D44D1EFE1D9D87A9006DCD0C /* DynamicTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTypeTests.swift; sourceTree = "<group>"; };
 		D44D1F001D9D87CC006DCD0C /* DynamicTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTypeView.swift; sourceTree = "<group>"; };
+		D4E1BD841E7164DD00F0A4B5 /* WithoutQuickTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithoutQuickTests.swift; sourceTree = "<group>"; };
 		D94D9F88FB2A2621AAAD2E60 /* Pods_BootstrapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BootstrapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -139,6 +141,7 @@
 				D44D1EFE1D9D87A9006DCD0C /* DynamicTypeTests.swift */,
 				5EDEF1DB1A1E5780004D7BAB /* Supporting Files */,
 				1DD47A571DD2AA04004B53FA /* DynamicSizeTests.swift */,
+				D4E1BD841E7164DD00F0A4B5 /* WithoutQuickTests.swift */,
 			);
 			path = BootstrapTests;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 			files = (
 				1DD47A581DD2AA04004B53FA /* DynamicSizeTests.swift in Sources */,
 				D44D1EFF1D9D87A9006DCD0C /* DynamicTypeTests.swift in Sources */,
+				D4E1BD851E7164DD00F0A4B5 /* WithoutQuickTests.swift in Sources */,
 				11BFADFD1BE4196100F74D8E /* BootstrapCustomFolderTests.swift in Sources */,
 				5EDEF1DE1A1E5780004D7BAB /* BootstrapTests.swift in Sources */,
 			);

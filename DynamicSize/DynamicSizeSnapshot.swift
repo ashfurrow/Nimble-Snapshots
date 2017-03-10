@@ -155,11 +155,11 @@ func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], is
         
         resizer.resize(view: view, for: size)
         
-        return FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: "\(snapshotName) - \(sizeName)", record: isRecord, referenceDirectory: referenceImageDirectory, tolerance: tolerance)
+        return FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect, snapshot: "\(snapshotName) - \(sizeName)", record: isRecord, referenceDirectory: referenceImageDirectory, tolerance: tolerance, filename: actualExpression.location.file)
     }
     
     if isRecord {
-        if result.filter({ !$0 }).count == 0 {
+        if result.filter({ !$0 }).isEmpty {
             failureMessage.actualValue = "snapshot \(name ?? snapshotName) successfully recorded, replace recordSnapshot with a check"
         } else {
             failureMessage.actualValue = "expected to record a snapshot in \(name)"
@@ -167,7 +167,7 @@ func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], is
         
         return false
     } else {
-        if result.filter({ !$0 }).count > 0 {
+        if !result.filter({ !$0 }).isEmpty {
             _clearFailureMessage(failureMessage)
             failureMessage.actualValue = "expected a matching snapshot in \(snapshotName)"
             return false
