@@ -25,4 +25,8 @@ task :carthage do
       raise("Carthage did not succeed") unless has_artifacts
     end
   end
+
+desc 'Runs SwiftLint'
+task :swiftlint do
+  sh 'swiftlint lint --no-cache'
 end
