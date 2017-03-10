@@ -4,6 +4,7 @@
 
 * Drops support for Swift 2.3 - @marcelofabri
 * Adds device agnostic support for testing dynamic sizes - @fsaragoca
+* Makes it possible to use it without Quick - @marcelofabri
 
 ## 4.4.2
 
