@@ -5,7 +5,7 @@ before_script:
   - bundle install
   - cd Bootstrap ; bundle exec pod install --repo-update ; cd ..
   - export LANG=en_US.UTF-8
-  - brew uninstall swiftlint || (brew update && brew install swiftlint)
+  - brew uninstall swiftlint ; (brew update && brew install swiftlint)
 script:
   - rake swiftlint
   - rake test
