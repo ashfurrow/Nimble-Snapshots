@@ -26,3 +26,8 @@ task :carthage do
     end
   end
 end
+
+desc 'Runs SwiftLint'
+task :swiftlint do
+  sh 'swiftlint lint --no-cache'
+end

@@ -181,6 +181,7 @@
 			buildConfigurationList = 5E28C2C81993C6FF0066DB4D /* Build configuration list for PBXNativeTarget "Bootstrap" */;
 			buildPhases = (
 				5E28C2A81993C6FE0066DB4D /* Sources */,
+				D4A0565B1E72BAEB00AB3788 /* SwiftLint */,
 				5E28C2A91993C6FE0066DB4D /* Frameworks */,
 				5E28C2AA1993C6FE0066DB4D /* Resources */,
 			);
@@ -321,6 +322,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BootstrapTests/Pods-BootstrapTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		D4A0565B1E72BAEB00AB3788 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  cd ..; swiftlint lint --no-cache\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

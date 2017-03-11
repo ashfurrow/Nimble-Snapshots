@@ -1,6 +1,6 @@
-import Quick
 import Nimble
 import Nimble_Snapshots
+import Quick
 import XCTest
 
 class WithoutQuickTests: XCTestCase {

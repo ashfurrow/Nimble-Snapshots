@@ -1,7 +1,7 @@
-import Quick
+import Bootstrap
 import Nimble
 import Nimble_Snapshots
-import Bootstrap
+import Quick
 
 class DynamicTypeTests: QuickSpec {
     override func spec() {
