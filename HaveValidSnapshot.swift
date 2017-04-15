@@ -182,7 +182,13 @@ func _recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRe
         let name = name ?? snapshotName
         failureMessage.expected = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else {
-        failureMessage.expected = "expected to record a snapshot in \(name)"
+        let expectedMessage: String
+        if let name = name {
+            expectedMessage = "expected to record a snapshot in \(name)"
+        } else {
+            expectedMessage = "expected to record a snapshot"
+        }
+        failureMessage.expected = expectedMessage
     }
 
     return false
