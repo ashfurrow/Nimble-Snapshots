@@ -14,13 +14,6 @@ class FBSnapshotTestConfiguration: QuickConfiguration {
     }
 }
 
-// Extracted from https://github.com/Quick/Nimble/blob/master/Sources/Nimble/Adapters/NimbleXCTestHandler.swift
-extension XCTestObservationCenter {
-    override open class func initialize() {
-        self.shared().addTestObserver(CurrentTestCaseTracker.shared)
-    }
-}
-
 /// Helper class providing access to the currently executing XCTestCase instance, if any
 @objc final class CurrentTestCaseTracker: NSObject, XCTestObservation {
     @objc static let shared = CurrentTestCaseTracker()
