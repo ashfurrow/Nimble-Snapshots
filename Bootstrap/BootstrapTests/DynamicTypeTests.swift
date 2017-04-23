@@ -16,7 +16,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid snapshot for all content size categories (iOS 9)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 9 && version.minorVersion == 3 else {
+                guard version.iOS9 else {
                     return
                 }
 
@@ -27,7 +27,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid snapshot for a single content size category (iOS 9)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 9 && version.minorVersion == 3 else {
+                guard version.iOS9 else {
                     return
                 }
 
@@ -38,7 +38,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid snapshot for all content size categories (iOS 10)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 10 && version.minorVersion == 2 else {
+                guard version.iOS10 else {
                     return
                 }
 
@@ -50,7 +50,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid snapshot for a single content size category (iOS 10)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 10 && version.minorVersion == 2 else {
+                guard version.iOS10 else {
                     return
                 }
 
@@ -62,7 +62,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid pretty-syntax snapshot (iOS 9)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 9 && version.minorVersion == 3 else {
+                guard version.iOS9 else {
                     return
                 }
 
@@ -71,7 +71,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid pretty-syntax snapshot (iOS 10)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 10 && version.minorVersion == 0 else {
+                guard version.iOS10 else {
                     return
                 }
 
@@ -80,7 +80,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid pretty-syntax snapshot for only one size category (iOS 9)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 9 && version.minorVersion == 3 else {
+                guard version.iOS9 else {
                     return
                 }
 
@@ -89,7 +89,7 @@ class DynamicTypeTests: QuickSpec {
 
             it("has a valid pretty-syntax snapshot for only one size category (iOS 10)") {
                 let version = ProcessInfo.processInfo.operatingSystemVersion
-                guard version.majorVersion == 10 && version.minorVersion == 0 else {
+                guard version.iOS10 else {
                     return
                 }
 
@@ -101,5 +101,15 @@ class DynamicTypeTests: QuickSpec {
                 expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS", isDeviceAgnostic: true))
             }
         }
+    }
+}
+
+private extension OperatingSystemVersion {
+    var iOS10: Bool {
+        return majorVersion == 10 && minorVersion == 3
+    }
+
+    var iOS9: Bool {
+        return majorVersion == 9 && minorVersion == 3
     }
 }
