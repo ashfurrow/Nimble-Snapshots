@@ -42,7 +42,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
     let mock = NBSMockedApplication()
 
     let matchers: [MatcherFunc<Snapshotable>] = sizes.map { category in
-        let sanitizedName = _sanitizedTestName(name)
+        let sanitizedName = sanitizedTestName(name)
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
         return MatcherFunc { actualExpression, failureMessage in
@@ -71,7 +71,7 @@ public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: B
     let mock = NBSMockedApplication()
 
     let matchers: [MatcherFunc<Snapshotable>] = sizes.map { category in
-        let sanitizedName = _sanitizedTestName(name)
+        let sanitizedName = sanitizedTestName(name)
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
         return MatcherFunc { actualExpression, failureMessage in

@@ -157,9 +157,9 @@ func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], is
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
-    let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = _sanitizedTestName(name)
-    let tolerance = tolerance ?? _getTolerance()
+    let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
+    let snapshotName = sanitizedTestName(name)
+    let tolerance = tolerance ?? getTolerance()
 
     let resizer = resizeMode.viewResizer()
 
@@ -180,13 +180,13 @@ func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], is
             let name = name ?? snapshotName
             failureMessage.actualValue = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
         } else {
-            failureMessage.actualValue = "expected to record a snapshot in \(name)"
+            failureMessage.actualValue = "expected to record a snapshot in \(String(describing: name))"
         }
 
         return false
     } else {
         if !result.filter({ !$0 }).isEmpty {
-            _clearFailureMessage(failureMessage)
+            clearFailureMessage(failureMessage)
             failureMessage.actualValue = "expected a matching snapshot in \(snapshotName)"
             return false
         }
