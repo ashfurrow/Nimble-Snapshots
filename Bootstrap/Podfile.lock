@@ -43,7 +43,7 @@ SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
   Nimble: c53e6903fee94041b90ded74f135820437d8bf59
-  Nimble-Snapshots: 9dc8c47ce13d68652caf2510d697c25eb732e487
+  Nimble-Snapshots: 8b21e0d72c0e2a532782ee57f4f83d13ab1ca251
   OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
   Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
 

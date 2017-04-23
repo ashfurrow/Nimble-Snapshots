@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.frameworks  = "Foundation", "XCTest"
 
   s.subspec "Core" do |ss|
-    ss.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift", "NimbleSnapshotsConfiguration.swift"
+    ss.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift", "NimbleSnapshotsConfiguration.swift", "XCTestObservationCenter+CurrentTestCaseTracker.{h,m}"
     ss.dependency "FBSnapshotTestCase", "~> 2.0"
     ss.dependency "Nimble"
     ss.dependency "Quick"
