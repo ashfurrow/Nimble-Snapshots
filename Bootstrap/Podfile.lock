@@ -7,7 +7,7 @@ PODS:
   - Forgeries (1.0.0):
     - Forgeries/Core (= 1.0.0)
   - Forgeries/Core (1.0.0)
-  - Nimble (6.0.1)
+  - Nimble (6.1.0)
   - Nimble-Snapshots/Core (4.4.2):
     - FBSnapshotTestCase (~> 2.0)
     - Nimble
@@ -23,7 +23,7 @@ PODS:
 DEPENDENCIES:
   - FBSnapshotTestCase (from `https://github.com/facebook/ios-snapshot-test-case.git`)
   - Forgeries
-  - Nimble (~> 6.0.1)
+  - Nimble (~> 6.1.0)
   - Nimble-Snapshots/DynamicSize (from `../`)
   - Nimble-Snapshots/DynamicType (from `../`)
   - Quick (~> 1.1.0)
@@ -40,13 +40,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/facebook/ios-snapshot-test-case.git
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
-  Nimble: 1527fd1bd2b4cf0636251a36bc8ab37e81da8347
-  Nimble-Snapshots: 9dc8c47ce13d68652caf2510d697c25eb732e487
+  Nimble: c53e6903fee94041b90ded74f135820437d8bf59
+  Nimble-Snapshots: 8b21e0d72c0e2a532782ee57f4f83d13ab1ca251
   OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
   Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
 
-PODFILE CHECKSUM: 519ab3b5519a34640cc5639010042334331331ab
+PODFILE CHECKSUM: 206301e00d9b7d4f66d75631eed31bed269c2a41
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1

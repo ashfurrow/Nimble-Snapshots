@@ -5,7 +5,7 @@ pod 'Forgeries'
 
 target 'BootstrapTests' do
   pod 'Quick', '~> 1.1.0'
-  pod 'Nimble', '~> 6.0.1'
+  pod 'Nimble', '~> 6.1.0'
   pod 'FBSnapshotTestCase', git: 'https://github.com/facebook/ios-snapshot-test-case.git'
 
   pod 'Nimble-Snapshots/DynamicType', :path => "../"

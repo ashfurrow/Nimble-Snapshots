@@ -79,7 +79,7 @@ public func setNimbleTolerance(_ tolerance: CGFloat) {
     FBSnapshotTest.sharedInstance.tolerance = tolerance
 }
 
-func _getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
+func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
     }
@@ -119,7 +119,7 @@ private func parseFilename(filename: String) -> String {
     return sanitizedName
 }
 
-func _sanitizedTestName(_ name: String?) -> String {
+func sanitizedTestName(_ name: String?) -> String {
 	guard let testName = currentTestName() else {
 		fatalError("Test matchers must be called from inside a test block")
 	}
@@ -131,26 +131,26 @@ func _sanitizedTestName(_ name: String?) -> String {
     return components.joined(separator: "_")
 }
 
-func _getTolerance() -> CGFloat {
+func getTolerance() -> CGFloat {
     return FBSnapshotTest.sharedInstance.tolerance
 }
 
-func _clearFailureMessage(_ failureMessage: FailureMessage) {
+func clearFailureMessage(_ failureMessage: FailureMessage) {
     failureMessage.actualValue = nil
     failureMessage.expected = ""
     failureMessage.postfixMessage = ""
     failureMessage.to = ""
 }
 
-func _performSnapshotTest(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
-                          actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage,
-                          tolerance: CGFloat?) -> Bool {
+private func performSnapshotTest(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
+                                 actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage,
+                                 tolerance: CGFloat?) -> Bool {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
-    let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = _sanitizedTestName(name)
-    let tolerance = tolerance ?? _getTolerance()
+    let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
+    let snapshotName = sanitizedTestName(name)
+    let tolerance = tolerance ?? getTolerance()
 
     let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic,
                                                 usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false,
@@ -158,23 +158,23 @@ func _performSnapshotTest(_ name: String?, isDeviceAgnostic: Bool = false, usesD
                                                 filename: actualExpression.location.file)
 
     if !result {
-        _clearFailureMessage(failureMessage)
+        clearFailureMessage(failureMessage)
         failureMessage.expected = "expected a matching snapshot in \(snapshotName)"
     }
 
     return result
 }
 
-func _recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
-                     actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+private func recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
+                            actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
-    let referenceImageDirectory = _getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = _sanitizedTestName(name)
-    let tolerance = _getTolerance()
+    let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
+    let snapshotName = sanitizedTestName(name)
+    let tolerance = getTolerance()
 
-    _clearFailureMessage(failureMessage)
+    clearFailureMessage(failureMessage)
 
     if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect,
                                       snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory,
@@ -182,7 +182,13 @@ func _recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, usesDrawRe
         let name = name ?? snapshotName
         failureMessage.expected = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else {
-        failureMessage.expected = "expected to record a snapshot in \(name)"
+        let expectedMessage: String
+        if let name = name {
+            expectedMessage = "expected to record a snapshot in \(name)"
+        } else {
+            expectedMessage = "expected to record a snapshot"
+        }
+        failureMessage.expected = expectedMessage
     }
 
     return false
@@ -208,12 +214,12 @@ public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = fa
 
     return MatcherFunc { actualExpression, failureMessage in
         if switchChecksWithRecords {
-            return _recordSnapshot(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression,
-                                   failureMessage: failureMessage)
+            return recordSnapshot(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression,
+                                  failureMessage: failureMessage)
         }
 
-        return _performSnapshotTest(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression,
-                                    failureMessage: failureMessage, tolerance: tolerance)
+        return performSnapshotTest(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression,
+                                   failureMessage: failureMessage, tolerance: tolerance)
     }
 }
 
@@ -222,21 +228,21 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawR
 
     return MatcherFunc { actualExpression, failureMessage in
         if switchChecksWithRecords {
-            return _recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                                   actualExpression: actualExpression, failureMessage: failureMessage)
+            return recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
+                                  actualExpression: actualExpression, failureMessage: failureMessage)
         }
 
-        return _performSnapshotTest(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                                    actualExpression: actualExpression,
-                                    failureMessage: failureMessage, tolerance: tolerance)
+        return performSnapshotTest(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
+                                   actualExpression: actualExpression,
+                                   failureMessage: failureMessage, tolerance: tolerance)
     }
 }
 
 public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
 
     return MatcherFunc { actualExpression, failureMessage in
-        return _recordSnapshot(name, usesDrawRect: usesDrawRect,
-                               actualExpression: actualExpression, failureMessage: failureMessage)
+        return recordSnapshot(name, usesDrawRect: usesDrawRect,
+                              actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
@@ -244,7 +250,7 @@ public func recordDeviceAgnosticSnapshot(named name: String? = nil,
                                          usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
 
     return MatcherFunc { actualExpression, failureMessage in
-        return _recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                               actualExpression: actualExpression, failureMessage: failureMessage)
+        return recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
+                              actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }

@@ -1,13 +1,16 @@
 require 'tmpdir'
 
-desc 'Run unit tests on iOS 9.3 and 10.2'
+desc 'Run unit tests on iOS 9.3 and 10.3'
 task :test do
-  sh "set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=9.3' -destination 'platform=iOS Simulator,id=1FD54EA7-5A25-4D6F-8599-D6F7687DA4EE,OS=10.2' clean build test | xcpretty --color --simple"
+  # workaround for https://github.com/travis-ci/travis-ci/issues/7638
+  sh "xcrun simctl create 'iPhone 6' com.apple.CoreSimulator.SimDeviceType.iPhone-6 com.apple.CoreSimulator.SimRuntime.iOS-9-3"
+
+  sh "set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=9.3' -destination 'name=iPhone 6,OS=10.3' clean build test | xcpretty --color --simple"
 end
 
 desc 'Lint the library for CocoaPods usage'
 task :pod_lint do
-  sh 'bundle exec pod lib lint'
+  sh 'bundle exec pod lib lint --allow-warnings'
 end
 
 desc 'Run a local copy of Carthage on a temporary directory'
