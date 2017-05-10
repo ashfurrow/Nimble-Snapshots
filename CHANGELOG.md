@@ -1,5 +1,10 @@
 # Nimble-Snapshots
 
+## Next
+* Update the Cartfile to use always the latest stable release of Nimble and Quick.
+* Fix issue with the installation using Carthage.
+* Changed use of deprecated `MatcherFunc` to `Predicate` in favor of `Nimble v7.0.0`.
+
 ## master
 
 * Drops support for Swift 2.3 - @marcelofabri
