@@ -210,9 +210,9 @@ private func currentTestName() -> String? {
 internal var switchChecksWithRecords = false
 
 public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = false,
-                              tolerance: CGFloat? = nil) -> MatcherFunc<Snapshotable> {
+                              tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
-    return MatcherFunc { actualExpression, failureMessage in
+    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         if switchChecksWithRecords {
             return recordSnapshot(name, usesDrawRect: usesDrawRect, actualExpression: actualExpression,
                                   failureMessage: failureMessage)
@@ -224,9 +224,9 @@ public func haveValidSnapshot(named name: String? = nil, usesDrawRect: Bool = fa
 }
 
 public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawRect: Bool = false,
-                                            tolerance: CGFloat? = nil) -> MatcherFunc<Snapshotable> {
+                                            tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
-    return MatcherFunc { actualExpression, failureMessage in
+    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         if switchChecksWithRecords {
             return recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
                                   actualExpression: actualExpression, failureMessage: failureMessage)
@@ -238,18 +238,18 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawR
     }
 }
 
-public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
-
-    return MatcherFunc { actualExpression, failureMessage in
+public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
+    
+    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         return recordSnapshot(name, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression, failureMessage: failureMessage)
     }
 }
 
 public func recordDeviceAgnosticSnapshot(named name: String? = nil,
-                                         usesDrawRect: Bool = false) -> MatcherFunc<Snapshotable> {
+                                         usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
 
-    return MatcherFunc { actualExpression, failureMessage in
+    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         return recordSnapshot(name, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression, failureMessage: failureMessage)
     }
