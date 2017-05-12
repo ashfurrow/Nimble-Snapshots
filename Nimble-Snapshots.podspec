@@ -18,8 +18,8 @@ Pod::Spec.new do |s|
   s.subspec "Core" do |ss|
     ss.source_files  = "HaveValidSnapshot.swift", "PrettySyntax.swift", "NimbleSnapshotsConfiguration.swift", "XCTestObservationCenter+CurrentTestCaseTracker.{h,m}"
     ss.dependency "FBSnapshotTestCase", "~> 2.0"
-    ss.dependency "Nimble"
-    ss.dependency "Quick"
+    ss.dependency "Nimble", "~> 7.0"
+    ss.dependency "Quick", "~> 1.0"
   end
 
   s.subspec "DynamicType" do |ss|
