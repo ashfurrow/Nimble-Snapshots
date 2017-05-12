@@ -239,7 +239,7 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, usesDrawR
 }
 
 public func recordSnapshot(named name: String? = nil, usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
-    
+
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         return recordSnapshot(name, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression, failureMessage: failureMessage)
