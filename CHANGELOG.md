@@ -6,9 +6,6 @@
 * Adds device agnostic support for testing dynamic sizes - @fsaragoca
 * Makes it possible to use it without Quick - @marcelofabri
 * Support usesDrawRect when using PrettySyntax - @marcelofabri
-
-## 4.4.3
-
 * Exposes `FBSnapshotTest` as a public class with a public `setReferenceImagesDirectory` function - @ashfurrow
 
 ## 4.4.2
