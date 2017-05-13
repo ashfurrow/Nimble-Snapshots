@@ -7,6 +7,10 @@
 * Makes it possible to use it without Quick - @marcelofabri
 * Support usesDrawRect when using PrettySyntax - @marcelofabri
 
+## 4.4.3
+
+* Exposes `FBSnapshotTest` as a public class with a public `setReferenceImagesDirectory` function - @ashfurrow
+
 ## 4.4.2
 
 * Adds support for Carthage (Swift 3.0) - @juolgon & @lascorbe
