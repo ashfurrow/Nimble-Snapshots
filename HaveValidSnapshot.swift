@@ -23,7 +23,7 @@ extension UIView : Snapshotable {
     }
 }
 
-@objc class FBSnapshotTest: NSObject {
+@objc public class FBSnapshotTest: NSObject {
 
     var currentExampleMetadata: ExampleMetadata?
 
@@ -37,7 +37,7 @@ extension UIView : Snapshotable {
         return Instance.instance
     }
 
-    class func setReferenceImagesDirectory(_ directory: String?) {
+    public class func setReferenceImagesDirectory(_ directory: String?) {
         sharedInstance.referenceImagesDirectory = directory
     }
 
