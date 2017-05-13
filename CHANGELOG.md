@@ -1,7 +1,12 @@
 # Nimble-Snapshots
 
-## master
+## Next
 
+## 5.0.0
+
+* Update the Cartfile to use always the latest stable release of Nimble and Quick.
+* Fix issue with the installation using Carthage.
+* Changed use of deprecated `MatcherFunc` to `Predicate` in favor of `Nimble v7.0.0`.
 * Drops support for Swift 2.3 - @marcelofabri
 * Adds device agnostic support for testing dynamic sizes - @fsaragoca
 * Makes it possible to use it without Quick - @marcelofabri
