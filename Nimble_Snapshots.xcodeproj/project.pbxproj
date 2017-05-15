@@ -14,6 +14,8 @@
 		095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478C1D47794300880922 /* HaveValidSnapshot.swift */; };
 		095B47901D47794300880922 /* NimbleSnapshotsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478D1D47794300880922 /* NimbleSnapshotsConfiguration.swift */; };
 		095B47911D47794300880922 /* PrettySyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478E1D47794300880922 /* PrettySyntax.swift */; };
+		D47CB5F91EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */; };
+		D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		095B478C1D47794300880922 /* HaveValidSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidSnapshot.swift; sourceTree = SOURCE_ROOT; };
 		095B478D1D47794300880922 /* NimbleSnapshotsConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NimbleSnapshotsConfiguration.swift; sourceTree = SOURCE_ROOT; };
 		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = SOURCE_ROOT; };
+		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestObservationCenter+CurrentTestCaseTracker.h"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
+		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+CurrentTestCaseTracker.m"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,8 @@
 				095B478C1D47794300880922 /* HaveValidSnapshot.swift */,
 				095B478D1D47794300880922 /* NimbleSnapshotsConfiguration.swift */,
 				095B478E1D47794300880922 /* PrettySyntax.swift */,
+				D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */,
+				D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */,
 				095B47701D4773F000880922 /* Nimble_Snapshots.h */,
 				095B47721D4773F000880922 /* Info.plist */,
 			);
@@ -80,6 +86,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47CB5F91EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h in Headers */,
 				095B47711D4773F000880922 /* Nimble_Snapshots.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				095B47911D47794300880922 /* PrettySyntax.swift in Sources */,
+				D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */,
 				095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */,
 				095B47901D47794300880922 /* NimbleSnapshotsConfiguration.swift in Sources */,
 			);
