@@ -2,6 +2,12 @@
 
 ## Next
 
+- Nothing yet!
+
+## 5.0.1
+
+* Fixes Carthage installs of 5.0.0.
+
 ## 5.0.0
 
 * Update the Cartfile to use always the latest stable release of Nimble and Quick.
