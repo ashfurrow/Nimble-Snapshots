@@ -39,10 +39,10 @@ You need to be using Carthage 0.18 or higher. Your `Cartfile` (or `Cartfile.priv
 something like the following.
 
 ```rb
-github "Quick/Quick" ~> 1.0.0
-github "Quick/Nimble" ~> 5.1.1
+github "Quick/Quick" ~> 1.0
+github "Quick/Nimble" ~> 5.1
 github "facebook/ios-snapshot-test-case" "2.1.4"
-github "Wallapop/Nimble-Snapshots"  ~> 4.4.0
+github "ashfurrow/Nimble-Snapshots"  ~> 5.0
 ```
 
 Then run:
