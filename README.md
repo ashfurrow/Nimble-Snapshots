@@ -111,6 +111,8 @@ Testing Dynamic Type manually is boring and no one seems to remember doing it
 when implementing a view/screen, so you can have snapshot tests according to
 content size categories.
 
+In order to use Dynamic Type testing, make sure to provide a valid `Host Application` in your testing target.
+
 First, you'll need to change you Podfile to import the Dynamic Type subspec:
 
 ```ruby
