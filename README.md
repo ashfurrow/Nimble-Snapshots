@@ -113,12 +113,6 @@ content size categories.
 
 In order to use Dynamic Type testing, make sure to provide a valid `Host Application` in your testing target.
 
-First, you'll need to change you Podfile to import the Dynamic Type subspec:
-
-```ruby
-pod 'Nimble-Snapshots/DynamicType'
-```
-
 Then you can use the `haveValidDynamicTypeSnapshot` and
 `recordDynamicTypeSnapshot` matchers:
 
@@ -147,13 +141,8 @@ For more info on usage, check out the
 Testing the same view with many sizes is easy but error prone. It easy to fix one test
 on change and forget the others. For this we create a easy way to tests all sizes at same time.
 
-First, you'll need to change you Podfile to import the Dynamic Size subspec:
-
-```ruby
-pod 'Nimble-Snapshots/DynamicSize'
-```
-
-Then you can use the new `haveValidDynamicSizeSnapshot` and `recordDynamicSizeSnapshot` matchers to use it:
+You can use the new `haveValidDynamicSizeSnapshot` and `recordDynamicSizeSnapshot`
+matchers to test multiple sizes at once:
 
 ```swift
 let sizes = ["SmallSize": CGSize(width: 44, height: 44),
@@ -178,13 +167,13 @@ you can use the `ResizeMode` enum:
 public enum ResizeMode {
   case frame
   case constrains
-  case block(resizeBlock: (UIView, CGSize)->())
-  case custom(ViewResizer: ViewResizer)
+  case block(resizeBlock: (UIView, CGSize) -> Void)
+  case custom(viewResizer: ViewResizer)
 }
 ```
 To use the enum you can `expect(view) == dynamicSizeSnapshot(sizes: sizes, resizeMode: newResizeMode)`.
 For custom behavior you can use `ResizeMode.block`. The block will be call on every resize. Or you can
 implement the `ViewResizer` protocol and resize yourself.
-The custom behavier can be used to record the views too.
+The custom behavior can be used to record the views too.
 
 For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests/DynamicSizeTests.swift).
