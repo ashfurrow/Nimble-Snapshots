@@ -46,7 +46,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
         return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
-            mock.mockPrefferedContentSizeCategory(category)
+            mock.mockPreferredContentSizeCategory(category)
 
             let predicate: Predicate<Snapshotable>
             if isDeviceAgnostic {
@@ -61,7 +61,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
     }
 
     return combinePredicates(predicates) {
-        mock.stopMockingPrefferedContentSizeCategory()
+        mock.stopMockingPreferredContentSizeCategory()
     }
 }
 
@@ -75,7 +75,7 @@ public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: B
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
         return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
-            mock.mockPrefferedContentSizeCategory(category)
+            mock.mockPreferredContentSizeCategory(category)
 
             let predicate: Predicate<Snapshotable>
             if isDeviceAgnostic {
@@ -89,6 +89,6 @@ public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: B
     }
 
     return combinePredicates(predicates, ignoreFailures: true) {
-        mock.stopMockingPrefferedContentSizeCategory()
+        mock.stopMockingPreferredContentSizeCategory()
     }
 }
