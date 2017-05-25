@@ -5,8 +5,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NBSMockedApplication : NSObject
 
-- (void)mockPrefferedContentSizeCategory:(UIContentSizeCategory)category;
-- (void)stopMockingPrefferedContentSizeCategory;
+- (void)mockPreferredContentSizeCategory:(UIContentSizeCategory)category;
+- (void)stopMockingPreferredContentSizeCategory;
 
 @end
 

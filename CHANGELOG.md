@@ -2,7 +2,7 @@
 
 ## Next
 
-- Nothing yet!
+* Removes OCMock dependency for DynamicType subspec - @marcelofabri
 
 ## 5.0.1
 

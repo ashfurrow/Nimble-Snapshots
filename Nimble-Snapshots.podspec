@@ -27,7 +27,6 @@ Pod::Spec.new do |s|
     ss.frameworks = "UIKit"
 
     ss.dependency "Nimble-Snapshots/Core"
-    ss.dependency "OCMock", "~> 3.3"
   end
 
   s.subspec "DynamicSize" do |ss|

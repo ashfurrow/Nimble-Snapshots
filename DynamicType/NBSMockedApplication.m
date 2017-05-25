@@ -1,10 +1,23 @@
 #import "NBSMockedApplication.h"
-#import <OCMock/OCMock.h>
+#import <objc/runtime.h>
 
 @interface NBSMockedApplication ()
 
-@property (nonatomic, strong) id applicationMock;
-@property (nonatomic, strong) id fontMock;
+@property (nonatomic) BOOL isSwizzled;
+
+@end
+
+@interface UIFont (Swizzling)
+
++ (void)nbs_swizzle;
+
+@end
+
+@interface UIApplication (Swizzling)
+
++ (void)nbs_swizzle;
+
+@property (nonatomic) UIContentSizeCategory nbs_preferredContentSizeCategory;
 
 @end
 
@@ -16,16 +29,13 @@
     (only available on iOS >= 10), passing an UITraitCollection with the desired contentSizeCategory.
  */
 
-- (void)mockPrefferedContentSizeCategory:(UIContentSizeCategory)category {
-    [self stopMockingPrefferedContentSizeCategory];
+- (void)mockPreferredContentSizeCategory:(UIContentSizeCategory)category {
+    UIApplication.sharedApplication.nbs_preferredContentSizeCategory = category;
 
-    self.applicationMock = OCMPartialMock([UIApplication sharedApplication]);
-    OCMStub([self.applicationMock sharedApplication]).andReturn(self.applicationMock);
-    OCMStub([self.applicationMock preferredContentSizeCategory]).andReturn(category);
-
-    if ([UITraitCollection instancesRespondToSelector:@selector(preferredContentSizeCategory)]) {
-        self.fontMock = OCMClassMock([UIFont class]);
-        OCMStub([self.fontMock preferredFontForTextStyle:[OCMArg any]]).andCall(self, @selector(preferredFontForTextStyle:));
+    if (!self.isSwizzled) {
+        [UIApplication nbs_swizzle];
+        [UIFont nbs_swizzle];
+        self.isSwizzled = YES;
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:UIContentSizeCategoryDidChangeNotification
@@ -33,18 +43,61 @@
                                                       userInfo:@{UIContentSizeCategoryNewValueKey: category}];
 }
 
-- (UIFont *)preferredFontForTextStyle:(UIFontTextStyle)style {
-    UIContentSizeCategory category = [self.applicationMock preferredContentSizeCategory];
+- (void)stopMockingPreferredContentSizeCategory {
+    if (self.isSwizzled) {
+        [UIApplication nbs_swizzle];
+        [UIFont nbs_swizzle];
+        self.isSwizzled = NO;
+    }
+}
+
+- (void)dealloc {
+    [self stopMockingPreferredContentSizeCategory];
+}
+
+@end
+
+@implementation UIFont (Swizzling)
+
++ (UIFont *)nbs_preferredFontForTextStyle:(UIFontTextStyle)style {
+    UIContentSizeCategory category = UIApplication.sharedApplication.preferredContentSizeCategory;
     UITraitCollection *categoryTrait = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:category];
     return [UIFont preferredFontForTextStyle:style compatibleWithTraitCollection:categoryTrait];
 }
 
-- (void)stopMockingPrefferedContentSizeCategory {
-    [self.applicationMock stopMocking];
-    self.applicationMock = nil;
++ (void)nbs_swizzle {
+    if (![UITraitCollection instancesRespondToSelector:@selector(preferredContentSizeCategory)]) {
+        return;
+    }
 
-    [self.fontMock stopMocking];
-    self.fontMock = nil;
+    SEL selector = @selector(preferredFontForTextStyle:);
+    SEL replacedSelector = @selector(nbs_preferredFontForTextStyle:);
+
+    Method originalMethod = class_getClassMethod(self, selector);
+    Method extendedMethod = class_getClassMethod(self, replacedSelector);
+    method_exchangeImplementations(originalMethod, extendedMethod);
+}
+
+@end
+
+@implementation UIApplication (Swizzling)
+
+- (UIContentSizeCategory)nbs_preferredContentSizeCategory {
+    return objc_getAssociatedObject(self, @selector(nbs_preferredContentSizeCategory));
+}
+
+- (void)setNbs_preferredContentSizeCategory:(UIContentSizeCategory)category {
+    objc_setAssociatedObject(self, @selector(nbs_preferredContentSizeCategory),
+                             category, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
++ (void)nbs_swizzle {
+    SEL selector = @selector(preferredContentSizeCategory);
+    SEL replacedSelector = @selector(nbs_preferredContentSizeCategory);
+
+    Method originalMethod = class_getInstanceMethod(self, selector);
+    Method extendedMethod = class_getInstanceMethod(self, replacedSelector);
+    method_exchangeImplementations(originalMethod, extendedMethod);
 }
 
 @end
