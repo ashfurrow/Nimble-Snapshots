@@ -10,3 +10,4 @@ script:
   - rake swiftlint
   - rake test
   - rake pod_lint
+  - rake carthage

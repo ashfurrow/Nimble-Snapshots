@@ -18,7 +18,7 @@
 		D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */; };
 		D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */; };
 		D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */; };
-		D4F7D4801ED764CD00B4D2FE /* NBSMockedApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */; };
+		D4F7D4801ED764CD00B4D2FE /* NBSMockedApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4F7D4811ED764CD00B4D2FE /* NBSMockedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47C1ED764CD00B4D2FE /* NBSMockedApplication.m */; };
 		D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */; };
 /* End PBXBuildFile section */
