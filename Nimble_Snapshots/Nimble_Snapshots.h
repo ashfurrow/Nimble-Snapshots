@@ -8,4 +8,4 @@ FOUNDATION_EXPORT const unsigned char Nimble_SnapshotsVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Nimble_Snapshots/PublicHeader.h>
 
-
+#import <Nimble_Snapshots/NBSMockedApplication.h>

@@ -12,9 +12,10 @@ end
 
 desc 'Run a local copy of Carthage on a temporary directory'
 task :carthage do
+  sh 'rm -rf ~/Library/Caches/org.carthage.CarthageKit'
+
   # make a folder, put a cartfile in and make it a consumer
   # of the root dir
-
   repo_dir = Dir.pwd
   Dir.mktmpdir('carthage_test') do |dir|
     Dir.chdir dir do
