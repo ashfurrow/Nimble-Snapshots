@@ -1,8 +1,6 @@
-import FBSnapshotTestCase
 import Foundation
 import Nimble
 import QuartzCore
-import Quick
 import UIKit
 
 public enum ResizeMode {

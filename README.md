@@ -25,6 +25,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
   pod 'Nimble-Snapshots'
+  pod 'Quick' # if you want to use it with Quick
 end
 ```
 

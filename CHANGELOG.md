@@ -2,7 +2,8 @@
 
 ## Next
 
-- Nothing yet!
+* Don't import Quick directly. 
+  This means you should add Quick to your Podfile if you want to use it. - @marcelofabri
 
 ## 5.1.0
 
