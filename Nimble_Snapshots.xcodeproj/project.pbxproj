@@ -10,9 +10,8 @@
 		095B47711D4773F000880922 /* Nimble_Snapshots.h in Headers */ = {isa = PBXBuildFile; fileRef = 095B47701D4773F000880922 /* Nimble_Snapshots.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		095B47891D47761500880922 /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095B47861D47761500880922 /* FBSnapshotTestCase.framework */; };
 		095B478A1D47761500880922 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095B47871D47761500880922 /* Nimble.framework */; };
-		095B478B1D47761500880922 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095B47881D47761500880922 /* Quick.framework */; };
 		095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478C1D47794300880922 /* HaveValidSnapshot.swift */; };
-		095B47901D47794300880922 /* NimbleSnapshotsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478D1D47794300880922 /* NimbleSnapshotsConfiguration.swift */; };
+		095B47901D47794300880922 /* CurrentTestCaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */; };
 		095B47911D47794300880922 /* PrettySyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478E1D47794300880922 /* PrettySyntax.swift */; };
 		D47CB5F91EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */; };
 		D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */; };
@@ -29,9 +28,8 @@
 		095B47721D4773F000880922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		095B47861D47761500880922 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
 		095B47871D47761500880922 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
-		095B47881D47761500880922 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		095B478C1D47794300880922 /* HaveValidSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidSnapshot.swift; sourceTree = SOURCE_ROOT; };
-		095B478D1D47794300880922 /* NimbleSnapshotsConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NimbleSnapshotsConfiguration.swift; sourceTree = SOURCE_ROOT; };
+		095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentTestCaseTracker.swift; sourceTree = SOURCE_ROOT; };
 		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = SOURCE_ROOT; };
 		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestObservationCenter+CurrentTestCaseTracker.h"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
 		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+CurrentTestCaseTracker.m"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
@@ -49,7 +47,6 @@
 			files = (
 				095B47891D47761500880922 /* FBSnapshotTestCase.framework in Frameworks */,
 				095B478A1D47761500880922 /* Nimble.framework in Frameworks */,
-				095B478B1D47761500880922 /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +58,6 @@
 			children = (
 				095B47861D47761500880922 /* FBSnapshotTestCase.framework */,
 				095B47871D47761500880922 /* Nimble.framework */,
-				095B47881D47761500880922 /* Quick.framework */,
 				095B476F1D4773F000880922 /* Nimble_Snapshots */,
 				095B476E1D4773F000880922 /* Products */,
 			);
@@ -81,7 +77,7 @@
 				D4F7D4771ED764CD00B4D2FE /* DynamicSize */,
 				D4F7D4791ED764CD00B4D2FE /* DynamicType */,
 				095B478C1D47794300880922 /* HaveValidSnapshot.swift */,
-				095B478D1D47794300880922 /* NimbleSnapshotsConfiguration.swift */,
+				095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */,
 				095B478E1D47794300880922 /* PrettySyntax.swift */,
 				D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */,
 				D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */,
@@ -196,7 +192,7 @@
 				D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */,
 				D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */,
 				095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */,
-				095B47901D47794300880922 /* NimbleSnapshotsConfiguration.swift in Sources */,
+				095B47901D47794300880922 /* CurrentTestCaseTracker.swift in Sources */,
 				D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */,
 				D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */,
 			);

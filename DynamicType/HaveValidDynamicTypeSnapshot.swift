@@ -1,6 +1,4 @@
-import FBSnapshotTestCase
 import Nimble
-import Quick
 import UIKit
 
 func allContentSizeCategories() -> [UIContentSizeCategory] {

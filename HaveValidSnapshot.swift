@@ -2,7 +2,6 @@ import FBSnapshotTestCase
 import Foundation
 import Nimble
 import QuartzCore
-import Quick
 import UIKit
 
 @objc public protocol Snapshotable {
@@ -25,17 +24,10 @@ extension UIView : Snapshotable {
 
 @objc public class FBSnapshotTest: NSObject {
 
-    var currentExampleMetadata: ExampleMetadata?
-
     var referenceImagesDirectory: String?
     var tolerance: CGFloat = 0
 
-    class var sharedInstance: FBSnapshotTest {
-        struct Instance {
-            static let instance: FBSnapshotTest = FBSnapshotTest()
-        }
-        return Instance.instance
-    }
+    static let sharedInstance = FBSnapshotTest()
 
     public class func setReferenceImagesDirectory(_ directory: String?) {
         sharedInstance.referenceImagesDirectory = directory
@@ -195,16 +187,7 @@ private func recordSnapshot(_ name: String?, isDeviceAgnostic: Bool = false, use
 }
 
 private func currentTestName() -> String? {
-    if let quickExample = FBSnapshotTest.sharedInstance.currentExampleMetadata {
-        return quickExample.example.name
-    }
-
-    if let testCase = CurrentTestCaseTracker.shared.currentTestCase {
-        let characterSet = CharacterSet(charactersIn: "[]+-")
-        return testCase.name?.components(separatedBy: characterSet).joined()
-    }
-
-    return nil
+    return CurrentTestCaseTracker.shared.currentTestCase?.sanitizedName
 }
 
 internal var switchChecksWithRecords = false

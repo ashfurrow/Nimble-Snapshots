@@ -1,3 +1,2 @@
 github "Quick/Nimble" "v7.0.0"
-github "Quick/Quick" "v1.1.0"
 github "facebook/ios-snapshot-test-case" "2.1.4"
