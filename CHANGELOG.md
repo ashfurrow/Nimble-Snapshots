@@ -3,6 +3,7 @@
 ## Next
 
 * Removes OCMock dependency for DynamicType subspec - @marcelofabri
+* Include all subspecs by default, allowing usage with Carthage - @marcelofabri
 
 ## 5.0.1
 

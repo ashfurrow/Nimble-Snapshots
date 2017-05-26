@@ -8,6 +8,5 @@ target 'BootstrapTests' do
   pod 'Nimble'
   pod 'FBSnapshotTestCase', git: 'https://github.com/facebook/ios-snapshot-test-case.git'
 
-  pod 'Nimble-Snapshots/DynamicType', :path => "../"
-  pod 'Nimble-Snapshots/DynamicSize', :path => "../"
+  pod 'Nimble-Snapshots', :path => "../"
 end

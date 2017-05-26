@@ -16,6 +16,11 @@
 		095B47911D47794300880922 /* PrettySyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478E1D47794300880922 /* PrettySyntax.swift */; };
 		D47CB5F91EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */; };
 		D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */; };
+		D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */; };
+		D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */; };
+		D4F7D4801ED764CD00B4D2FE /* NBSMockedApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */; };
+		D4F7D4811ED764CD00B4D2FE /* NBSMockedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47C1ED764CD00B4D2FE /* NBSMockedApplication.m */; };
+		D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = SOURCE_ROOT; };
 		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestObservationCenter+CurrentTestCaseTracker.h"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
 		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+CurrentTestCaseTracker.m"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
+		D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeSnapshot.swift; sourceTree = "<group>"; };
+		D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidDynamicTypeSnapshot.swift; sourceTree = "<group>"; };
+		D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSMockedApplication.h; sourceTree = "<group>"; };
+		D4F7D47C1ED764CD00B4D2FE /* NBSMockedApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSMockedApplication.m; sourceTree = "<group>"; };
+		D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyDynamicTypeSyntax.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +78,8 @@
 		095B476F1D4773F000880922 /* Nimble_Snapshots */ = {
 			isa = PBXGroup;
 			children = (
+				D4F7D4771ED764CD00B4D2FE /* DynamicSize */,
+				D4F7D4791ED764CD00B4D2FE /* DynamicType */,
 				095B478C1D47794300880922 /* HaveValidSnapshot.swift */,
 				095B478D1D47794300880922 /* NimbleSnapshotsConfiguration.swift */,
 				095B478E1D47794300880922 /* PrettySyntax.swift */,
@@ -79,6 +91,25 @@
 			path = Nimble_Snapshots;
 			sourceTree = "<group>";
 		};
+		D4F7D4771ED764CD00B4D2FE /* DynamicSize */ = {
+			isa = PBXGroup;
+			children = (
+				D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */,
+			);
+			path = DynamicSize;
+			sourceTree = SOURCE_ROOT;
+		};
+		D4F7D4791ED764CD00B4D2FE /* DynamicType */ = {
+			isa = PBXGroup;
+			children = (
+				D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */,
+				D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */,
+				D4F7D47C1ED764CD00B4D2FE /* NBSMockedApplication.m */,
+				D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */,
+			);
+			path = DynamicType;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -87,6 +118,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D47CB5F91EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h in Headers */,
+				D4F7D4801ED764CD00B4D2FE /* NBSMockedApplication.h in Headers */,
 				095B47711D4773F000880922 /* Nimble_Snapshots.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,9 +192,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				095B47911D47794300880922 /* PrettySyntax.swift in Sources */,
+				D4F7D4811ED764CD00B4D2FE /* NBSMockedApplication.m in Sources */,
 				D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */,
+				D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */,
 				095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */,
 				095B47901D47794300880922 /* NimbleSnapshotsConfiguration.swift in Sources */,
+				D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */,
+				D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
