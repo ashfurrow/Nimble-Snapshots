@@ -43,7 +43,7 @@ something like the following.
 github "Quick/Quick" ~> 1.0
 github "Quick/Nimble" ~> 7.0
 github "facebook/ios-snapshot-test-case" "2.1.4"
-github "ashfurrow/Nimble-Snapshots"  ~> 5.0
+github "ashfurrow/Nimble-Snapshots"
 ```
 
 Then run:
