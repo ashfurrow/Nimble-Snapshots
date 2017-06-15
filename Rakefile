@@ -2,7 +2,7 @@ require 'tmpdir'
 
 desc 'Run unit tests on iOS 9.3 and 10.3'
 task :test do
-  sh "set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=10.3' clean build test | xcpretty --color --simple"
+  sh "set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=10.3.1' clean build test | xcpretty --color --simple"
 end
 
 desc 'Lint the library for CocoaPods usage'
