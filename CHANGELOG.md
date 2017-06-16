@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 6.1.0
+
+* tvOS support for CocoaPods added. - @fousa
+
 ## 6.0.0
 
 * Don't import Quick directly. 
