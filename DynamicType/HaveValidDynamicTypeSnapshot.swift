@@ -45,6 +45,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil, usesDrawRect
 
         return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
             mock.mockPreferredContentSizeCategory(category)
+            updateTraitCollection(on: actualExpression)
 
             let predicate: Predicate<Snapshotable>
             if isDeviceAgnostic {
@@ -74,6 +75,7 @@ public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: B
 
         return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
             mock.mockPreferredContentSizeCategory(category)
+            updateTraitCollection(on: actualExpression)
 
             let predicate: Predicate<Snapshotable>
             if isDeviceAgnostic {
@@ -88,5 +90,17 @@ public func recordDynamicTypeSnapshot(named name: String? = nil, usesDrawRect: B
 
     return combinePredicates(predicates, ignoreFailures: true) {
         mock.stopMockingPreferredContentSizeCategory()
+    }
+}
+
+private func updateTraitCollection(on expression: Expression<Snapshotable>) {
+    // swiftlint:disable:next force_try force_unwrapping
+    let instance = try! expression.evaluate()!
+    updateTraitCollection(on: instance)
+}
+
+private func updateTraitCollection(on element: Snapshotable) {
+    if let environment = element as? UITraitEnvironment {
+        environment.traitCollectionDidChange(nil)
     }
 }
