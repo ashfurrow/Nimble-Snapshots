@@ -102,5 +102,14 @@ private func updateTraitCollection(on expression: Expression<Snapshotable>) {
 private func updateTraitCollection(on element: Snapshotable) {
     if let environment = element as? UITraitEnvironment {
         environment.traitCollectionDidChange(nil)
+
+        if let view = environment as? UIView {
+            view.subviews.forEach(updateTraitCollection(on:))
+        } else if let vc = environment as? UIViewController {
+            vc.childViewControllers.forEach(updateTraitCollection(on:))
+            if vc.isViewLoaded {
+                updateTraitCollection(on: vc.view)
+            }
+        }
     }
 }

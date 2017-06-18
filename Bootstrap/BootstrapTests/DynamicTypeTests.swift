@@ -69,6 +69,18 @@ class DynamicTypeTests: QuickSpec {
 
                 expect(label) == dynamicTypeSnapshot()
             }
+
+            it("works with adjustsFontForContentSizeCategory in a subview") {
+                let frame = CGRect(x: 0, y: 0, width: 300, height: 100)
+                let view = UIView(frame: frame)
+                let label = UILabel(frame: frame)
+                label.text = "Example"
+                label.adjustsFontForContentSizeCategory = true
+                label.font = .preferredFont(forTextStyle: .body)
+                view.addSubview(label)
+
+                expect(view) == dynamicTypeSnapshot()
+            }
         }
     }
 }
