@@ -21,6 +21,12 @@
 
 @end
 
+@interface UITraitCollection (Swizzling)
+
++ (void)nbs_swizzle;
+
+@end
+
 @implementation NBSMockedApplication
 
 /* On iOS 9, +[UIFont preferredFontForTextStyle:] uses -[UIApplication preferredContentSizeCategory]
@@ -35,6 +41,7 @@
     if (!self.isSwizzled) {
         [UIApplication nbs_swizzle];
         [UIFont nbs_swizzle];
+        [UITraitCollection nbs_swizzle];
         self.isSwizzled = YES;
     }
 
@@ -47,6 +54,7 @@
     if (self.isSwizzled) {
         [UIApplication nbs_swizzle];
         [UIFont nbs_swizzle];
+        [UITraitCollection nbs_swizzle];
         self.isSwizzled = NO;
     }
 }
@@ -94,6 +102,51 @@
 + (void)nbs_swizzle {
     SEL selector = @selector(preferredContentSizeCategory);
     SEL replacedSelector = @selector(nbs_preferredContentSizeCategory);
+
+    Method originalMethod = class_getInstanceMethod(self, selector);
+    Method extendedMethod = class_getInstanceMethod(self, replacedSelector);
+    method_exchangeImplementations(originalMethod, extendedMethod);
+}
+
+@end
+
+@implementation UITraitCollection (Swizzling)
+
+- (UIContentSizeCategory)nbs_preferredContentSizeCategory {
+    return UIApplication.sharedApplication.preferredContentSizeCategory;
+}
+
+- (BOOL)nbs__changedContentSizeCategoryFromTraitCollection:(id)arg {
+    return YES;
+}
+
++ (void)nbs_swizzle {
+    [self nbs_swizzlePreferredContentSizeCategory];
+    [self nbs_swizzleChangedContentSizeCategoryFromTraitCollection];
+}
+
++ (void)nbs_swizzlePreferredContentSizeCategory {
+    SEL selector = @selector(preferredContentSizeCategory);
+
+    if (![self instancesRespondToSelector:selector]) {
+        return;
+    }
+
+    SEL replacedSelector = @selector(nbs_preferredContentSizeCategory);
+
+    Method originalMethod = class_getInstanceMethod(self, selector);
+    Method extendedMethod = class_getInstanceMethod(self, replacedSelector);
+    method_exchangeImplementations(originalMethod, extendedMethod);
+}
+
++ (void)nbs_swizzleChangedContentSizeCategoryFromTraitCollection {
+    SEL selector = sel_registerName("_changedContentSizeCategoryFromTraitCollection:");
+
+    if (![self instancesRespondToSelector:selector]) {
+        return;
+    }
+
+    SEL replacedSelector = @selector(nbs__changedContentSizeCategoryFromTraitCollection:);
 
     Method originalMethod = class_getInstanceMethod(self, selector);
     Method extendedMethod = class_getInstanceMethod(self, replacedSelector);

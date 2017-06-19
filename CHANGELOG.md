@@ -2,7 +2,8 @@
 
 ## Next
 
-- Nothing yet!
+* Makes DynamicType tests to work with `adjustsFontForContentSizeCategory` property
+  and with views that uses `traitCollectionDidChange:`. - @marcelofabri
 
 ## 6.1.0
 
