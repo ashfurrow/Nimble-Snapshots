@@ -9,15 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet private weak var label: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        updateText()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateText()
     }
 
+    private func updateText() {
+        label.text = UIApplication.shared.preferredContentSizeCategory.rawValue
+    }
 }

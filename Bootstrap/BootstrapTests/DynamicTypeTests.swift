@@ -81,6 +81,13 @@ class DynamicTypeTests: QuickSpec {
 
                 expect(view) == dynamicTypeSnapshot()
             }
+
+            it("works with traitCollectionDidChange in a view controller from a storyboard") {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateInitialViewController()
+
+                expect(controller).to(haveValidDynamicTypeSnapshot())
+            }
         }
     }
 }

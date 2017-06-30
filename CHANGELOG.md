@@ -4,6 +4,8 @@
 
 * Makes DynamicType tests to work with `adjustsFontForContentSizeCategory` property
   and with views that uses `traitCollectionDidChange:`. - @marcelofabri
+* Trigger a view to be loaded prior to first `traitCollectionDidChange`
+  call when doing dynamic type testing of a view controller - @yas375
 
 ## 6.1.0
 
@@ -11,7 +13,7 @@
 
 ## 6.0.0
 
-* Don't import Quick directly. 
+* Don't import Quick directly.
   This means you should add Quick to your Podfile if you want to use it. - @marcelofabri
 
 ## 5.1.0
