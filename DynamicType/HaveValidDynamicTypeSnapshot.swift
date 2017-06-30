@@ -101,6 +101,11 @@ private func updateTraitCollection(on expression: Expression<Snapshotable>) {
 
 private func updateTraitCollection(on element: Snapshotable) {
     if let environment = element as? UITraitEnvironment {
+        if let vc = environment as? UIViewController {
+            vc.beginAppearanceTransition(true, animated: false)
+            vc.endAppearanceTransition()
+        }
+
         environment.traitCollectionDidChange(nil)
 
         if let view = environment as? UIView {
