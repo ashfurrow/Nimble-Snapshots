@@ -4,6 +4,10 @@
 
 * Nothing yet.
 
+## 6.2.1
+
+* Fixes Carthage install dependency mismatch – @NachoSoto 
+
 ## 6.2.0
 
 * Makes DynamicType tests to work with `adjustsFontForContentSizeCategory` property
