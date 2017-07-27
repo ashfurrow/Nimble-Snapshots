@@ -31,6 +31,7 @@
 		095B478C1D47794300880922 /* HaveValidSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidSnapshot.swift; sourceTree = SOURCE_ROOT; };
 		095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentTestCaseTracker.swift; sourceTree = SOURCE_ROOT; };
 		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = SOURCE_ROOT; };
+		1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Nimble_Snapshots.xcconfig; sourceTree = "<group>"; };
 		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestObservationCenter+CurrentTestCaseTracker.h"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
 		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+CurrentTestCaseTracker.m"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
 		D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeSnapshot.swift; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 				095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */,
 				095B478E1D47794300880922 /* PrettySyntax.swift */,
 				D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */,
+				1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */,
 				D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */,
 				095B47701D4773F000880922 /* Nimble_Snapshots.h */,
 				095B47721D4773F000880922 /* Info.plist */,
@@ -294,6 +296,7 @@
 		};
 		095B47761D4773F000880922 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -301,11 +304,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
 				INFOPLIST_FILE = Nimble_Snapshots/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -320,6 +318,7 @@
 		};
 		095B47771D4773F000880922 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -327,11 +326,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
 				INFOPLIST_FILE = Nimble_Snapshots/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
