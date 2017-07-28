@@ -4,6 +4,10 @@
 
 * Nothing yet.
 
+## 6.2.2
+
+* Adds Carthage support for tvOS - @tsabend
+
 ## 6.2.1
 
 * Fixes Carthage install dependency mismatch – @NachoSoto 
