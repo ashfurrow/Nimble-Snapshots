@@ -1,2 +1,2 @@
-github "Quick/Nimble" ~> 7.0
+github "Quick/Nimble" "xcode9-beta"
 github "facebook/ios-snapshot-test-case" "2.1.4"
