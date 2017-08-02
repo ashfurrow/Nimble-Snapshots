@@ -14,3 +14,6 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
 # Require a changelog entry
 warn("No CHANGELOG changes made") if !git.modified_files.include?("CHANGELOG.md") && !declared_trivial
+
+swiftlint.config_file = '.swiftlint.yml'
+swiftlint.lint_files

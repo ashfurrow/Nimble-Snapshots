@@ -6,4 +6,5 @@ gem 'rake'
 
 group :test do
   gem 'danger'
+  gem 'danger-swiftlint'
 end
