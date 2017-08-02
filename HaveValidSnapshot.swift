@@ -99,6 +99,8 @@ func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     let folderPathComponents = pathComponents.subarray(with: NSRange(location: 0, length: currentIndex)) as NSArray
     let folderPath = folderPathComponents.componentsJoined(by: "/")
 
+    setDefaultFailureDiffsDirectory(testTargetFolderPath: folderPath)
+
     return folderPath + "/ReferenceImages"
 }
 
@@ -109,6 +111,10 @@ private func parseFilename(filename: String) -> String {
     let sanitizedName = nsName.lastPathComponent.replacingOccurrences(of: type, with: "")
 
     return sanitizedName
+}
+
+func setDefaultFailureDiffsDirectory(testTargetFolderPath: String) {
+    setenv("IMAGE_DIFF_DIR", "\(testTargetFolderPath)/FailureDiffs", 0)
 }
 
 func sanitizedTestName(_ name: String?) -> String {

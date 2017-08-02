@@ -178,3 +178,14 @@ implement the `ViewResizer` protocol and resize yourself.
 The custom behavior can be used to record the views too.
 
 For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests/DynamicSizeTests.swift).
+
+## A note about test failures artifacts
+
+By default Nimble-Snapshot will place test failures image diffs in a folder right next to `ReferenceImages`. It is strongly recommended that you don't commit those files to your source repo.
+
+Add this to your `.gitignore`:
+
+```
+# Nimble-Snapshot
+FailureDiffs
+```
