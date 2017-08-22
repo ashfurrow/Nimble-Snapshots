@@ -18,13 +18,9 @@ import XCTest
 extension XCTestCase {
     var sanitizedName: String? {
 
-        #if swift(>=3.2)
-            let fullName = self.name
-        #else
-            guard let fullName = self.name else {
-                return nil
-            }
-        #endif
+        guard let fullName = self.name else {
+            return nil
+        }
 
         let characterSet = CharacterSet(charactersIn: "[]+-")
         let name = fullName.components(separatedBy: characterSet).joined()
