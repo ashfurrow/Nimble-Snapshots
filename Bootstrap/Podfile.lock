@@ -7,10 +7,10 @@ PODS:
   - Forgeries (1.0.0):
     - Forgeries/Core (= 1.0.0)
   - Forgeries/Core (1.0.0)
-  - Nimble (7.0.0)
-  - Nimble-Snapshots (6.2.0):
-    - Nimble-Snapshots/Core (= 6.2.0)
-  - Nimble-Snapshots/Core (6.2.0):
+  - Nimble (7.0.1)
+  - Nimble-Snapshots (6.2.2):
+    - Nimble-Snapshots/Core (= 6.2.2)
+  - Nimble-Snapshots/Core (6.2.2):
     - FBSnapshotTestCase (~> 2.0)
     - Nimble (~> 7.0)
   - Quick (1.1.0)
@@ -18,28 +18,38 @@ PODS:
 DEPENDENCIES:
   - FBSnapshotTestCase (from `https://github.com/facebook/ios-snapshot-test-case.git`)
   - Forgeries
-  - Nimble
+  - Nimble (from `https://github.com/Quick/Nimble.git`)
   - Nimble-Snapshots (from `../`)
-  - Quick
+  - Quick (from `https://github.com/Quick/Quick.git`)
 
 EXTERNAL SOURCES:
   FBSnapshotTestCase:
     :git: https://github.com/facebook/ios-snapshot-test-case.git
+  Nimble:
+    :git: https://github.com/Quick/Nimble.git
   Nimble-Snapshots:
     :path: "../"
+  Quick:
+    :git: https://github.com/Quick/Quick.git
 
 CHECKOUT OPTIONS:
   FBSnapshotTestCase:
-    :commit: c1808fb4435ffc3db2203e7623935f39fc31aa8f
+    :commit: ed4e6a6e81bfb69a5223156e6c3d389a416cf6e3
     :git: https://github.com/facebook/ios-snapshot-test-case.git
+  Nimble:
+    :commit: 24aa2d97405b352cb85bd963d1898f780f9bde3e
+    :git: https://github.com/Quick/Nimble.git
+  Quick:
+    :commit: 6814556ae44d281e4636f8ccf8458d19ae65a457
+    :git: https://github.com/Quick/Quick.git
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
-  Nimble: 874982b605d4d752fcac6be695d13c502de84b1b
-  Nimble-Snapshots: d743e5e1d99eb75e6d1e920f1cebc47ec1f50783
-  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
+  Nimble: 1b6670c36e5750169b9e4cc2e9cfa82a7603c69e
+  Nimble-Snapshots: f23ae8cb1d0f3c743b634d3cee3f7da2252cd40a
+  Quick: 4700beb8056662b579facd79eaca7f04fb3d48e6
 
-PODFILE CHECKSUM: 24cc189c790002caa222c2b53c56461116464e09
+PODFILE CHECKSUM: 73aefa59604e4676edad46ccc4b72e2a08d5ea77
 
 COCOAPODS: 1.2.1

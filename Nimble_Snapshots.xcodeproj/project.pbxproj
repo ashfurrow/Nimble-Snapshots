@@ -28,12 +28,12 @@
 		095B47721D4773F000880922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		095B47861D47761500880922 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
 		095B47871D47761500880922 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
-		095B478C1D47794300880922 /* HaveValidSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidSnapshot.swift; sourceTree = SOURCE_ROOT; };
-		095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentTestCaseTracker.swift; sourceTree = SOURCE_ROOT; };
-		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = SOURCE_ROOT; };
+		095B478C1D47794300880922 /* HaveValidSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidSnapshot.swift; sourceTree = "<group>"; };
+		095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentTestCaseTracker.swift; sourceTree = "<group>"; };
+		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = "<group>"; };
 		1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Nimble_Snapshots.xcconfig; sourceTree = "<group>"; };
-		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestObservationCenter+CurrentTestCaseTracker.h"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
-		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+CurrentTestCaseTracker.m"; path = "../XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
+		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestObservationCenter+CurrentTestCaseTracker.h"; path = "XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
+		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+CurrentTestCaseTracker.m"; path = "XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
 		D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeSnapshot.swift; sourceTree = "<group>"; };
 		D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidDynamicTypeSnapshot.swift; sourceTree = "<group>"; };
 		D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSMockedApplication.h; sourceTree = "<group>"; };
@@ -57,10 +57,10 @@
 		095B47631D4773F000880922 = {
 			isa = PBXGroup;
 			children = (
-				095B47861D47761500880922 /* FBSnapshotTestCase.framework */,
-				095B47871D47761500880922 /* Nimble.framework */,
 				095B476F1D4773F000880922 /* Nimble_Snapshots */,
 				095B476E1D4773F000880922 /* Products */,
+				095B47861D47761500880922 /* FBSnapshotTestCase.framework */,
+				095B47871D47761500880922 /* Nimble.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,14 +77,14 @@
 			children = (
 				D4F7D4771ED764CD00B4D2FE /* DynamicSize */,
 				D4F7D4791ED764CD00B4D2FE /* DynamicType */,
-				095B478C1D47794300880922 /* HaveValidSnapshot.swift */,
 				095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */,
+				095B478C1D47794300880922 /* HaveValidSnapshot.swift */,
+				095B47721D4773F000880922 /* Info.plist */,
+				095B47701D4773F000880922 /* Nimble_Snapshots.h */,
+				1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */,
 				095B478E1D47794300880922 /* PrettySyntax.swift */,
 				D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */,
-				1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */,
 				D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */,
-				095B47701D4773F000880922 /* Nimble_Snapshots.h */,
-				095B47721D4773F000880922 /* Info.plist */,
 			);
 			path = Nimble_Snapshots;
 			sourceTree = "<group>";
@@ -95,7 +95,7 @@
 				D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */,
 			);
 			path = DynamicSize;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		D4F7D4791ED764CD00B4D2FE /* DynamicType */ = {
 			isa = PBXGroup;
@@ -106,7 +106,7 @@
 				D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */,
 			);
 			path = DynamicType;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -148,12 +148,12 @@
 		095B47641D4773F000880922 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Wallapop;
 				TargetAttributes = {
 					095B476C1D4773F000880922 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -212,13 +212,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -246,6 +254,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -261,13 +270,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -287,6 +304,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -299,6 +318,7 @@
 			baseConfigurationReference = 1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -312,7 +332,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -321,6 +342,7 @@
 			baseConfigurationReference = 1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -333,7 +355,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wallapop.Nimble-Snapshots";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

@@ -17,12 +17,8 @@ import XCTest
 
 extension XCTestCase {
     var sanitizedName: String? {
-        guard let fullName = self.name else {
-            return nil
-        }
-
         let characterSet = CharacterSet(charactersIn: "[]+-")
-        let name = fullName.components(separatedBy: characterSet).joined()
+        let name = self.name.components(separatedBy: characterSet).joined()
 
         if let quickClass = NSClassFromString("QuickSpec"), self.isKind(of: quickClass) {
             let className = String(describing: type(of: self))

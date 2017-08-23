@@ -1,7 +1,7 @@
 import Nimble
 import UIKit
 
-func allContentSizeCategories() -> [UIContentSizeCategory] {
+public func allContentSizeCategories() -> [UIContentSizeCategory] {
     return [
         .extraSmall, .small, .medium,
         .large, .extraLarge, .extraExtraLarge,

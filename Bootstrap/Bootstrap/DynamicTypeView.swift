@@ -35,7 +35,7 @@ public final class DynamicTypeView: UIView {
         super.updateConstraints()
     }
 
-    func updateFonts(_ notification: Notification) {
+    @objc func updateFonts(_ notification: Notification) {
         guard let category = notification.userInfo?[UIContentSizeCategoryNewValueKey] as? String else {
             return
         }
