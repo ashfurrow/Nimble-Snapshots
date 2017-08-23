@@ -18,28 +18,38 @@ PODS:
 DEPENDENCIES:
   - FBSnapshotTestCase (from `https://github.com/facebook/ios-snapshot-test-case.git`)
   - Forgeries
-  - Nimble
+  - Nimble (from `https://github.com/Quick/Nimble.git`)
   - Nimble-Snapshots (from `../`)
-  - Quick
+  - Quick (from `https://github.com/Quick/Quick.git`)
 
 EXTERNAL SOURCES:
   FBSnapshotTestCase:
     :git: https://github.com/facebook/ios-snapshot-test-case.git
+  Nimble:
+    :git: https://github.com/Quick/Nimble.git
   Nimble-Snapshots:
     :path: "../"
+  Quick:
+    :git: https://github.com/Quick/Quick.git
 
 CHECKOUT OPTIONS:
   FBSnapshotTestCase:
     :commit: ed4e6a6e81bfb69a5223156e6c3d389a416cf6e3
     :git: https://github.com/facebook/ios-snapshot-test-case.git
+  Nimble:
+    :commit: 24aa2d97405b352cb85bd963d1898f780f9bde3e
+    :git: https://github.com/Quick/Nimble.git
+  Quick:
+    :commit: 6814556ae44d281e4636f8ccf8458d19ae65a457
+    :git: https://github.com/Quick/Quick.git
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
-  Nimble: 657d000e11df8aebe27cdaf9d244de7f30ed87f7
+  Nimble: 1b6670c36e5750169b9e4cc2e9cfa82a7603c69e
   Nimble-Snapshots: f23ae8cb1d0f3c743b634d3cee3f7da2252cd40a
-  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
+  Quick: 4700beb8056662b579facd79eaca7f04fb3d48e6
 
-PODFILE CHECKSUM: 24cc189c790002caa222c2b53c56461116464e09
+PODFILE CHECKSUM: 603678fe4732c2fd7c4576663aa1e1325645a729
 
 COCOAPODS: 1.2.1
