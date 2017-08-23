@@ -13,5 +13,9 @@ opt_in_rules:
   - switch_case_on_newline
   - redundant_nil_coalescing
 
+included:
+  - Bootstrap
+  - Nimble_Snapshots
+
 excluded:
   - Bootstrap/Pods
