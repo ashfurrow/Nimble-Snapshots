@@ -19,12 +19,12 @@ extension XCTestCase {
     var sanitizedName: String? {
         let fullName = self.name
         let characterSet = CharacterSet(charactersIn: "[]+-")
-        let name = fullName?.components(separatedBy: characterSet).joined()
+        let name = fullName.components(separatedBy: characterSet).joined()
 
         if let quickClass = NSClassFromString("QuickSpec"), self.isKind(of: quickClass) {
             let className = String(describing: type(of: self))
-            if let range = name?.range(of: className), range.lowerBound == name?.startIndex {
-                return name?.replacingCharacters(in: range, with: "")
+            if let range = name.range(of: className), range.lowerBound == name.startIndex {
+                return name.replacingCharacters(in: range, with: "")
                     .trimmingCharacters(in: .whitespacesAndNewlines)
             }
         }
