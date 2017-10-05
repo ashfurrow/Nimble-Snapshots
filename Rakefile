@@ -1,8 +1,8 @@
 require 'tmpdir'
 
-desc 'Run unit tests on iOS 9.3 and 10.3'
+desc 'Run unit tests on iOS 11.0'
 task :test do
-  sh "xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=10.3.1' build test"
+  sh "xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=11.0' build test"
 end
 
 desc 'Lint the library for CocoaPods usage'
