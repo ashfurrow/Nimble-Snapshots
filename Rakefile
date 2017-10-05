@@ -12,20 +12,7 @@ end
 
 desc 'Run a local copy of Carthage on a temporary directory'
 task :carthage do
-  sh 'rm -rf ~/Library/Caches/org.carthage.CarthageKit'
-
-  # make a folder, put a cartfile in and make it a consumer
-  # of the root dir
-  repo_dir = Dir.pwd
-  Dir.mktmpdir('carthage_test') do |dir|
-    Dir.chdir dir do
-      File.write('Cartfile', "git \"file://#{repo_dir}\" \"HEAD\"")
-
-      sh "carthage bootstrap --platform 'iOS'"
-      has_artifacts = !Dir.glob("Carthage/Build/*").empty?
-      raise("Carthage did not succeed") unless has_artifacts
-    end
-  end
+  sh 'set -o pipefail && carthage bootstrap --platform iOS && xcodebuild | xcpretty --color --simple'
 end
 
 desc 'Runs SwiftLint'
