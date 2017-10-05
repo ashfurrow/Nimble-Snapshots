@@ -7,7 +7,7 @@ end
 
 desc 'Lint the library for CocoaPods usage'
 task :pod_lint do
-  sh 'bundle exec pod lib lint --allow-warnings'
+  sh 'bundle exec pod spec lint --allow-warnings'
 end
 
 desc 'Run a local copy of Carthage on a temporary directory'
