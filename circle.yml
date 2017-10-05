@@ -1,0 +1,17 @@
+machine:
+  xcode:
+    version: 9.0
+  environment:
+    LANG: en_US.UTF-8
+
+dependencies:
+  override:
+    - bundle install
+    - cd Bootstrap ; bundle exec pod install ; cd ..
+
+test:
+  override:
+    - rake test
+    - rake pod_lint
+    - rake carthage
+    - bundle exec danger
