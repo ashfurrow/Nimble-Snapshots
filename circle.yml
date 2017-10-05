@@ -11,6 +11,5 @@ dependencies:
 test:
   override:
     - rake test
-    - rake pod_lint
     - rake carthage
     - bundle exec danger
