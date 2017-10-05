@@ -1,8 +1,8 @@
 require 'tmpdir'
 
-desc 'Run unit tests on iOS 9.3 and 10.3'
+desc 'Run unit tests on iOS 11.0'
 task :test do
-  sh "set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=10.3.1' clean build test | xcpretty --color --simple"
+  sh "set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 6,OS=11.0' build test | xcpretty --color --simple"
 end
 
 desc 'Lint the library for CocoaPods usage'
@@ -12,20 +12,7 @@ end
 
 desc 'Run a local copy of Carthage on a temporary directory'
 task :carthage do
-  sh 'rm -rf ~/Library/Caches/org.carthage.CarthageKit'
-
-  # make a folder, put a cartfile in and make it a consumer
-  # of the root dir
-  repo_dir = Dir.pwd
-  Dir.mktmpdir('carthage_test') do |dir|
-    Dir.chdir dir do
-      File.write('Cartfile', "git \"file://#{repo_dir}\" \"HEAD\"")
-
-      sh "carthage bootstrap --platform 'iOS'"
-      has_artifacts = !Dir.glob("Carthage/Build/*").empty?
-      raise("Carthage did not succeed") unless has_artifacts
-    end
-  end
+  sh 'set -o pipefail && carthage bootstrap --platform iOS && xcodebuild | xcpretty --color --simple'
 end
 
 desc 'Runs SwiftLint'

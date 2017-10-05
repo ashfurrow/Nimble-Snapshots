@@ -33,6 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func isExpectedDevice(nativeResolution: CGSize) -> Bool {
         return UIDevice.current.userInterfaceIdiom == .phone &&
-            nativeResolution == CGSize(width: 640, height: 960)
+            nativeResolution == CGSize(width: 750, height: 1334)
     }
 }
