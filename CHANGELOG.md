@@ -2,7 +2,7 @@
 
 ## Next
 
-* Nothing yet.
+* Xcode 9 / Swift 4 support - @danielsaidi
 
 ## 6.2.2
 

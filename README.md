@@ -1,4 +1,4 @@
-Nimble-Snapshots [![Build Status](https://travis-ci.org/ashfurrow/Nimble-Snapshots.svg?branch=master)](https://travis-ci.org/ashfurrow/Nimble-Snapshots)
+[![CircleCI](https://circleci.com/gh/ashfurrow/Nimble-Snapshots/tree/master.svg?style=svg)](https://circleci.com/gh/ashfurrow/Nimble-Snapshots/tree/master)
 =============================
 
 [Nimble](https://github.com/Quick/Nimble) matchers for [FBSnapshotTestCase](https://github.com/facebook/ios-snapshot-test-case).
