@@ -2,7 +2,7 @@
 =============================
 
 [Nimble](https://github.com/Quick/Nimble) matchers for [FBSnapshotTestCase](https://github.com/facebook/ios-snapshot-test-case).
-Highly derivative of [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
+Originally derived from [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
 
 <p align="center">
 <img src="http://gifs.ashfurrow.com/click.gif" />
