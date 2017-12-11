@@ -27,7 +27,7 @@ extension UIView : Snapshotable {
     var referenceImagesDirectory: String?
     var tolerance: CGFloat = 0
 
-    static let sharedInstance = FBSnapshotTest()
+    public static let sharedInstance = FBSnapshotTest()
 
     public class func setReferenceImagesDirectory(_ directory: String?) {
         sharedInstance.referenceImagesDirectory = directory
