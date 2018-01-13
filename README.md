@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/ashfurrow/Nimble-Snapshots/tree/master.svg?style=svg)](https://circleci.com/gh/ashfurrow/Nimble-Snapshots/tree/master)
 =============================
 
-[Nimble](https://github.com/Quick/Nimble) matchers for [FBSnapshotTestCase](https://github.com/facebook/ios-snapshot-test-case).
+[Nimble](https://github.com/Quick/Nimble) matchers for [iOSSnapshotTestCase](https://github.com/uber/ios-snapshot-test-case).
 Originally derived from [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
 
 <p align="center">
