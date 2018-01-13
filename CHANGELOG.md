@@ -2,7 +2,7 @@
 
 ## Next
 
-* Nothing yet!
+* Migrate from FBSnapshotTestCase to iOSSnapshotTestCase - @freak4pc
 
 ## 6.3.0
 

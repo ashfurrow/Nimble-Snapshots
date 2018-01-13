@@ -6,7 +6,7 @@ pod 'Forgeries'
 target 'BootstrapTests' do
   pod 'Quick'
   pod 'Nimble'
-  pod 'FBSnapshotTestCase', git: 'https://github.com/facebook/ios-snapshot-test-case.git'
+  pod 'iOSSnapshotTestCase'
 
   pod 'Nimble-Snapshots', :path => "../"
 end
