@@ -157,8 +157,8 @@ expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
 expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
 
 // If you prefer the == syntax, we got you covered too:
-expect(view) == dynamicSizeSnapshot(sizes: sizes)
-expect(view) == dynamicSizeSnapshot(sizes: sizes)
+expect(view) == snapshot(sizes: sizes)
+expect(view) == snapshot(sizes: sizes)
 ```
 
 By default, the size will be set on the view using the frame property. To change this behavior
