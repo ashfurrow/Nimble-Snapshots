@@ -68,7 +68,7 @@ class ConstraintViewResizer: ViewResizer {
         //iOS 9+ BUG: Before the first draw, iOS will not calculate the layout, 
         // it add a _UITemporaryLayoutWidth equals to its bounds and create a conflict. 
         // So to it do all the layout we create a Window and add it as subview
-        if view.bounds.width != size.width || view.bounds.width != size.width {
+        if view.bounds.width != size.width || view.bounds.height != size.height {
             let window = UIWindow(frame: CGRect(origin: .zero, size: size))
             let viewController = UIViewController()
             viewController.view = UIView()

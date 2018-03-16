@@ -5,6 +5,7 @@
 * Migrate from FBSnapshotTestCase to iOSSnapshotTestCase - @freak4pc
 * Update the `README` to use the new iOSSnapshotTestCase - @Vkt0r
 * Update the `Cartfile` to use the latest version of the iOSSnapshotTestCase - @Vkt0r
+* Fixed bug in the iOS9+ first-pass-layout-workaround to check both height and width (was a typo) [#145](https://github.com/ashfurrow/Nimble-Snapshots/issues/145) - @davertay
 
 
 ## 6.3.0
