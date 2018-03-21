@@ -2,9 +2,13 @@
 
 ## Next
 
+* Nothing yet!
+
+## 6.4.1
+
 * Fix `pod lib lint` warnings in Xcode 9 - @paulz
 
-# 6.4.0
+## 6.4.0
 
 * Migrate from FBSnapshotTestCase to iOSSnapshotTestCase - @freak4pc
 * Update the `README` to use the new iOSSnapshotTestCase - @Vkt0r
