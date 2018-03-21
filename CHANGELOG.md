@@ -2,7 +2,7 @@
 
 ## Next
 
-- Nothing yet!
+* Fix `pod lib lint` warnings in Xcode 9 - @paulz
 
 # 6.4.0
 
@@ -22,7 +22,7 @@
 
 ## 6.2.1
 
-* Fixes Carthage install dependency mismatch – @NachoSoto 
+* Fixes Carthage install dependency mismatch – @NachoSoto
 
 ## 6.2.0
 
