@@ -69,8 +69,12 @@
 
 + (UIFont *)nbs_preferredFontForTextStyle:(UIFontTextStyle)style {
     UIContentSizeCategory category = UIApplication.sharedApplication.preferredContentSizeCategory;
-    UITraitCollection *categoryTrait = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:category];
-    return [UIFont preferredFontForTextStyle:style compatibleWithTraitCollection:categoryTrait];
+    if (@available(iOS 10.0, tvOS 10.0, *)) {
+        UITraitCollection *categoryTrait = [UITraitCollection traitCollectionWithPreferredContentSizeCategory:category];
+        return [UIFont preferredFontForTextStyle:style compatibleWithTraitCollection:categoryTrait];
+    } else {
+        return [UIFont preferredFontForTextStyle:style];
+    }
 }
 
 + (void)nbs_swizzle {
