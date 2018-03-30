@@ -1,10 +1,8 @@
 /*
- *  Copyright (c) 2015, Facebook, Inc.
- *  All rights reserved.
+ *  Copyright (c) 2015-present, Facebook, Inc.
  *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant
- *  of patent rights can be found in the PATENTS file in the same directory.
+ *  This source code is licensed under the MIT license found in the
+ *  LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -40,10 +38,6 @@
 
 + (UIImage *)fb_imageForView:(UIView *)view
 {
-  CGRect bounds = view.bounds;
-  NSAssert1(CGRectGetWidth(bounds), @"Zero width for view %@", view);
-  NSAssert1(CGRectGetHeight(bounds), @"Zero height for view %@", view);
-
   // If the input view is already a UIWindow, then just use that. Otherwise wrap in a window.
   UIWindow *window = [view isKindOfClass:[UIWindow class]] ? (UIWindow *)view : view.window;
   BOOL removeFromSuperview = NO;
@@ -55,9 +49,14 @@
     [window addSubview:view];
     removeFromSuperview = YES;
   }
-
-  UIGraphicsBeginImageContextWithOptions(bounds.size, NO, 0);
+  
   [view layoutIfNeeded];
+
+  CGRect bounds = view.bounds;
+  NSAssert1(CGRectGetWidth(bounds), @"Zero width for view %@", view);
+  NSAssert1(CGRectGetHeight(bounds), @"Zero height for view %@", view);
+    
+  UIGraphicsBeginImageContextWithOptions(bounds.size, NO, 0);
   [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
 
   UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();

@@ -1,10 +1,8 @@
 /*
- *  Copyright (c) 2015, Facebook, Inc.
- *  All rights reserved.
+ *  Copyright (c) 2015-present, Facebook, Inc.
  *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant
- *  of patent rights can be found in the PATENTS file in the same directory.
+ *  This source code is licensed under the MIT license found in the
+ *  LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47,7 +45,8 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
   if (self = [super init]) {
     _testName = [testName copy];
     _deviceAgnostic = NO;
-    
+    _agnosticOptions = FBSnapshotTestCaseAgnosticOptionNone;
+
     _fileManager = [[NSFileManager alloc] init];
   }
   return self;
@@ -133,13 +132,13 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
   if (sameImageDimensions && [referenceImage fb_compareWithImage:image tolerance:tolerance]) {
     return YES;
   }
-  
+
   if (NULL != errorPtr) {
     NSString *errorDescription = sameImageDimensions ? @"Images different" : @"Images different sizes";
     NSString *errorReason = sameImageDimensions ? [NSString stringWithFormat:@"image pixels differed by more than %.2f%% from the reference image", tolerance * 100]
                                                 : [NSString stringWithFormat:@"referenceImage:%@, image:%@", NSStringFromCGSize(referenceImage.size), NSStringFromCGSize(image.size)];
     FBSnapshotTestControllerErrorCode errorCode = sameImageDimensions ? FBSnapshotTestControllerErrorCodeImagesDifferent : FBSnapshotTestControllerErrorCodeImagesDifferentSizes;
-    
+
     *errorPtr = [NSError errorWithDomain:FBSnapshotTestControllerErrorDomain
                                     code:errorCode
                                 userInfo:@{
@@ -232,11 +231,14 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
   if (0 < identifier.length) {
     fileName = [fileName stringByAppendingFormat:@"_%@", identifier];
   }
-  
+
+  BOOL noAgnosticOption = (self.agnosticOptions & FBSnapshotTestCaseAgnosticOptionNone) == FBSnapshotTestCaseAgnosticOptionNone;
   if (self.isDeviceAgnostic) {
     fileName = FBDeviceAgnosticNormalizedFileName(fileName);
+  } else if (!noAgnosticOption) {
+    fileName = FBDeviceAgnosticNormalizedFileNameFromOption(fileName, self.agnosticOptions);
   }
-  
+
   if ([[UIScreen mainScreen] scale] > 1) {
     fileName = [fileName stringByAppendingFormat:@"@%.fx", [[UIScreen mainScreen] scale]];
   }

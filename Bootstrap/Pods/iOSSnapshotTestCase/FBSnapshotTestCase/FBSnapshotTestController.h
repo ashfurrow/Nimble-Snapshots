@@ -1,15 +1,15 @@
 /*
- *  Copyright (c) 2015, Facebook, Inc.
- *  All rights reserved.
+ *  Copyright (c) 2015-present, Facebook, Inc.
  *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant
- *  of patent rights can be found in the PATENTS file in the same directory.
+ *  This source code is licensed under the MIT license found in the
+ *  LICENSE file in the root directory of this source tree.
  *
  */
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
+#import <FBSnapshotTestCase/FBSnapshotTestCasePlatform.h>
 
 typedef NS_ENUM(NSInteger, FBSnapshotTestControllerErrorCode) {
   FBSnapshotTestControllerErrorCodeUnknown,
@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, FBSnapshotTestControllerErrorCode) {
   FBSnapshotTestControllerErrorCodeImagesDifferentSizes,
   FBSnapshotTestControllerErrorCodeImagesDifferent,
 };
+
 /**
  Errors returned by the methods of FBSnapshotTestController use this domain.
  */
@@ -60,6 +61,17 @@ extern NSString *const FBDiffedImageKey;
  The default value is @c NO.
  */
 @property (readwrite, nonatomic, assign, getter=isDeviceAgnostic) BOOL deviceAgnostic;
+
+/**
+ When set, allows fine-grained control over how agnostic you want the file names to be.
+
+ Allows you to combine which agnostic options you want in your snapshot file names.
+
+ The default value is FBSnapshotTestCaseAgnosticOptionNone.
+
+ @attention If deviceAgnostic is YES, this bitmask is ignored. deviceAgnostic will be deprecated in a future version of FBSnapshotTestCase.
+ */
+@property (readwrite, nonatomic, assign) FBSnapshotTestCaseAgnosticOption agnosticOptions;
 
 /**
  Uses drawViewHierarchyInRect:afterScreenUpdates: to draw the image instead of renderInContext:
