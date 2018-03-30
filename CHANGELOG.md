@@ -2,7 +2,7 @@
 
 ## Next
 
-* Nothing yet!
+* Fix an error causing the project wasn't building with Xcode 9.3 - @Vkt0r
 
 ## 6.4.1
 
