@@ -1,10 +1,8 @@
 /*
- *  Copyright (c) 2015, Facebook, Inc.
- *  All rights reserved.
+ *  Copyright (c) 2015-present, Facebook, Inc.
  *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant
- *  of patent rights can be found in the PATENTS file in the same directory.
+ *  This source code is licensed under the MIT license found in the
+ *  LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47,5 +45,33 @@ NSString *FBDeviceAgnosticNormalizedFileName(NSString *fileName)
   NSArray *validComponents = [fileName componentsSeparatedByCharactersInSet:invalidCharacters];
   fileName = [validComponents componentsJoinedByString:@"_"];
   
+  return fileName;
+}
+
+NSString *FBDeviceAgnosticNormalizedFileNameFromOption(NSString *fileName, FBSnapshotTestCaseAgnosticOption option)
+{
+  if ((option & FBSnapshotTestCaseAgnosticOptionDevice) == FBSnapshotTestCaseAgnosticOptionDevice) {
+    UIDevice *device = [UIDevice currentDevice];
+    fileName = [fileName stringByAppendingFormat:@"_%@", device.model];
+  }
+
+  if ((option & FBSnapshotTestCaseAgnosticOptionOS) == FBSnapshotTestCaseAgnosticOptionOS) {
+    UIDevice *device = [UIDevice currentDevice];
+    NSString *os = device.systemVersion;
+    fileName = [fileName stringByAppendingFormat:@"_%@", os];
+  }
+
+  if ((option & FBSnapshotTestCaseAgnosticOptionScreenSize) == FBSnapshotTestCaseAgnosticOptionScreenSize) {
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    CGSize screenSize = keyWindow.bounds.size;
+    fileName = [fileName stringByAppendingFormat:@"_%.0fx%.0f", screenSize.width, screenSize.height];
+  }
+
+  NSMutableCharacterSet *invalidCharacters = [NSMutableCharacterSet new];
+  [invalidCharacters formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
+  [invalidCharacters formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+  NSArray *validComponents = [fileName componentsSeparatedByCharactersInSet:invalidCharacters];
+  fileName = [validComponents componentsJoinedByString:@"_"];
+
   return fileName;
 }

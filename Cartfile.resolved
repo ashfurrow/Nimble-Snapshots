@@ -1,2 +1,2 @@
 github "Quick/Nimble" "v7.0.3"
-github "uber/ios-snapshot-test-case" "2.2.0"
+github "uber/ios-snapshot-test-case" "3.0.0"

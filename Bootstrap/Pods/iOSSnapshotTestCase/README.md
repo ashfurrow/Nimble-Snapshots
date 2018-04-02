@@ -1,7 +1,8 @@
 iOSSnapshotTestCase (previously named FBSnapshotTestCase)
 ======================
 
-[![Build Status](https://travis-ci.org/uber/ios-snapshot-test-case.svg)](https://travis-ci.org/uber/ios-snapshot-test-case) [![Cocoa Pod Version](https://cocoapod-badges.herokuapp.com/v/iOSSnapshotTestCase/badge.svg)](http://cocoadocs.org/docsets/iOSSnapshotTestCase/)
+[![Build Status](https://travis-ci.org/uber/ios-snapshot-test-case.svg)](https://travis-ci.org/uber/ios-snapshot-test-case) 
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/iOSSnapshotTestCase.svg)](https://img.shields.io/cocoapods/v/iOSSnapshotTestCase.svg)
 
 What it does
 ------------
@@ -40,7 +41,7 @@ Installation with CocoaPods
      end
      ```
 
-   If you support iOS 7 use `iOSSnapshotTestCase/Core` instead, which doesn't contain Swift support.
+   If your test target is Objective-C only use `iOSSnapshotTestCase/Core` instead, which doesn't contain Swift support.
 
    Replace "Tests" with the name of your test project.
 
@@ -89,15 +90,13 @@ have separate targets for the two types.
 Authors
 -------
 
-`FBSnapshotTestCase` was written at Facebook by
+`iOSSnapshotTestCase` was written at Facebook by
 [Jonathan Dann](https://facebook.com/j.p.dann) with significant contributions by
 [Todd Krabach](https://facebook.com/toddkrabach).
 
-Today it is maintained by [Uber](https://github.com/uber).
+Today it is maintained by [Uber](https://github.com/uber) and [Alan Zeino](https://github.com/alanzeino).
 
 License
 -------
 
-Portions of `FBSnapshotTestCase` written while under Facebook's ownership are BSD-licensed. See `LICENSE`.
-
-Subsequent contributions to `FBSnapshotTestCase` are MIT–licensed. See `LICENSE`.
+`iOSSnapshotTestCase` is MIT–licensed. See `LICENSE`.
