@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Nimble-Snapshots"
-  s.version      = "6.4.1"
+  s.version      = "6.5.0"
   s.summary      = "Nimble matchers for iOSSnapshotTestCase"
   s.description  = <<-DESC
                    Nimble matchers for iOSSnapshotTestCase. Highly derivative of [Expecta Matchers for iOSSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
