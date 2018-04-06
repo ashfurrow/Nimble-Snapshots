@@ -118,29 +118,31 @@ class ConstraintViewResizer: ViewResizer {
 
 public struct DynamicSizeSnapshot {
     let name: String?
+    let identifier: String?
     let record: Bool
     let sizes: [String: CGSize]
     let resizeMode: ResizeMode
 
-    init(name: String?, record: Bool, sizes: [String: CGSize], resizeMode: ResizeMode) {
+    init(name: String?, identifier: String?, record: Bool, sizes: [String: CGSize], resizeMode: ResizeMode) {
         self.name = name
+        self.identifier = identifier
         self.record = record
         self.sizes = sizes
         self.resizeMode = resizeMode
     }
 }
 
-public func snapshot(_ name: String? = nil, sizes: [String: CGSize],
+public func snapshot(_ name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
                      resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
-    return DynamicSizeSnapshot(name: name, record: false, sizes: sizes, resizeMode: resizeMode)
+    return DynamicSizeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func haveValidDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize],
+public func haveValidDynamicSizeSnapshot(named name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
                                          isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
                                          tolerance: CGFloat? = nil,
                                          resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
-        return performDynamicSizeSnapshotTest(name, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic,
+        return performDynamicSizeSnapshotTest(name, identifier: identifier, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic,
                                               usesDrawRect: usesDrawRect, actualExpression: actualExpression,
                                               failureMessage: failureMessage, tolerance: tolerance,
                                               isRecord: false, resizeMode: resizeMode)
@@ -148,7 +150,7 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil, sizes: [Stri
 }
 
 // swiftlint:disable:next function_parameter_count
-func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], isDeviceAgnostic: Bool = false,
+func performDynamicSizeSnapshotTest(_ name: String?, identifier: String? = nil, sizes: [String: CGSize], isDeviceAgnostic: Bool = false,
                                     usesDrawRect: Bool = false, actualExpression: Expression<Snapshotable>,
                                     failureMessage: FailureMessage, tolerance: CGFloat? = nil, isRecord: Bool,
                                     resizeMode: ResizeMode) -> Bool {
@@ -164,13 +166,14 @@ func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], is
     let result = sizes.map { (sizeName, size) -> Bool in
         // swiftlint:disable:next force_unwrapping
         let view = instance.snapshotObject!
+        let _snapshotName = identifier != nil ? "\(snapshotName)_\(identifier!) - \(sizeName)" : "\(snapshotName) - \(sizeName)"
 
         resizer.resize(view: view, for: size)
 
         return FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect,
-                                              snapshot: "\(snapshotName) - \(sizeName)", record: isRecord,
+                                              snapshot: _snapshotName, record: isRecord,
                                               referenceDirectory: referenceImageDirectory, tolerance: tolerance,
-                                              filename: actualExpression.location.file)
+                                              filename: actualExpression.location.file, identifier: nil)
     }
 
     if isRecord {
@@ -193,16 +196,16 @@ func performDynamicSizeSnapshotTest(_ name: String?, sizes: [String: CGSize], is
     }
 }
 
-public func recordSnapshot(_ name: String? = nil, sizes: [String: CGSize],
+public func recordSnapshot(_ name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
                            resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
-    return DynamicSizeSnapshot(name: name, record: true, sizes: sizes, resizeMode: resizeMode)
+    return DynamicSizeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func recordDynamicSizeSnapshot(named name: String? = nil, sizes: [String: CGSize],
+public func recordDynamicSizeSnapshot(named name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
                                       isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
                                       resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
-        return performDynamicSizeSnapshotTest(name, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic,
+        return performDynamicSizeSnapshotTest(name, identifier: identifier, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic,
                                               usesDrawRect: usesDrawRect, actualExpression: actualExpression,
                                               failureMessage: failureMessage, isRecord: true, resizeMode: resizeMode)
     }
@@ -210,8 +213,8 @@ public func recordDynamicSizeSnapshot(named name: String? = nil, sizes: [String:
 
 public func == (lhs: Expectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
     if rhs.record {
-        lhs.to(recordDynamicSizeSnapshot(named: rhs.name, sizes: rhs.sizes, resizeMode: rhs.resizeMode))
+        lhs.to(recordDynamicSizeSnapshot(named: rhs.name, identifier: rhs.identifier, sizes: rhs.sizes, resizeMode: rhs.resizeMode))
     } else {
-        lhs.to(haveValidDynamicSizeSnapshot(named: rhs.name, sizes: rhs.sizes, resizeMode: rhs.resizeMode))
+        lhs.to(haveValidDynamicSizeSnapshot(named: rhs.name, identifier: rhs.identifier, sizes: rhs.sizes, resizeMode: rhs.resizeMode))
     }
 }
