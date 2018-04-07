@@ -166,7 +166,13 @@ func performDynamicSizeSnapshotTest(_ name: String?, identifier: String? = nil, 
     let result = sizes.map { (sizeName, size) -> Bool in
         // swiftlint:disable:next force_unwrapping
         let view = instance.snapshotObject!
-        let _snapshotName = identifier != nil ? "\(snapshotName)_\(identifier!) - \(sizeName)" : "\(snapshotName) - \(sizeName)"
+        let _snapshotName: String
+        
+        if let identifier = identifier {
+            _snapshotName = "\(snapshotName)_\(identifier) - \(sizeName)"
+        } else {
+            _snapshotName = "\(snapshotName) - \(sizeName)"
+        }
 
         resizer.resize(view: view, for: size)
 
