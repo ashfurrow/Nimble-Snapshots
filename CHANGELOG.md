@@ -2,6 +2,10 @@
 
 ## Next
 
+* Nothing yet!
+
+## 6.6.0
+
 * Add the optional `identifier` for each snapshot function, to be used is there are multiple snapshot tests in a given test method - @Vkt0r
 
 ## 6.5.0
