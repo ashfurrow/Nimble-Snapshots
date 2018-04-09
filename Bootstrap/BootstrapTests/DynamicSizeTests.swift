@@ -29,6 +29,11 @@ class DynamicSizeTests: QuickSpec {
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes))
                 }
+                
+                it("has a valid snapshot to all sizes with identifier") {
+                    //expect(view).to(recordDynamicSizeSnapshot(identifier: "bootstrap", sizes: sizes))
+                    expect(view).to(haveValidDynamicSizeSnapshot(identifier: "bootstrap", sizes: sizes))
+                }
 
                 it("has a valid snapshot to all sizes (using == operator)") {
                     expect(view) == snapshot(sizes: sizes)

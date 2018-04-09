@@ -18,6 +18,11 @@ class BootstrapTests: QuickSpec {
                 expect(view).to(haveValidSnapshot())
                 expect(view).to(haveValidSnapshot(named: "something custom"))
             }
+            
+            it("has a valid snapshot with a identifier") {
+                expect(view).to(haveValidSnapshot(identifier: "bootstrap"))
+                expect(view).to(haveValidSnapshot(named: "something custom", identifier: "bootstrap"))
+            }
 
             it("has a valid pretty-syntax snapshot") {
                 expect(view) == snapshot("something custom")
@@ -33,7 +38,12 @@ class BootstrapTests: QuickSpec {
                 expect(view) == snapshot()
             }
 
-            it("has a valid snapshot with model and OS in name") {
+            it("has a valid snapshot with model and OS in name and identifier") {
+                expect(view).to(haveValidDeviceAgnosticSnapshot(identifier: "bootstrap"))
+                expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS", identifier: "boostrap"))
+            }
+            
+            it("has a valid snapshot with model and OS in name ") {
                 expect(view).to(haveValidDeviceAgnosticSnapshot())
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS"))
             }

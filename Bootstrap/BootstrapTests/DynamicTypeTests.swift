@@ -60,6 +60,11 @@ class DynamicTypeTests: QuickSpec {
                 expect(view).to(haveValidDynamicTypeSnapshot(isDeviceAgnostic: true))
                 expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS", isDeviceAgnostic: true))
             }
+            
+            it("has a valid snapshot with identifier") {
+                expect(view).to(haveValidDynamicTypeSnapshot(identifier: "bootstrap"))
+                expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS", identifier: "bootstrap"))
+            }
 
             it("works with adjustsFontForContentSizeCategory") {
                 let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 100))
