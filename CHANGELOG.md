@@ -2,7 +2,7 @@
 
 ## Next
 
-* Nothing yet!
+* Add test images to the test results as XCAttachments - @tabend
 
 ## 6.6.0
 
