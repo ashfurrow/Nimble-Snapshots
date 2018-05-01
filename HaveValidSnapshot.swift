@@ -52,11 +52,31 @@ extension UIView : Snapshotable {
 
         do {
             try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject,
-                                                   selector: Selector(snapshot), identifier: identifier, tolerance: tolerance)
-        } catch {
+                                                 selector: Selector(snapshot), identifier: identifier, tolerance: tolerance)
+            let image = try snapshotController.referenceImage(for: Selector(snapshot), identifier: identifier)
+            attach(image: image, named: "Reference Image")
+        } catch let error {
+            let info = (error as NSError).userInfo
+            if let ref = info[FBReferenceImageKey] as? UIImage {
+                attach(image: ref, named: "Reference Image")
+            }
+            if let captured = info[FBCapturedImageKey] as? UIImage {
+                attach(image: captured, named: "Captured Image")
+            }
+            if let diff = info[FBDiffedImageKey] as? UIImage {
+                attach(image: diff, named: "Diffed Image")
+            }
             return false
         }
         return true
+    }
+
+    private static func attach(image: UIImage, named name: String) {
+        XCTContext.runActivity(named: name, block: { activity in
+            let attachment = XCTAttachment(image: image)
+            attachment.name = name
+            activity.add(attachment)
+        })
     }
 }
 
