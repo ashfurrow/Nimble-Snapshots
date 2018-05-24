@@ -58,13 +58,13 @@ extension UIView : Snapshotable {
         } catch let error {
             let info = (error as NSError).userInfo
             if let ref = info[FBReferenceImageKey] as? UIImage {
-                attach(image: ref, named: "Reference Image")
+                attach(image: ref, named: "Reference_\(reason)")
             }
             if let captured = info[FBCapturedImageKey] as? UIImage {
-                attach(image: captured, named: "Captured Image")
+                attach(image: captured, named: "Captured_\(reason)")
             }
             if let diff = info[FBDiffedImageKey] as? UIImage {
-                attach(image: diff, named: "Diffed Image")
+                attach(image: diff, named: "Diffed_\(reason)")
             }
             return false
         }
