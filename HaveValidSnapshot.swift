@@ -54,17 +54,17 @@ extension UIView : Snapshotable {
             try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject,
                                                  selector: Selector(snapshot), identifier: identifier, tolerance: tolerance)
             let image = try snapshotController.referenceImage(for: Selector(snapshot), identifier: identifier)
-            attach(image: image, named: "Reference_\(reason)")
+            attach(image: image, named: "Reference_\(snapshot)")
         } catch let error {
             let info = (error as NSError).userInfo
             if let ref = info[FBReferenceImageKey] as? UIImage {
-                attach(image: ref, named: "Reference_\(reason)")
+                attach(image: ref, named: "Reference_\(snapshot)")
             }
             if let captured = info[FBCapturedImageKey] as? UIImage {
-                attach(image: captured, named: "Captured_\(reason)")
+                attach(image: captured, named: "Captured_\(snapshot)")
             }
             if let diff = info[FBDiffedImageKey] as? UIImage {
-                attach(image: diff, named: "Diffed_\(reason)")
+                attach(image: diff, named: "Diffed_\(snapshot)")
             }
             return false
         }
