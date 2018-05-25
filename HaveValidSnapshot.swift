@@ -54,7 +54,7 @@ extension UIView : Snapshotable {
             try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject,
                                                  selector: Selector(snapshot), identifier: identifier, tolerance: tolerance)
             let image = try snapshotController.referenceImage(for: Selector(snapshot), identifier: identifier)
-            attach(image: image, named: "Reference Image")
+            attach(image: image, named: "Reference_\(reason)")
         } catch let error {
             let info = (error as NSError).userInfo
             if let ref = info[FBReferenceImageKey] as? UIImage {
