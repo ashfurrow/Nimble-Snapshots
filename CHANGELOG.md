@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 6.7.1
+
+* Change the images name for XCAttachments based on the origin image's name - @maryam
+
 ## 6.7.0
 
 * Add test images to the test results as XCAttachments - @tabend
