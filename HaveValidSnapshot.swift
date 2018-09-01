@@ -40,7 +40,8 @@ extension UIView : Snapshotable {
                                filename: String, identifier: String? = nil) -> Bool {
 
         let testName = parseFilename(filename: filename)
-        let snapshotController: FBSnapshotTestController = FBSnapshotTestController(testName: testName)
+        let snapshotController: FBSnapshotTestController = FBSnapshotTestController(test: self)
+        snapshotController.folderName = testName
         snapshotController.isDeviceAgnostic = isDeviceAgnostic
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
@@ -51,7 +52,7 @@ extension UIView : Snapshotable {
         assert(snapshotController.referenceImagesDirectory != nil, reason)
 
         do {
-            try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject,
+            try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject!,
                                                  selector: Selector(snapshot), identifier: identifier, tolerance: tolerance)
             let image = try snapshotController.referenceImage(for: Selector(snapshot), identifier: identifier)
             attach(image: image, named: "Reference_\(snapshot)")
