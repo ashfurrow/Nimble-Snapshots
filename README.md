@@ -42,7 +42,7 @@ something like the following.
 ```rb
 github "Quick/Quick" ~> 1.0
 github "Quick/Nimble" ~> 7.0
-github "uber/ios-snapshot-test-case" "2.2.0"
+github "uber/ios-snapshot-test-case" "4.0.0"
 github "ashfurrow/Nimble-Snapshots"
 ```
 

@@ -2,7 +2,7 @@
 
 ## Next
 
-- Nothing yet!
+* Fix an error regarding `iOSSnapshotTestCase` breaking compatibility change in version 4.0.0 - @Vkt0r
 
 ## 6.7.1
 
