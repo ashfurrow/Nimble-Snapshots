@@ -2,7 +2,7 @@
 
 ## Next
 
-- Nothing yet!
+* Load reference images directory path from environment variable if present - @aniastrzezek
 
 ## 6.7.1
 
