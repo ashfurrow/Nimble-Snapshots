@@ -3,6 +3,7 @@
 ## Next
 
 * Fix an error regarding `iOSSnapshotTestCase` breaking compatibility change in version 4.0.0 - @Vkt0r
+* Load reference images directory path from environment variable if present - @aniastrzezek
 
 ## 6.7.1
 

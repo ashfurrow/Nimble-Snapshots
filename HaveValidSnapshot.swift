@@ -96,6 +96,10 @@ func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
     }
+    
+    if let environmentReference = ProcessInfo.processInfo.environment["FB_REFERENCE_IMAGE_DIR"] {
+        return environmentReference
+    }
 
     // Search the test file's path to find the first folder with a test suffix,
     // then append "/ReferenceImages" and use that.
@@ -112,7 +116,8 @@ func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
 
     guard let testDirectory = testPath else {
         fatalError("Could not infer reference image folder – You should provide a reference dir using " +
-                   "FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)")
+                   "FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR) " +
+                   "or by setting the FB_REFERENCE_IMAGE_DIR environment variable")
     }
 
     // Recombine the path components and append our own image directory.
