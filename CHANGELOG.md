@@ -2,7 +2,7 @@
 
 ## Next
 
-* Nothing yet!
+* Fix failed snapshots not being saved - @marcelofabri
 
 ## 6.8.0
 
