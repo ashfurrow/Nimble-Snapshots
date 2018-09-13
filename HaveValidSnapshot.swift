@@ -45,6 +45,7 @@ extension UIView : Snapshotable {
         snapshotController.isDeviceAgnostic = isDeviceAgnostic
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
+        snapshotController.imageDiffDirectory = NSTemporaryDirectory()
         snapshotController.usesDrawViewHierarchyInRect = usesDrawRect
 
         let reason = "Missing value for referenceImagesDirectory - " +
