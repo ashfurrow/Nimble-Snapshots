@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build-and-test:
+    # Specify the Xcode version to use.
+    macos:
+      xcode: "9.3.0"
+    working_directory: /Users/distiller/project
+    environment:
+      FL_OUTPUT_DIR: output
+      BUNDLE_PATH: vendor/bundle
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-gems-{{ checksum "Gemfile.lock" }}
+          # Fall back to using the latest cache if no exact match is found.
+          - v1-gems-
+      - run:
+          name: "Install bundle"
+          command: bundle check || bundle install
+      - save_cache:
+          key: v1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: "Run tests"
+          command: rake test
+      - run:
+          name: "Run Carthage integration test"
+          command: rake carthage
+      - run:
+          name: "Run Danger"
+          command: bundle exec danger
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build-and-test
