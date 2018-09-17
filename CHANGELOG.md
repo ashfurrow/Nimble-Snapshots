@@ -2,7 +2,11 @@
 
 ## Next
 
+<<<<<<< HEAD
 * Add [second_curtain](https://github.com/ashfurrow/second_curtain) to the project - @Vkt0r
+=======
+* Xcode 10 Support (Swift 4 & Swift 4.2).
+>>>>>>> Add CHANGELOG entry for Xcode 10
 
 ## 6.8.1
 
