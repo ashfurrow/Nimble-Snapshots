@@ -31,3 +31,9 @@ jobs:
       - run:
           name: "Run Danger"
           command: bundle exec danger
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build-and-test
