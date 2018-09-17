@@ -111,7 +111,12 @@ private func updateTraitCollection(on element: Snapshotable) {
         if let view = environment as? UIView {
             view.subviews.forEach(updateTraitCollection(on:))
         } else if let vc = environment as? UIViewController {
+            #if swift(>=4.2)
+            vc.children.forEach(updateTraitCollection(on:))
+            #else
             vc.childViewControllers.forEach(updateTraitCollection(on:))
+            #endif
+
             if vc.isViewLoaded {
                 updateTraitCollection(on: vc.view)
             }
