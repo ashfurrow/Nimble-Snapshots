@@ -2,7 +2,7 @@
 
 ## Next
 
-* Nothing yet!
+* Add [second_curtain](https://github.com/ashfurrow/second_curtain) to the project - @Vkt0r
 
 ## 6.8.1
 
