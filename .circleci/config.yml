@@ -3,7 +3,7 @@ jobs:
   build-and-test:
     # Specify the Xcode version to use.
     macos:
-      xcode: "9.3.0"
+      xcode: "10.0.0"
     working_directory: /Users/distiller/project
     environment:
       BUNDLE_PATH: vendor/bundle
