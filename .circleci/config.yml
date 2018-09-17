@@ -6,7 +6,6 @@ jobs:
       xcode: "9.3.0"
     working_directory: /Users/distiller/project
     environment:
-      FL_OUTPUT_DIR: output
       BUNDLE_PATH: vendor/bundle
     steps:
       - checkout
@@ -24,13 +23,24 @@ jobs:
             - vendor/bundle
       - run:
           name: "Run tests"
-          command: rake test
+          command: |
+              mkdir output
+              rake test
+      - run: 
+          name: second curtain
+          command: bundle exec second_curtain output/xcodebuild.log
+          when: on_fail
       - run:
           name: "Run Carthage integration test"
           command: rake carthage
       - run:
           name: "Run Danger"
           command: bundle exec danger
+      - store_artifacts:
+          path: output/
+      - store_test_results:
+          path: output/
+                 
 
 workflows:
   version: 2
