@@ -1,49 +1,98 @@
-version: 2
-jobs:
-  build-and-test:
-    # Specify the Xcode version to use.
-    macos:
-      xcode: "9.3.0"
-    working_directory: /Users/distiller/project
-    environment:
-      BUNDLE_PATH: vendor/bundle
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-gems-{{ checksum "Gemfile.lock" }}
-          # Fall back to using the latest cache if no exact match is found.
-          - v1-gems-
-      - run:
+references:
+    defaults: &defaults
+        macos:
+            xcode: "10.0.0"
+        shell: /bin/bash --login -eo pipefail
+        working_directory: /Users/distiller/project
+        environment:
+            BUNDLE_PATH: vendor/bundle
+            
+    restore_bundle_cache: &restore_bundle_cache
+        restore_cache:
+            keys:
+                - v1-gems-{{ checksum "Gemfile.lock" }}
+                # Fall back to using the latest cache if no exact match is found.
+                - v1-gems-
+
+    save_bundle_cache: &save_bundle_cache
+        save_cache:
+            key: v1-gems-{{ checksum "Gemfile.lock" }}
+            paths:
+                - vendor/bundle
+
+    bunde_install: &bunde_install
+        run:
           name: "Install bundle"
           command: bundle check || bundle install
-      - save_cache:
-          key: v1-gems-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+
+version: 2
+jobs:
+
+  tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_bundle_cache
+      - *bunde_install
+      - *restore_bundle_cache
       - run:
-          name: "Run tests"
-          command: |
-              mkdir output
-              rake test
+          name: "Create output dir"
+          command: mkdir output
+      - run:
+          name: "Run tests in Swift 4.0"
+          command: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=4.0 build test | tee output/xcodebuild_swift$SWIFT_VERSION.log | xcpretty --color --simple
       - run: 
           name: second curtain
-          command: bundle exec second_curtain output/xcodebuild.log
+          command: bundle exec second_curtain output/xcodebuild_swift4.0.log
           when: on_fail
       - run:
-          name: "Run Carthage integration test"
-          command: rake carthage
-      - run:
-          name: "Run Danger"
-          command: bundle exec danger
+          name: "Run tests in Swift 4.2"
+          command: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=4.2 build test | tee output/xcodebuild_swift$SWIFT_VERSION.log | xcpretty --color --simple
+      - run: 
+          name: second curtain
+          command: bundle exec second_curtain output/xcodebuild_swift4.2.log
+          when: on_fail
       - store_artifacts:
           path: output/
       - store_test_results:
           path: output/
-                 
+    
+  carthage-integration-test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: "Run Carthage integration test"
+          command: carthage bootstrap --platform iOS && xcodebuild | xcpretty --color --simple
 
+  swiftlint:
+    <<: *defaults
+    docker:
+      - image: dantoml/swiftlint:latest
+    steps:
+      - checkout
+      - run: swiftlint lint --no-cache --reporter junit | tee result.xml
+      - store_artifacts:
+          path: result.xml
+      - store_test_results:
+          path: result.xml
+   
+  danger:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_bundle_cache
+      - *bunde_install
+      - *restore_bundle_cache
+      - run:
+          name: "Run Danger"
+          command: bundle exec danger
+  
 workflows:
   version: 2
-  build-test:
+  build-and-test:
     jobs:
-      - build-and-test
+      - tests
+      - carthage-integration-test
+      - danger
+      - swiftlint
