@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         assert(ProcessInfo.processInfo.isOperatingSystemAtLeast(minVersion),
                  "The tests should be run at least on iOS 9.3, not \(version.majorVersion), \(version.minorVersion)")
 
-
         #if swift(>=4.2)
         let stringFromSize: (CGSize) -> String = { NSCoder.string(for: $0) }
         #else
