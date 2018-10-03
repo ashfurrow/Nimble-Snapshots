@@ -12,6 +12,8 @@ opt_in_rules:
   - sorted_imports
   - switch_case_on_newline
   - redundant_nil_coalescing
-
+disabled_rules:
+  - identifier_name
 excluded:
   - Bootstrap/Pods
+  - Carthage
