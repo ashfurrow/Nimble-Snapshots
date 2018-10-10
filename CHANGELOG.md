@@ -2,6 +2,7 @@
 
 ## Next
 
+* Xcode 10 Support (Swift 4 & Swift 4.2). @freak4pc
 * Add [second_curtain](https://github.com/ashfurrow/second_curtain) to the project - @Vkt0r
 
 ## 6.8.1

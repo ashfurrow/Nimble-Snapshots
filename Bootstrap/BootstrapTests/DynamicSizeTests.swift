@@ -29,7 +29,7 @@ class DynamicSizeTests: QuickSpec {
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes))
                 }
-                
+
                 it("has a valid snapshot to all sizes with identifier") {
                     //expect(view).to(recordDynamicSizeSnapshot(identifier: "bootstrap", sizes: sizes))
                     expect(view).to(haveValidDynamicSizeSnapshot(identifier: "bootstrap", sizes: sizes))
@@ -88,11 +88,13 @@ class DynamicSizeTests: QuickSpec {
                 }
 
                 it("has a valid snapshot to all sizes") {
-                    expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
+                    expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes,
+                                                                 resizeMode: .block(resizeBlock: { view, size in
                         view.frame = CGRect(origin: .zero, size: size)
                         view.layoutIfNeeded()
                     })))
-//                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
+//                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes,
+//                                                              resizeMode: .block(resizeBlock: { (view, size) in
 //                        view.frame = CGRect(origin: CGPoint.zero, size: size)
 //                        view.layoutIfNeeded()
 //                    })))
@@ -118,9 +120,11 @@ class DynamicSizeTests: QuickSpec {
 
                 it("has a valid snapshot to all sizes") {
                     let resizer = CustomResizer()
-                    expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, resizeMode: .custom(viewResizer: resizer)))
+                    expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes,
+                                                                 resizeMode: .custom(viewResizer: resizer)))
                     expect(resizer.used) == 3
-//                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, resizeMode: .custom(ViewResizer: resizer)))
+//                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes,
+//                                                              resizeMode: .custom(ViewResizer: resizer)))
                 }
 
                 it("has a valid snapshot to all sizes (using == operator)") {

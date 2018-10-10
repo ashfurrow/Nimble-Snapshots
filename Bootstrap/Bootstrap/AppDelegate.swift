@@ -8,6 +8,10 @@
 
 import UIKit
 
+#if swift(>=4.2)
+    typealias UIApplicationLaunchOptionsKey = UIApplication.LaunchOptionsKey
+#endif
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,10 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         assert(ProcessInfo.processInfo.isOperatingSystemAtLeast(minVersion),
                  "The tests should be run at least on iOS 9.3, not \(version.majorVersion), \(version.minorVersion)")
 
+        #if swift(>=4.2)
+        let stringFromSize: (CGSize) -> String = { NSCoder.string(for: $0) }
+        #else
+        let stringFromSize: (CGSize) -> String = { NSStringFromCGSize($0) }
+        #endif
         let nativeResolution = UIScreen.main.nativeBounds.size
         assert(isExpectedDevice(nativeResolution: nativeResolution),
                "The tests should be run on an iPhone 6, not a device with " +
-               "native resolution \(NSStringFromCGSize(nativeResolution))")
+               "native resolution \(stringFromSize(nativeResolution))")
 
         return true
     }

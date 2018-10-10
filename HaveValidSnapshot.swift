@@ -8,7 +8,7 @@ import UIKit
     var snapshotObject: UIView? { get }
 }
 
-extension UIViewController : Snapshotable {
+extension UIViewController: Snapshotable {
     public var snapshotObject: UIView? {
         self.beginAppearanceTransition(true, animated: false)
         self.endAppearanceTransition()
@@ -16,7 +16,7 @@ extension UIViewController : Snapshotable {
     }
 }
 
-extension UIView : Snapshotable {
+extension UIView: Snapshotable {
     public var snapshotObject: UIView? {
         return self
     }
@@ -52,9 +52,16 @@ extension UIView : Snapshotable {
                      "Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)"
         assert(snapshotController.referenceImagesDirectory != nil, reason)
 
+        guard let snapshotObject = instance.snapshotObject else {
+            fatalError("Failed unwrapping Snapshot Object")
+        }
+
         do {
-            try snapshotController.compareSnapshot(ofViewOrLayer: instance.snapshotObject!,
-                                                 selector: Selector(snapshot), identifier: identifier, tolerance: tolerance)
+            try snapshotController.compareSnapshot(ofViewOrLayer: snapshotObject,
+                                                   selector: Selector(snapshot),
+                                                   identifier: identifier,
+                                                   tolerance: tolerance)
+
             let image = try snapshotController.referenceImage(for: Selector(snapshot), identifier: identifier)
             attach(image: image, named: "Reference_\(snapshot)")
         } catch let error {
@@ -97,7 +104,7 @@ func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
     }
-    
+
     if let environmentReference = ProcessInfo.processInfo.environment["FB_REFERENCE_IMAGE_DIR"] {
         return environmentReference
     }
@@ -161,8 +168,12 @@ func clearFailureMessage(_ failureMessage: FailureMessage) {
     failureMessage.to = ""
 }
 
-private func performSnapshotTest(_ name: String?, identifier: String? = nil, isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
-                                 actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage,
+private func performSnapshotTest(_ name: String?,
+                                 identifier: String? = nil,
+                                 isDeviceAgnostic: Bool = false,
+                                 usesDrawRect: Bool = false,
+                                 actualExpression: Expression<Snapshotable>,
+                                 failureMessage: FailureMessage,
                                  tolerance: CGFloat?) -> Bool {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
@@ -184,8 +195,12 @@ private func performSnapshotTest(_ name: String?, identifier: String? = nil, isD
     return result
 }
 
-private func recordSnapshot(_ name: String?, identifier: String? = nil, isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
-                            actualExpression: Expression<Snapshotable>, failureMessage: FailureMessage) -> Bool {
+private func recordSnapshot(_ name: String?,
+                            identifier: String? = nil,
+                            isDeviceAgnostic: Bool = false,
+                            usesDrawRect: Bool = false,
+                            actualExpression: Expression<Snapshotable>,
+                            failureMessage: FailureMessage) -> Bool {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -195,9 +210,15 @@ private func recordSnapshot(_ name: String?, identifier: String? = nil, isDevice
 
     clearFailureMessage(failureMessage)
 
-    if FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect,
-                                      snapshot: snapshotName, record: true, referenceDirectory: referenceImageDirectory,
-                                      tolerance: tolerance, filename: actualExpression.location.file, identifier: identifier) {
+    if FBSnapshotTest.compareSnapshot(instance,
+                                      isDeviceAgnostic: isDeviceAgnostic,
+                                      usesDrawRect: usesDrawRect,
+                                      snapshot: snapshotName,
+                                      record: true,
+                                      referenceDirectory: referenceImageDirectory,
+                                      tolerance: tolerance,
+                                      filename: actualExpression.location.file,
+                                      identifier: identifier) {
         let name = name ?? snapshotName
         failureMessage.expected = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else {
@@ -224,16 +245,25 @@ public func haveValidSnapshot(named name: String? = nil, identifier: String? = n
 
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         if switchChecksWithRecords {
-            return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect, actualExpression: actualExpression,
+            return recordSnapshot(name,
+                                  identifier: identifier,
+                                  usesDrawRect: usesDrawRect,
+                                  actualExpression: actualExpression,
                                   failureMessage: failureMessage)
         }
 
-        return performSnapshotTest(name, identifier: identifier, usesDrawRect: usesDrawRect, actualExpression: actualExpression,
-                                   failureMessage: failureMessage, tolerance: tolerance)
+        return performSnapshotTest(name,
+                                   identifier: identifier,
+                                   usesDrawRect: usesDrawRect,
+                                   actualExpression: actualExpression,
+                                   failureMessage: failureMessage,
+                                   tolerance: tolerance)
     }
 }
 
-public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, identifier: String? = nil, usesDrawRect: Bool = false,
+public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
+                                            identifier: String? = nil,
+                                            usesDrawRect: Bool = false,
                                             tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
@@ -248,7 +278,9 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil, identifie
     }
 }
 
-public func recordSnapshot(named name: String? = nil, identifier: String? = nil, usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
+public func recordSnapshot(named name: String? = nil,
+                           identifier: String? = nil,
+                           usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect,

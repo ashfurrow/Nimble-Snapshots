@@ -84,9 +84,15 @@ class ConstraintViewResizer: ViewResizer {
         var height: NSLayoutConstraint!
         var width: NSLayoutConstraint!
 
+        #if swift(>=4.2)
+        let heightLayout = NSLayoutConstraint.Attribute.height
+        let widthLayout = NSLayoutConstraint.Attribute.width
+        let equalRelation = NSLayoutConstraint.Relation.equal
+        #else
         let heightLayout = NSLayoutAttribute.height
         let widthLayout = NSLayoutAttribute.width
         let equalRelation = NSLayoutRelation.equal
+        #endif
 
         for constrain in view.constraints {
             if constrain.firstAttribute == heightLayout &&
@@ -142,15 +148,24 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil, identifier: 
                                          tolerance: CGFloat? = nil,
                                          resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
-        return performDynamicSizeSnapshotTest(name, identifier: identifier, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic,
-                                              usesDrawRect: usesDrawRect, actualExpression: actualExpression,
-                                              failureMessage: failureMessage, tolerance: tolerance,
-                                              isRecord: false, resizeMode: resizeMode)
+        return performDynamicSizeSnapshotTest(name,
+                                              identifier: identifier,
+                                              sizes: sizes,
+                                              isDeviceAgnostic: isDeviceAgnostic,
+                                              usesDrawRect: usesDrawRect,
+                                              actualExpression: actualExpression,
+                                              failureMessage: failureMessage,
+                                              tolerance: tolerance,
+                                              isRecord: false,
+                                              resizeMode: resizeMode)
     }
 }
 
 // swiftlint:disable:next function_parameter_count
-func performDynamicSizeSnapshotTest(_ name: String?, identifier: String? = nil, sizes: [String: CGSize], isDeviceAgnostic: Bool = false,
+func performDynamicSizeSnapshotTest(_ name: String?,
+                                    identifier: String? = nil,
+                                    sizes: [String: CGSize],
+                                    isDeviceAgnostic: Bool = false,
                                     usesDrawRect: Bool = false, actualExpression: Expression<Snapshotable>,
                                     failureMessage: FailureMessage, tolerance: CGFloat? = nil, isRecord: Bool,
                                     resizeMode: ResizeMode) -> Bool {
@@ -166,18 +181,18 @@ func performDynamicSizeSnapshotTest(_ name: String?, identifier: String? = nil, 
     let result = sizes.map { (sizeName, size) -> Bool in
         // swiftlint:disable:next force_unwrapping
         let view = instance.snapshotObject!
-        let _snapshotName: String
-        
+        let finalSnapshotName: String
+
         if let identifier = identifier {
-            _snapshotName = "\(snapshotName)_\(identifier) - \(sizeName)"
+            finalSnapshotName = "\(snapshotName)_\(identifier) - \(sizeName)"
         } else {
-            _snapshotName = "\(snapshotName) - \(sizeName)"
+            finalSnapshotName = "\(snapshotName) - \(sizeName)"
         }
 
         resizer.resize(view: view, for: size)
 
         return FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect,
-                                              snapshot: _snapshotName, record: isRecord,
+                                              snapshot: finalSnapshotName, record: isRecord,
                                               referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                               filename: actualExpression.location.file, identifier: nil)
     }
@@ -211,16 +226,28 @@ public func recordDynamicSizeSnapshot(named name: String? = nil, identifier: Str
                                       isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
                                       resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
-        return performDynamicSizeSnapshotTest(name, identifier: identifier, sizes: sizes, isDeviceAgnostic: isDeviceAgnostic,
-                                              usesDrawRect: usesDrawRect, actualExpression: actualExpression,
-                                              failureMessage: failureMessage, isRecord: true, resizeMode: resizeMode)
+        return performDynamicSizeSnapshotTest(name,
+                                              identifier: identifier,
+                                              sizes: sizes,
+                                              isDeviceAgnostic: isDeviceAgnostic,
+                                              usesDrawRect: usesDrawRect,
+                                              actualExpression: actualExpression,
+                                              failureMessage: failureMessage,
+                                              isRecord: true,
+                                              resizeMode: resizeMode)
     }
 }
 
 public func == (lhs: Expectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
     if rhs.record {
-        lhs.to(recordDynamicSizeSnapshot(named: rhs.name, identifier: rhs.identifier, sizes: rhs.sizes, resizeMode: rhs.resizeMode))
+        lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
+                                         identifier: rhs.identifier,
+                                         sizes: rhs.sizes,
+                                         resizeMode: rhs.resizeMode))
     } else {
-        lhs.to(haveValidDynamicSizeSnapshot(named: rhs.name, identifier: rhs.identifier, sizes: rhs.sizes, resizeMode: rhs.resizeMode))
+        lhs.to(haveValidDynamicSizeSnapshot(named: rhs.name,
+                                            identifier: rhs.identifier,
+                                            sizes: rhs.sizes,
+                                            resizeMode: rhs.resizeMode))
     }
 }

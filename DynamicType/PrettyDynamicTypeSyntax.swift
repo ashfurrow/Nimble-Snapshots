@@ -18,15 +18,25 @@ public struct DynamicTypeSnapshot {
     }
 }
 
-public func dynamicTypeSnapshot(_ name: String? = nil, identifier: String? = nil, sizes: [UIContentSizeCategory] = allContentSizeCategories(),
+public func dynamicTypeSnapshot(_ name: String? = nil,
+                                identifier: String? = nil,
+                                sizes: [UIContentSizeCategory] = allContentSizeCategories(),
                                 deviceAgnostic: Bool = false) -> DynamicTypeSnapshot {
-    return DynamicTypeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, deviceAgnostic: deviceAgnostic)
+    return DynamicTypeSnapshot(name: name,
+                               identifier: identifier,
+                               record: false,
+                               sizes: sizes,
+                               deviceAgnostic: deviceAgnostic)
 }
 
 public func recordDynamicTypeSnapshot(_ name: String? = nil, identifier: String? = nil,
                                       sizes: [UIContentSizeCategory] = allContentSizeCategories(),
                                       deviceAgnostic: Bool = false) -> DynamicTypeSnapshot {
-    return DynamicTypeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, deviceAgnostic: deviceAgnostic)
+    return DynamicTypeSnapshot(name: name,
+                               identifier: identifier,
+                               record: true,
+                               sizes: sizes,
+                               deviceAgnostic: deviceAgnostic)
 }
 
 public func == (lhs: Expectation<Snapshotable>, rhs: DynamicTypeSnapshot) {
