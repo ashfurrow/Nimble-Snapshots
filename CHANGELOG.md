@@ -3,6 +3,7 @@
 ## Next
 
 * Add [second_curtain](https://github.com/ashfurrow/second_curtain) to the project - @Vkt0r
+* Set image diff directory from environment variable if present - @flobories
 
 ## 6.8.1
 
