@@ -45,7 +45,7 @@ extension UIView: Snapshotable {
         snapshotController.isDeviceAgnostic = isDeviceAgnostic
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
-        snapshotController.imageDiffDirectory = NSTemporaryDirectory()
+        snapshotController.imageDiffDirectory = defaultImageDiffDirectory
         snapshotController.usesDrawViewHierarchyInRect = usesDrawRect
 
         let reason = "Missing value for referenceImagesDirectory - " +
@@ -134,6 +134,13 @@ func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     let folderPath = folderPathComponents.componentsJoined(by: "/")
 
     return folderPath + "/ReferenceImages"
+}
+
+private var defaultImageDiffDirectory: String {
+    if let environmentReference = ProcessInfo.processInfo.environment["IMAGE_DIFF_DIR"] {
+        return environmentReference
+    }
+    return NSTemporaryDirectory()
 }
 
 private func parseFilename(filename: String) -> String {
