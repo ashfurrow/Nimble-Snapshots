@@ -2,6 +2,10 @@
 
 ## Next
 
+* Nothing yet!
+
+## 6.9.0
+
 * Save the failed tests directory in the CircleCI artifacts - @Vkt0r
 * Run [second_curtain](https://github.com/ashfurrow/second_curtain) in the pipeline of `xcodebuild` - @Vkt0r
 * Xcode 10 Support (Swift 4 & Swift 4.2). @freak4pc
