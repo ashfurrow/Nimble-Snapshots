@@ -44,7 +44,7 @@ typedef union {
 
 @implementation UIImage (Compare)
 
-- (BOOL)fb_compareWithImage:(UIImage *)image tolerance:(CGFloat)tolerance
+- (BOOL)fb_compareWithImage:(UIImage *)image perPixelTolerance:(CGFloat)perPixelTolerance overallTolerance:(CGFloat)overallTolerance
 {
     NSAssert(CGSizeEqualToSize(self.size, image.size), @"Images must be same size.");
 
@@ -93,40 +93,88 @@ typedef union {
     CGContextRelease(imageContext);
 
     BOOL imageEqual = YES;
+    FBComparePixel *p1 = referenceImagePixels;
+    FBComparePixel *p2 = imagePixels;
 
     // Do a fast compare if we can
-    if (tolerance == 0) {
+    if (overallTolerance == 0 && perPixelTolerance == 0) {
         imageEqual = (memcmp(referenceImagePixels, imagePixels, referenceImageSizeBytes) == 0);
     } else {
+        const NSUInteger pixelCount = referenceImageSize.width * referenceImageSize.height;
         // Go through each pixel in turn and see if it is different
-        const NSInteger pixelCount = referenceImageSize.width * referenceImageSize.height;
-
-        FBComparePixel *p1 = referenceImagePixels;
-        FBComparePixel *p2 = imagePixels;
-
-        NSInteger numDiffPixels = 0;
-        for (int n = 0; n < pixelCount; ++n) {
-            // If this pixel is different, increment the pixel diff count and see
-            // if we have hit our limit.
-            if (p1->raw != p2->raw) {
-                numDiffPixels++;
-
-                CGFloat percent = (CGFloat)numDiffPixels / pixelCount;
-                if (percent > tolerance) {
-                    imageEqual = NO;
-                    break;
-                }
-            }
-
-            p1++;
-            p2++;
-        }
+        imageEqual = [self _compareAllPixelsWithPerPixelTolerance:perPixelTolerance
+                                                 overallTolerance:overallTolerance
+                                                       pixelCount:pixelCount
+                                                  referencePixels:p1
+                                                      imagePixels:p2];
     }
 
     free(referenceImagePixels);
     free(imagePixels);
 
     return imageEqual;
+}
+
+- (BOOL)_comparePixelWithPerPixelTolerance:(CGFloat)perPixelTolerance
+                            referencePixel:(FBComparePixel *)referencePixel
+                                imagePixel:(FBComparePixel *)imagePixel
+{
+    if (referencePixel->raw == imagePixel->raw) {
+        return YES;
+    } else if (perPixelTolerance == 0) {
+        return NO;
+    }
+
+    CGFloat redPercentDiff = [self _calculatePercentDifferenceForReferencePixelComponent:referencePixel->pixels.red
+                                                                     imagePixelComponent:imagePixel->pixels.red];
+    CGFloat greenPercentDiff = [self _calculatePercentDifferenceForReferencePixelComponent:referencePixel->pixels.green
+                                                                       imagePixelComponent:imagePixel->pixels.green];
+    CGFloat bluePercentDiff = [self _calculatePercentDifferenceForReferencePixelComponent:referencePixel->pixels.blue
+                                                                      imagePixelComponent:imagePixel->pixels.blue];
+    CGFloat alphaPercentDiff = [self _calculatePercentDifferenceForReferencePixelComponent:referencePixel->pixels.alpha
+                                                                       imagePixelComponent:imagePixel->pixels.alpha];
+
+    BOOL anyDifferencesFound = (redPercentDiff > perPixelTolerance ||
+                                greenPercentDiff > perPixelTolerance ||
+                                bluePercentDiff > perPixelTolerance ||
+                                alphaPercentDiff > perPixelTolerance);
+
+    return !anyDifferencesFound;
+}
+
+- (CGFloat)_calculatePercentDifferenceForReferencePixelComponent:(char)p1
+                                             imagePixelComponent:(char)p2
+{
+    NSInteger referencePixelComponent = (unsigned char)p1;
+    NSInteger imagePixelComponent = (unsigned char)p2;
+    NSUInteger componentDifference = ABS(referencePixelComponent - imagePixelComponent);
+    return (CGFloat)componentDifference / 256;
+}
+
+- (BOOL)_compareAllPixelsWithPerPixelTolerance:(CGFloat)perPixelTolerance
+                              overallTolerance:(CGFloat)overallTolerance
+                                    pixelCount:(NSUInteger)pixelCount
+                               referencePixels:(FBComparePixel *)referencePixel
+                                   imagePixels:(FBComparePixel *)imagePixel
+{
+    NSUInteger numDiffPixels = 0;
+    for (NSUInteger n = 0; n < pixelCount; ++n) {
+        // If this pixel is different, increment the pixel diff count and see
+        // if we have hit our limit.
+        BOOL isIdenticalPixel = [self _comparePixelWithPerPixelTolerance:perPixelTolerance referencePixel:referencePixel imagePixel:imagePixel];
+        if (!isIdenticalPixel) {
+            numDiffPixels++;
+
+            CGFloat percent = (CGFloat)numDiffPixels / (CGFloat)pixelCount;
+            if (percent > overallTolerance) {
+                return NO;
+            }
+        }
+
+        referencePixel++;
+        imagePixel++;
+    }
+    return YES;
 }
 
 @end
