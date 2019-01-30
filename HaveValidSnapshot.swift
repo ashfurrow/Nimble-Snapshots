@@ -60,7 +60,7 @@ extension UIView: Snapshotable {
             try snapshotController.compareSnapshot(ofViewOrLayer: snapshotObject,
                                                    selector: Selector(snapshot),
                                                    identifier: identifier,
-                                                   tolerance: tolerance)
+                                                   overallTolerance: tolerance)
 
             let image = try snapshotController.referenceImage(for: Selector(snapshot), identifier: identifier)
             attach(image: image, named: "Reference_\(snapshot)")
