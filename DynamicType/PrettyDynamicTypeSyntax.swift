@@ -29,7 +29,8 @@ public func dynamicTypeSnapshot(_ name: String? = nil,
                                deviceAgnostic: deviceAgnostic)
 }
 
-public func recordDynamicTypeSnapshot(_ name: String? = nil, identifier: String? = nil,
+public func recordDynamicTypeSnapshot(_ name: String? = nil,
+                                      identifier: String? = nil,
                                       sizes: [UIContentSizeCategory] = allContentSizeCategories(),
                                       deviceAgnostic: Bool = false) -> DynamicTypeSnapshot {
     return DynamicTypeSnapshot(name: name,

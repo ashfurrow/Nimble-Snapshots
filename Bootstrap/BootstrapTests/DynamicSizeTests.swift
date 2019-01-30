@@ -101,7 +101,7 @@ class DynamicSizeTests: QuickSpec {
                 }
 
                 it("has a valid snapshot to all sizes (using == operator)") {
-                    expect(view) == snapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
+                    expect(view) == snapshot(sizes: sizes, resizeMode: .block(resizeBlock: { view, size in
                         view.frame = CGRect(origin: .zero, size: size)
                         view.layoutIfNeeded()
                     }))

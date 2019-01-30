@@ -4,7 +4,7 @@ import UIKit
 public final class DynamicTypeView: UIView {
     public let label: UILabel
 
-    public override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         label = UILabel()
         super.init(frame: frame)
 
@@ -26,12 +26,12 @@ public final class DynamicTypeView: UIView {
         #endif
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateFonts),
-                                                         name: notName,
-                                                         object: nil)
+                                               name: notName,
+                                               object: nil)
     }
 
     private var createdConstraints = false
-    public override func updateConstraints() {
+    override public func updateConstraints() {
         if !createdConstraints {
             label.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
             label.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -42,7 +42,8 @@ public final class DynamicTypeView: UIView {
         super.updateConstraints()
     }
 
-    @objc func updateFonts(_ notification: Notification) {
+    @objc
+    func updateFonts(_ notification: Notification) {
         #if swift(>=4.2)
         let newValueKey = UIContentSizeCategory.newValueUserInfoKey
         #else
@@ -57,6 +58,7 @@ public final class DynamicTypeView: UIView {
         label.text = category.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
     }
 
+    @available(*, unavailable)
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
