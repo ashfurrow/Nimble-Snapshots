@@ -188,6 +188,9 @@ For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests
   For more info on usage, check the [dynamic type tests](Bootstrap/BootstrapTests/DynamicTypeTests.swift).
 
 * Removes support for Xcode 7.3 and Swift 2.2 - @marcelofabri
+
+## 4.2.0
+
 * Adds Swift 2.3/3.0 support - @carezone
 
 ## 4.1.0
