@@ -81,8 +81,8 @@ class ConstraintViewResizer: ViewResizer {
     }
 
     func findConstrains(of view: UIView) -> SizeConstrainsWrapper {
-        var height: NSLayoutConstraint!
-        var width: NSLayoutConstraint!
+        var height: NSLayoutConstraint! // swiftlint:disable:this implicitly_unwrapped_optional
+        var width: NSLayoutConstraint! // swiftlint:disable:this implicitly_unwrapped_optional
 
         #if swift(>=4.2)
         let heightLayout = NSLayoutConstraint.Attribute.height
@@ -138,13 +138,18 @@ public struct DynamicSizeSnapshot {
     }
 }
 
-public func snapshot(_ name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
+public func snapshot(_ name: String? = nil,
+                     identifier: String? = nil,
+                     sizes: [String: CGSize],
                      resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
     return DynamicSizeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func haveValidDynamicSizeSnapshot(named name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
-                                         isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
+public func haveValidDynamicSizeSnapshot(named name: String? = nil,
+                                         identifier: String? = nil,
+                                         sizes: [String: CGSize],
+                                         isDeviceAgnostic: Bool = false,
+                                         usesDrawRect: Bool = false,
                                          tolerance: CGFloat? = nil,
                                          resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
@@ -166,8 +171,11 @@ func performDynamicSizeSnapshotTest(_ name: String?,
                                     identifier: String? = nil,
                                     sizes: [String: CGSize],
                                     isDeviceAgnostic: Bool = false,
-                                    usesDrawRect: Bool = false, actualExpression: Expression<Snapshotable>,
-                                    failureMessage: FailureMessage, tolerance: CGFloat? = nil, isRecord: Bool,
+                                    usesDrawRect: Bool = false,
+                                    actualExpression: Expression<Snapshotable>,
+                                    failureMessage: FailureMessage,
+                                    tolerance: CGFloat? = nil,
+                                    isRecord: Bool,
                                     resizeMode: ResizeMode) -> Bool {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
@@ -178,7 +186,7 @@ func performDynamicSizeSnapshotTest(_ name: String?,
 
     let resizer = resizeMode.viewResizer()
 
-    let result = sizes.map { (sizeName, size) -> Bool in
+    let result = sizes.map { sizeName, size -> Bool in
         // swiftlint:disable:next force_unwrapping
         let view = instance.snapshotObject!
         let finalSnapshotName: String
@@ -217,13 +225,18 @@ func performDynamicSizeSnapshotTest(_ name: String?,
     }
 }
 
-public func recordSnapshot(_ name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
+public func recordSnapshot(_ name: String? = nil,
+                           identifier: String? = nil,
+                           sizes: [String: CGSize],
                            resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
     return DynamicSizeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func recordDynamicSizeSnapshot(named name: String? = nil, identifier: String? = nil, sizes: [String: CGSize],
-                                      isDeviceAgnostic: Bool = false, usesDrawRect: Bool = false,
+public func recordDynamicSizeSnapshot(named name: String? = nil,
+                                      identifier: String? = nil,
+                                      sizes: [String: CGSize],
+                                      isDeviceAgnostic: Bool = false,
+                                      usesDrawRect: Bool = false,
                                       resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         return performDynamicSizeSnapshotTest(name,

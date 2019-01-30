@@ -22,7 +22,8 @@ extension UIView: Snapshotable {
     }
 }
 
-@objc public class FBSnapshotTest: NSObject {
+@objc
+public class FBSnapshotTest: NSObject {
 
     var referenceImagesDirectory: String?
     var tolerance: CGFloat = 0
@@ -34,10 +35,15 @@ extension UIView: Snapshotable {
     }
 
     // swiftlint:disable:next function_parameter_count
-    class func compareSnapshot(_ instance: Snapshotable, isDeviceAgnostic: Bool = false,
-                               usesDrawRect: Bool = false, snapshot: String, record: Bool,
-                               referenceDirectory: String, tolerance: CGFloat,
-                               filename: String, identifier: String? = nil) -> Bool {
+    class func compareSnapshot(_ instance: Snapshotable,
+                               isDeviceAgnostic: Bool = false,
+                               usesDrawRect: Bool = false,
+                               snapshot: String,
+                               record: Bool,
+                               referenceDirectory: String,
+                               tolerance: CGFloat,
+                               filename: String,
+                               identifier: String? = nil) -> Bool {
 
         let testName = parseFilename(filename: filename)
         let snapshotController: FBSnapshotTestController = FBSnapshotTestController(test: self)
@@ -81,11 +87,11 @@ extension UIView: Snapshotable {
     }
 
     private static func attach(image: UIImage, named name: String) {
-        XCTContext.runActivity(named: name, block: { activity in
+        XCTContext.runActivity(named: name) { activity in
             let attachment = XCTAttachment(image: image)
             attachment.name = name
             activity.add(attachment)
-        })
+        }
     }
 }
 
@@ -247,7 +253,9 @@ private func currentTestName() -> String? {
 
 internal var switchChecksWithRecords = false
 
-public func haveValidSnapshot(named name: String? = nil, identifier: String? = nil, usesDrawRect: Bool = false,
+public func haveValidSnapshot(named name: String? = nil,
+                              identifier: String? = nil,
+                              usesDrawRect: Bool = false,
                               tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
@@ -295,7 +303,8 @@ public func recordSnapshot(named name: String? = nil,
     }
 }
 
-public func recordDeviceAgnosticSnapshot(named name: String? = nil, identifier: String? = nil,
+public func recordDeviceAgnosticSnapshot(named name: String? = nil,
+                                         identifier: String? = nil,
                                          usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in

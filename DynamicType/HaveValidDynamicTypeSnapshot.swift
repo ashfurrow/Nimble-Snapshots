@@ -15,7 +15,8 @@ func shortCategoryName(_ category: UIContentSizeCategory) -> String {
     return category.rawValue.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
 }
 
-func combinePredicates<T>(_ predicates: [Predicate<T>], ignoreFailures: Bool = false,
+func combinePredicates<T>(_ predicates: [Predicate<T>],
+                          ignoreFailures: Bool = false,
                           deferred: (() -> Void)? = nil) -> Predicate<T> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         defer {
@@ -52,7 +53,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil,
             let predicate: Predicate<Snapshotable>
             if isDeviceAgnostic {
                 predicate = haveValidDeviceAgnosticSnapshot(named: nameWithCategory, identifier: identifier,
-                                                          usesDrawRect: usesDrawRect, tolerance: tolerance)
+                                                            usesDrawRect: usesDrawRect, tolerance: tolerance)
             } else {
                 predicate = haveValidSnapshot(named: nameWithCategory,
                                               identifier: identifier,
@@ -69,7 +70,9 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil,
     }
 }
 
-public func recordDynamicTypeSnapshot(named name: String? = nil, identifier: String? = nil, usesDrawRect: Bool = false,
+public func recordDynamicTypeSnapshot(named name: String? = nil,
+                                      identifier: String? = nil,
+                                      usesDrawRect: Bool = false,
                                       sizes: [UIContentSizeCategory] = allContentSizeCategories(),
                                       isDeviceAgnostic: Bool = false) -> Predicate<Snapshotable> {
     let mock = NBSMockedApplication()
