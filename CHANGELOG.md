@@ -2,6 +2,10 @@
 
 ## Next
 
+- Nothing yet!
+
+## 6.9.1
+
 * Update ios-snapshot-test-case to 5.0.2 - @dogo
 * Fix compareSnapShot signature - @dogo
 
