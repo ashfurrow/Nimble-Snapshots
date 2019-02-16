@@ -37,7 +37,7 @@ SPEC CHECKSUMS:
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
   iOSSnapshotTestCase: 2d51aa06775e95cecb0a1fb9c5c159ccd1dd4596
   Nimble: 2839b01d1b31f6a6a7777a221f0d91cf52e8e27b
-  Nimble-Snapshots: 2b2e62c4fc970b3e0a093f7b0684a97c660ff619
+  Nimble-Snapshots: f99337636e33e9ed5c90f0ea517769caa8233c79
   Quick: d17304d58d0d169dd0bd1c6e5c28e3318de32a1a
 
 PODFILE CHECKSUM: 9764f9631594aa3cb114bebcaf0c496e070ff50c
