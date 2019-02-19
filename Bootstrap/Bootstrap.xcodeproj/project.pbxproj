@@ -75,9 +75,9 @@
 			children = (
 				5EFDC74A1F8698B4001453EC /* Bootstrap */,
 				5EFDC75F1F8698B4001453EC /* BootstrapTests */,
-				5EFDC7491F8698B4001453EC /* Products */,
-				C8BD3DA99C7599D57DBEC91F /* Pods */,
 				E3AA8BD26A653D22A0B178E9 /* Frameworks */,
+				C8BD3DA99C7599D57DBEC91F /* Pods */,
+				5EFDC7491F8698B4001453EC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,12 +94,12 @@
 			isa = PBXGroup;
 			children = (
 				5EFDC74B1F8698B4001453EC /* AppDelegate.swift */,
-				5EFDC76B1F869987001453EC /* DynamicTypeView.swift */,
-				5EFDC74D1F8698B4001453EC /* ViewController.swift */,
-				5EFDC74F1F8698B4001453EC /* Main.storyboard */,
 				5EFDC7521F8698B4001453EC /* Assets.xcassets */,
-				5EFDC7541F8698B4001453EC /* LaunchScreen.storyboard */,
+				5EFDC76B1F869987001453EC /* DynamicTypeView.swift */,
 				5EFDC7571F8698B4001453EC /* Info.plist */,
+				5EFDC7541F8698B4001453EC /* LaunchScreen.storyboard */,
+				5EFDC74F1F8698B4001453EC /* Main.storyboard */,
+				5EFDC74D1F8698B4001453EC /* ViewController.swift */,
 			);
 			path = Bootstrap;
 			sourceTree = "<group>";
@@ -108,11 +108,11 @@
 			isa = PBXGroup;
 			children = (
 				5EFDC7751F8699EB001453EC /* ACustomFolder */,
+				5EFDC7601F8698B4001453EC /* BootstrapTests.swift */,
 				5EFDC76E1F8699AA001453EC /* DynamicSizeTests.swift */,
 				5EFDC76F1F8699AA001453EC /* DynamicTypeTests.swift */,
-				5EFDC76D1F8699AA001453EC /* WithoutQuickTests.swift */,
-				5EFDC7601F8698B4001453EC /* BootstrapTests.swift */,
 				5EFDC7621F8698B4001453EC /* Info.plist */,
+				5EFDC76D1F8699AA001453EC /* WithoutQuickTests.swift */,
 			);
 			path = BootstrapTests;
 			sourceTree = "<group>";
@@ -328,6 +328,7 @@
 				5EFDC7501F8698B4001453EC /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		5EFDC7541F8698B4001453EC /* LaunchScreen.storyboard */ = {
@@ -336,6 +337,7 @@
 				5EFDC7551F8698B4001453EC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -484,7 +486,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DF74FF8B3AD029F099535426 /* Pods-BootstrapTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BootstrapTests/Info.plist;
@@ -501,7 +502,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A3B52C622E22BF8DD5DB225F /* Pods-BootstrapTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BootstrapTests/Info.plist;

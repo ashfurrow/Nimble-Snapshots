@@ -33,9 +33,9 @@
     {
       "name": "Core",
       "source_files": [
-        "*.{h,m,swift}",
-        "DynamicType/*.{swift,m,h}",
-        "DynamicSize/*.{swift}"
+        "Nimble_Snapshots/*.{h,m,swift}",
+        "Nimble_Snapshots/DynamicType/*.{swift,m,h}",
+        "Nimble_Snapshots/DynamicSize/*.{swift}"
       ],
       "dependencies": {
         "iOSSnapshotTestCase": [

@@ -17,7 +17,9 @@ Pod::Spec.new do |s|
   s.frameworks  = "Foundation", "XCTest", "UIKit"
 
   s.subspec "Core" do |ss|
-    ss.source_files  = "*.{h,m,swift}", "DynamicType/*.{swift,m,h}", "DynamicSize/*.{swift}"
+    ss.source_files  = "Nimble_Snapshots/*.{h,m,swift}",
+                        "Nimble_Snapshots/DynamicType/*.{swift,m,h}",
+                        "Nimble_Snapshots/DynamicSize/*.{swift}"
     ss.dependency "iOSSnapshotTestCase", "~> 5.0"
     ss.dependency "Nimble", "~> 7.0"
   end
