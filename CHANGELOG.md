@@ -2,7 +2,8 @@
 
 ## Next
 
-- Nothing yet!
+* Update ios-snapshot-test-case to 6.0.0 - @karpelcev
+* Dropped support for iOS 8 and 9 - @karpelcev
 
 ## 6.9.1
 
