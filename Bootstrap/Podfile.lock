@@ -2,22 +2,22 @@ PODS:
   - Forgeries (1.0.0):
     - Forgeries/Core (= 1.0.0)
   - Forgeries/Core (1.0.0)
-  - iOSSnapshotTestCase (5.0.2):
-    - iOSSnapshotTestCase/SwiftSupport (= 5.0.2)
-  - iOSSnapshotTestCase/Core (5.0.2)
-  - iOSSnapshotTestCase/SwiftSupport (5.0.2):
+  - iOSSnapshotTestCase (6.0.0):
+    - iOSSnapshotTestCase/SwiftSupport (= 6.0.0)
+  - iOSSnapshotTestCase/Core (6.0.0)
+  - iOSSnapshotTestCase/SwiftSupport (6.0.0):
     - iOSSnapshotTestCase/Core
-  - Nimble (7.1.3)
+  - Nimble (8.0.1)
   - Nimble-Snapshots (6.9.1):
     - Nimble-Snapshots/Core (= 6.9.1)
   - Nimble-Snapshots/Core (6.9.1):
-    - iOSSnapshotTestCase (~> 5.0)
-    - Nimble (~> 7.0)
-  - Quick (1.3.1)
+    - iOSSnapshotTestCase (~> 6.0)
+    - Nimble (~> 8.0)
+  - Quick (2.0.0)
 
 DEPENDENCIES:
   - Forgeries
-  - iOSSnapshotTestCase (~> 5.0)
+  - iOSSnapshotTestCase (~> 6.0)
   - Nimble
   - Nimble-Snapshots (from `../`)
   - Quick
@@ -35,11 +35,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
-  iOSSnapshotTestCase: 2d51aa06775e95cecb0a1fb9c5c159ccd1dd4596
-  Nimble: 2839b01d1b31f6a6a7777a221f0d91cf52e8e27b
-  Nimble-Snapshots: 9c8264f45a7b9073bd824a8d63636bb8a59107df
-  Quick: d17304d58d0d169dd0bd1c6e5c28e3318de32a1a
+  iOSSnapshotTestCase: f592adfdedffe6113a55528ce698ccc457a550f1
+  Nimble: 45f786ae66faa9a709624227fae502db55a8bdd0
+  Nimble-Snapshots: 856ce5fabddf94fb9768168f02029e2662c7e458
+  Quick: ce1276c7c27ba2da3cb2fd0cde053c3648b3b22d
 
-PODFILE CHECKSUM: 9764f9631594aa3cb114bebcaf0c496e070ff50c
+PODFILE CHECKSUM: cf788ac372af1f0756888028f59656e0b73607c9
 
 COCOAPODS: 1.5.3
