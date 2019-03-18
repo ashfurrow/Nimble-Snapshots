@@ -49,9 +49,9 @@ public class FBSnapshotTest: NSObject {
         let snapshotController: FBSnapshotTestController = FBSnapshotTestController(test: self)
         snapshotController.folderName = testName
         if isDeviceAgnostic {
-            snapshotController.agnosticOptions = [.device, .OS, .screenSize]
+            snapshotController.fileNameOptions = [.device, .OS, .screenSize, .screenScale]
         } else {
-            snapshotController.agnosticOptions = .none
+            snapshotController.fileNameOptions = .screenScale
         }
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
