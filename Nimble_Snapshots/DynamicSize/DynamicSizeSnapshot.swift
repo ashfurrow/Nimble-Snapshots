@@ -192,9 +192,9 @@ func performDynamicSizeSnapshotTest(_ name: String?,
         let finalSnapshotName: String
 
         if let identifier = identifier {
-            finalSnapshotName = "\(snapshotName)_\(identifier) - \(sizeName)"
+            finalSnapshotName = "\(snapshotName)_\(identifier)_\(sizeName)"
         } else {
-            finalSnapshotName = "\(snapshotName) - \(sizeName)"
+            finalSnapshotName = "\(snapshotName)_\(sizeName)"
         }
 
         resizer.resize(view: view, for: size)
