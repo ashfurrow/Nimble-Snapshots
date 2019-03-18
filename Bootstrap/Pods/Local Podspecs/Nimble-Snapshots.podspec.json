@@ -13,7 +13,7 @@
   },
   "social_media_url": "http://twitter.com/ashfurrow",
   "platforms": {
-    "ios": "8.1",
+    "ios": "10.0",
     "tvos": "9.0"
   },
   "pod_target_xcconfig": {
