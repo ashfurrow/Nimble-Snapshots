@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         let nativeResolution = UIScreen.main.nativeBounds.size
         assert(isExpectedDevice(nativeResolution: nativeResolution),
-               "The tests should be run on an iPhone 6, not a device with " +
+               "The tests should be run on an iPhone 8, not a device with " +
                "native resolution \(stringFromSize(nativeResolution))")
 
         return true
