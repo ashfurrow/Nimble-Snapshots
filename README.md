@@ -17,7 +17,7 @@ You need to be using CocoaPods 0.36 Beta 1 or higher. Your `Podfile` should look
 something like the following.
 
 ```rb
-platform :ios, '8.0'
+platform :ios, '10.0'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -40,9 +40,9 @@ You need to be using Carthage 0.18 or higher. Your `Cartfile` (or `Cartfile.priv
 something like the following.
 
 ```rb
-github "Quick/Quick" ~> 1.0
-github "Quick/Nimble" ~> 7.0
-github "uber/ios-snapshot-test-case" "5.0.2"
+github "Quick/Quick" ~> 2.0
+github "Quick/Nimble" ~> 8.0
+github "uber/ios-snapshot-test-case" "6.0.0"
 github "ashfurrow/Nimble-Snapshots"
 ```
 
