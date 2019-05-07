@@ -2,6 +2,10 @@
 
 ## Next
 
+* Nothing yet!
+
+## 7.1.0
+
 * Xcode 10.2.1 and Swift 5.0 support - @Vkt0r
 
 ## 7.0.0
