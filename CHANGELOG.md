@@ -6,6 +6,7 @@
 
 ## 7.1.1
 
+* Updates Swift, CocoaPods versions - @ashfurrow
 * Fix objc header import - @lascorbe
 * Add `swift_version` to `.podspec` - @lascorbe
 
