@@ -4,6 +4,11 @@
 
 * Nothing yet!
 
+## 7.1.1
+
+* Fix objc header import - @lascorbe
+* Add `swift_version` to `.podspec` - @lascorbe
+
 ## 7.1.0
 
 * Xcode 10.2.1 and Swift 5.0 support - @Vkt0r
