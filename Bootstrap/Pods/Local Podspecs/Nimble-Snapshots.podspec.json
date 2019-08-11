@@ -1,6 +1,6 @@
 {
   "name": "Nimble-Snapshots",
-  "version": "7.0.0",
+  "version": "7.1.1",
   "summary": "Nimble matchers for iOSSnapshotTestCase",
   "description": "Nimble matchers for iOSSnapshotTestCase. Highly derivative of [Expecta Matchers for iOSSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).",
   "homepage": "https://github.com/ashfurrow/Nimble-Snapshots",
@@ -16,12 +16,13 @@
     "ios": "10.0",
     "tvos": "9.0"
   },
+  "swift_versions": "5.0",
   "pod_target_xcconfig": {
     "ENABLE_BITCODE": "NO"
   },
   "source": {
     "git": "https://github.com/ashfurrow/Nimble-Snapshots.git",
-    "tag": "7.0.0"
+    "tag": "7.1.1"
   },
   "default_subspecs": "Core",
   "frameworks": [
@@ -62,5 +63,6 @@
         ]
       }
     }
-  ]
+  ],
+  "swift_version": "5.0"
 }
