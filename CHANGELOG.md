@@ -2,7 +2,8 @@
 
 ## Next
 
-* Nothing yet!
+* Update ios-snapshot-test-case to the latest version (6.1.0) - Vkt0r
+* Remove the unnecessary `.swift-version` file - Vkt0r
 
 ## 7.1.1
 
