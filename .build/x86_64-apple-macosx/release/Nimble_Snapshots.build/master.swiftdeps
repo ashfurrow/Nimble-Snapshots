@@ -1,0 +1,5 @@
+version: "Apple Swift version 5.1 (swiftlang-1100.0.270.13 clang-1100.0.33.7)"
+options: "c0217a65a85d008a26ec80817b436ae1"
+build_time: [1569937185, 273303000]
+inputs:
+  "/Users/allanmelo/gitProjects/Nimble-Snapshots/Sources/Nimble-Snapshots/Nimble_Snapshots.swift": [9223372036, 854775807]

@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.1 (swiftlang-1100.0.270.13 clang-1100.0.33.7)"
+options: "ed580a9e197f06967004074aba80f381"
+build_time: [1569937079, 367011000]
+inputs:
+  "/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/Nimble_SnapshotsTests.swift": [1569936843, 34171841]
+  "/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/XCTestManifests.swift": [1569936843, 34508924]

@@ -1,0 +1,65 @@
+client:
+  name: basic
+tools: {}
+targets:
+  "main": ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.swiftmodule","<Nimble-Snapshots-release.module>"]
+  "test": ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble-SnapshotsPackageTests.xctest/Contents/MacOS/Nimble-SnapshotsPackageTests","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.swiftmodule","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.swiftmodule","<Nimble-Snapshots-release.module>","<Nimble-SnapshotsPackageTests-release.test>","<Nimble-SnapshotsTests-release.module>"]
+  "Nimble-Snapshots-release.module": ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.swiftmodule","<Nimble-Snapshots-release.module>"]
+  "Nimble-SnapshotsPackageTests-release.test": ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble-SnapshotsPackageTests.xctest/Contents/MacOS/Nimble-SnapshotsPackageTests","<Nimble-SnapshotsPackageTests-release.test>"]
+  "Nimble-SnapshotsTests-release.module": ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.swiftmodule","<Nimble-SnapshotsTests-release.module>"]
+default: "main"
+commands: 
+  "<C.Nimble-Snapshots-release.module>":
+    tool: phony
+    inputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.swiftmodule"]
+    outputs: ["<Nimble-Snapshots-release.module>"]
+
+  "<C.Nimble-SnapshotsPackageTests-release.test>":
+    tool: phony
+    inputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble-SnapshotsPackageTests.xctest/Contents/MacOS/Nimble-SnapshotsPackageTests"]
+    outputs: ["<Nimble-SnapshotsPackageTests-release.test>"]
+
+  "<C.Nimble-SnapshotsTests-release.module>":
+    tool: phony
+    inputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.swiftmodule"]
+    outputs: ["<Nimble-SnapshotsTests-release.module>"]
+
+  "C.Nimble-Snapshots-release.module":
+    tool: swift-compiler
+    executable: "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    module-name: "Nimble_Snapshots"
+    module-output-path: "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.swiftmodule"
+    inputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/Sources/Nimble-Snapshots/Nimble_Snapshots.swift"]
+    outputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots.swift.o","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.swiftmodule"]
+    import-paths: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release"]
+    temps-path: "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build"
+    objects: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots.swift.o"]
+    other-args: ["-target","x86_64-apple-macosx10.10","-swift-version","5","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-O","-j8","-DSWIFT_PACKAGE","-module-cache-path","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/ModuleCache","-parseable-output","-Xfrontend","-color-diagnostics"]
+    sources: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/Sources/Nimble-Snapshots/Nimble_Snapshots.swift"]
+    is-library: true
+    enable-whole-module-optimization: true
+    num-threads: "8"
+
+  "C.Nimble-SnapshotsPackageTests-release.test":
+    tool: shell
+    description: "Linking ./.build/x86_64-apple-macosx/release/Nimble-SnapshotsPackageTests.xctest/Contents/MacOS/Nimble-SnapshotsPackageTests"
+    inputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots.swift.o","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.build/Nimble_SnapshotsTests.swift.o","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.build/XCTestManifests.swift.o"]
+    outputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble-SnapshotsPackageTests.xctest/Contents/MacOS/Nimble-SnapshotsPackageTests"]
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-L","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release","-o","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble-SnapshotsPackageTests.xctest/Contents/MacOS/Nimble-SnapshotsPackageTests","-module-name","Nimble_SnapshotsPackageTests","-Xlinker","-bundle","@/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble-SnapshotsPackageTests.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx","-target","x86_64-apple-macosx10.10","-L","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib"]
+
+  "C.Nimble-SnapshotsTests-release.module":
+    tool: swift-compiler
+    executable: "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    module-name: "Nimble_SnapshotsTests"
+    module-output-path: "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.swiftmodule"
+    inputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.swiftmodule","/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/Nimble_SnapshotsTests.swift","/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/XCTestManifests.swift"]
+    outputs: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.build/Nimble_SnapshotsTests.swift.o","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.build/XCTestManifests.swift.o","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.swiftmodule"]
+    import-paths: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release"]
+    temps-path: "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.build"
+    objects: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.build/Nimble_SnapshotsTests.swift.o","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_SnapshotsTests.build/XCTestManifests.swift.o"]
+    other-args: ["-target","x86_64-apple-macosx10.10","-swift-version","5","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-O","-j8","-DSWIFT_PACKAGE","-module-cache-path","/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/ModuleCache","-parseable-output","-Xfrontend","-color-diagnostics"]
+    sources: ["/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/Nimble_SnapshotsTests.swift","/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/XCTestManifests.swift"]
+    is-library: true
+    enable-whole-module-optimization: true
+    num-threads: "8"
+

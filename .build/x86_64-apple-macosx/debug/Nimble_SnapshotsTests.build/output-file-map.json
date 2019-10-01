@@ -1,0 +1,17 @@
+{
+  "": {
+    "swift-dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/master.swiftdeps"
+  },
+  "/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/Nimble_SnapshotsTests.swift": {
+    "dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/Nimble_SnapshotsTests.d",
+    "object": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/Nimble_SnapshotsTests.swift.o",
+    "swiftmodule": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/Nimble_SnapshotsTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/Nimble_SnapshotsTests.swiftdeps"
+  },
+  "/Users/allanmelo/gitProjects/Nimble-Snapshots/Tests/Nimble-SnapshotsTests/XCTestManifests.swift": {
+    "dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/XCTestManifests.d",
+    "object": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/XCTestManifests.swift.o",
+    "swiftmodule": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/XCTestManifests~partial.swiftmodule",
+    "swift-dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/debug/Nimble_SnapshotsTests.build/XCTestManifests.swiftdeps"
+  }
+}

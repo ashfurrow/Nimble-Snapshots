@@ -1,0 +1,12 @@
+{
+  "": {
+    "dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots.d",
+    "object": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots.o",
+    "swift-dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/master.swiftdeps"
+  },
+  "/Users/allanmelo/gitProjects/Nimble-Snapshots/Sources/Nimble-Snapshots/Nimble_Snapshots.swift": {
+    "object": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots.swift.o",
+    "swiftmodule": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots~partial.swiftmodule",
+    "swift-dependencies": "/Users/allanmelo/gitProjects/Nimble-Snapshots/.build/x86_64-apple-macosx/release/Nimble_Snapshots.build/Nimble_Snapshots.swiftdeps"
+  }
+}
