@@ -203,7 +203,8 @@ func performDynamicSizeSnapshotTest(_ name: String?,
 
         return FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect,
                                               snapshot: finalSnapshotName, record: isRecord,
-                                              referenceDirectory: referenceImageDirectory, tolerance: tolerance, perPixelTolerance: pixelTolerance,
+                                              referenceDirectory: referenceImageDirectory, tolerance: tolerance,
+                                              perPixelTolerance: pixelTolerance,
                                               filename: actualExpression.location.file, identifier: nil)
     }
 

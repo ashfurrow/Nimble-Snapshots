@@ -210,7 +210,8 @@ private func performSnapshotTest(_ name: String?,
 
     let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic,
                                                 usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false,
-                                                referenceDirectory: referenceImageDirectory, tolerance: tolerance, perPixelTolerance: pixelTolerance,
+                                                referenceDirectory: referenceImageDirectory, tolerance: tolerance,
+                                                perPixelTolerance: pixelTolerance,
                                                 filename: actualExpression.location.file, identifier: identifier)
 
     if !result {
