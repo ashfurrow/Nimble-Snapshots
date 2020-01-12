@@ -301,6 +301,7 @@ public func haveValidSnapshot(named name: String? = nil,
 public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
                                             identifier: String? = nil,
                                             usesDrawRect: Bool = false,
+                                            pixelTolerance: CGFloat? = nil,
                                             tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
@@ -310,8 +311,8 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
         }
 
         return performSnapshotTest(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                                   actualExpression: actualExpression,
-                                   failureMessage: failureMessage, tolerance: tolerance)
+                                   actualExpression: actualExpression, failureMessage: failureMessage,
+                                   pixelTolerance: pixelTolerance, tolerance: tolerance)
     }
 }
 

@@ -150,6 +150,7 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil,
                                          sizes: [String: CGSize],
                                          isDeviceAgnostic: Bool = false,
                                          usesDrawRect: Bool = false,
+                                         pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
                                          resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
@@ -161,6 +162,7 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil,
                                               actualExpression: actualExpression,
                                               failureMessage: failureMessage,
                                               tolerance: tolerance,
+                                              pixelTolerance: pixelTolerance,
                                               isRecord: false,
                                               resizeMode: resizeMode)
     }
