@@ -113,6 +113,10 @@ public func setNimbleTolerance(_ tolerance: CGFloat) {
     FBSnapshotTest.sharedInstance.tolerance = tolerance
 }
 
+public func setNimblePixelTolerance(_ pixelTolerance: CGFloat) {
+    FBSnapshotTest.sharedInstance.pixelTolerance = pixelTolerance
+}
+
 func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
