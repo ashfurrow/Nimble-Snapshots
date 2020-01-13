@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 8.1.1
+
+- Adds additional control over `pixelTolerate` - paulz
+
 ## 8.1.0
 
 - Adds optional `pixelTolerance` parameter - paulz
