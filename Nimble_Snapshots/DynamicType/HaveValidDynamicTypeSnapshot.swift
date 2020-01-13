@@ -37,6 +37,7 @@ func combinePredicates<T>(_ predicates: [Predicate<T>],
 public func haveValidDynamicTypeSnapshot(named name: String? = nil,
                                          identifier: String? = nil,
                                          usesDrawRect: Bool = false,
+                                         pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
                                          sizes: [UIContentSizeCategory] = allContentSizeCategories(),
                                          isDeviceAgnostic: Bool = false) -> Predicate<Snapshotable> {
@@ -53,11 +54,13 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil,
             let predicate: Predicate<Snapshotable>
             if isDeviceAgnostic {
                 predicate = haveValidDeviceAgnosticSnapshot(named: nameWithCategory, identifier: identifier,
-                                                            usesDrawRect: usesDrawRect, tolerance: tolerance)
+                                                            usesDrawRect: usesDrawRect, pixelTolerance: pixelTolerance,
+                                                            tolerance: tolerance)
             } else {
                 predicate = haveValidSnapshot(named: nameWithCategory,
                                               identifier: identifier,
                                               usesDrawRect: usesDrawRect,
+                                              pixelTolerance: pixelTolerance,
                                               tolerance: tolerance)
             }
 

@@ -113,6 +113,10 @@ public func setNimbleTolerance(_ tolerance: CGFloat) {
     FBSnapshotTest.sharedInstance.tolerance = tolerance
 }
 
+public func setNimblePixelTolerance(_ pixelTolerance: CGFloat) {
+    FBSnapshotTest.sharedInstance.pixelTolerance = pixelTolerance
+}
+
 func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
@@ -297,6 +301,7 @@ public func haveValidSnapshot(named name: String? = nil,
 public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
                                             identifier: String? = nil,
                                             usesDrawRect: Bool = false,
+                                            pixelTolerance: CGFloat? = nil,
                                             tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
@@ -306,8 +311,8 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
         }
 
         return performSnapshotTest(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                                   actualExpression: actualExpression,
-                                   failureMessage: failureMessage, tolerance: tolerance)
+                                   actualExpression: actualExpression, failureMessage: failureMessage,
+                                   pixelTolerance: pixelTolerance, tolerance: tolerance)
     }
 }
 
