@@ -6,7 +6,7 @@ references:
         working_directory: ~/Nimble-Snapshots
         environment:
             BUNDLE_PATH: vendor/bundle
-            
+
     restore_bundle_cache: &restore_bundle_cache
         restore_cache:
             keys:
@@ -62,8 +62,9 @@ jobs:
           path: ~/Nimble-Snapshots/Bootstrap/BootstrapTests/FailureDiffs/
       - store_test_results:
           path: result.xml
+      - store_test_results:
           path: output/
-      
+
 workflows:
   version: 2
   build-and-test:
