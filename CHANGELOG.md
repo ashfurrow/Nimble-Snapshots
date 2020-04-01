@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 8.1.2
+
+- Carthage-only release to fix search pages. See #196 - joeydong
+
 ## 8.1.1
 
 - Adds additional control over `pixelTolerate` - paulz
