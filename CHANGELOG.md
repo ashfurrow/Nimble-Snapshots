@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 8.2.0
+
+- Adds support for replacing all snapshot reference images. See #198 - dogo
+
 ## 8.1.2
 
 - Carthage-only release to fix search pages. See #196 - joeydong
