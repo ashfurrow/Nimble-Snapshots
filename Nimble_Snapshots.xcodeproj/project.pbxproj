@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		095B47711D4773F000880922 /* Nimble_Snapshots.h in Headers */ = {isa = PBXBuildFile; fileRef = 095B47701D4773F000880922 /* Nimble_Snapshots.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		095B47891D47761500880922 /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095B47861D47761500880922 /* FBSnapshotTestCase.framework */; };
-		095B478A1D47761500880922 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095B47871D47761500880922 /* Nimble.framework */; };
 		095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478C1D47794300880922 /* HaveValidSnapshot.swift */; };
 		095B47901D47794300880922 /* CurrentTestCaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */; };
 		095B47911D47794300880922 /* PrettySyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478E1D47794300880922 /* PrettySyntax.swift */; };
@@ -47,8 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				095B47891D47761500880922 /* FBSnapshotTestCase.framework in Frameworks */,
-				095B478A1D47761500880922 /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
