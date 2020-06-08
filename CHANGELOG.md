@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 8.2.1
+
+- Fixes tvOS compilation for Carthage - see #199 - daltonclaybrook
+
 ## 8.2.0
 
 - Adds support for replacing all snapshot reference images. See #198 - dogo
