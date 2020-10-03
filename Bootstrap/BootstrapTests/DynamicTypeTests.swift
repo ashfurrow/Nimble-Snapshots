@@ -57,13 +57,19 @@ class DynamicTypeTests: QuickSpec {
             }
 
             it("has a valid snapshot with model and OS in name") {
+                //expect(view).to(recordDynamicTypeSnapshot(isDeviceAgnostic: true))
                 expect(view).to(haveValidDynamicTypeSnapshot(isDeviceAgnostic: true))
+
+                //expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS", isDeviceAgnostic: true))
                 expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS",
                                                              isDeviceAgnostic: true))
             }
 
             it("has a valid snapshot with identifier") {
+                //expect(view).to(recordDynamicTypeSnapshot(identifier: "bootstrap"))
                 expect(view).to(haveValidDynamicTypeSnapshot(identifier: "bootstrap"))
+
+                //expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS", identifier: "bootstrap"))
                 expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS",
                                                              identifier: "bootstrap"))
             }
@@ -92,6 +98,8 @@ class DynamicTypeTests: QuickSpec {
             it("works with traitCollectionDidChange in a view controller from a storyboard") {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let controller = storyboard.instantiateInitialViewController()
+                controller?.beginAppearanceTransition(true, animated: false)
+                controller?.endAppearanceTransition()
 
                 expect(controller).to(haveValidDynamicTypeSnapshot())
             }
