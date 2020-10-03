@@ -1,7 +1,7 @@
 references:
     defaults: &defaults
         macos:
-            xcode: "10.2.1"
+            xcode: "12.0.0"
         shell: /bin/bash --login -eo pipefail
         working_directory: ~/Nimble-Snapshots
         environment:
