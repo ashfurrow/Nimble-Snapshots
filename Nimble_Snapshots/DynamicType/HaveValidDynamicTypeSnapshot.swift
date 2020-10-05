@@ -23,13 +23,9 @@ func combinePredicates<T>(_ predicates: [Predicate<T>],
             deferred?()
         }
 
-        return try predicates.reduce(true) { acc, matcher -> Bool in
-            guard acc || ignoreFailures else {
-                return false
-            }
-
-            let result = try matcher.matches(actualExpression, failureMessage: failureMessage)
-            return result && acc
+        return try predicates.allSatisfy { matcher -> Bool in
+            guard ignoreFailures else { return false }
+            return try matcher.matches(actualExpression, failureMessage: failureMessage)
         }
     }
 }
