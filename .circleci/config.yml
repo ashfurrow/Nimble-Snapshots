@@ -23,7 +23,9 @@ references:
     bunde_install: &bunde_install
         run:
           name: "Install bundle"
-          command: bundle check || bundle install
+          command: |
+            bundle -v
+            bundle check || bundle install
 
 version: 2
 jobs:
