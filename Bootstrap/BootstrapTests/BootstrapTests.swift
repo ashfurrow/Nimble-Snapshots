@@ -61,18 +61,18 @@ class BootstrapTests: QuickSpec {
 
             it("has a valid snapshot when draw rect is turned on ") {
                 UIButton.appearance().tintColor = .red
-                let imageView = UIButton(type: .contactAdd)
+                let button = UIButton(type: .contactAdd)
 
-                // expect(imageView).to( recordSnapshot(usesDrawRect: true) )
-                expect(imageView).to( haveValidSnapshot(usesDrawRect: true) )
+                //expect(button).to(recordSnapshot(usesDrawRect: true))
+                expect(button).to(haveValidSnapshot(usesDrawRect: true))
             }
 
             it("has a valid snapshot when draw rect is turned on and is using pretty syntax") {
                 UIButton.appearance().tintColor = .red
-                let imageView = UIButton(type: .contactAdd)
+                let button = UIButton(type: .contactAdd)
 
-                // expect(imageView) == recordSnapshot(usesDrawRect: true)
-                expect(imageView) == snapshot(usesDrawRect: true)
+                //expect(button) == recordSnapshot(usesDrawRect: true)
+                expect(button) == snapshot(usesDrawRect: true)
             }
 
             it("handles recording with recordSnapshot") {
