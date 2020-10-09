@@ -8,7 +8,8 @@ class BootstrapTests: QuickSpec {
             var view: UIView!
 
             beforeEach {
-                setNimbleTolerance(0)
+                // Set 10% tolerance to handle antialiasing issues
+                setNimbleTolerance(0.1)
                 setNimbleTestFolder("tests")
                 view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
                 view.backgroundColor = .blue
