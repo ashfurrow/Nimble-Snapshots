@@ -42,7 +42,6 @@ public func == (lhs: Expectation<Snapshotable>, rhs: Snapshot) {
 }
 
 // MARK: - Nicer syntax using emoji
-
 // swiftlint:disable:next identifier_name
 public func 📷(_ file: FileString = #file, line: UInt = #line, snapshottable: Snapshotable) {
   expect(file: file, line: line, snapshottable).to(recordSnapshot())
