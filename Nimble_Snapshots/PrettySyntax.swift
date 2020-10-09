@@ -44,11 +44,11 @@ public func == (lhs: Expectation<Snapshotable>, rhs: Snapshot) {
 // MARK: - Nicer syntax using emoji
 
 // swiftlint:disable:next identifier_name
-public func 📷(_ snapshottable: Snapshotable, file: FileString = #file, line: UInt = #line) {
-    expect(snapshottable, file: file, line: line).to(recordSnapshot())
+public func 📷(file: FileString = #file, line: UInt = #line, _ snapshottable: Snapshotable) {
+  expect(file: file, line: line, snapshottable).to(recordSnapshot())
 }
 
 // swiftlint:disable:next identifier_name
-public func 📷(_ snapshottable: Snapshotable, named name: String, file: FileString = #file, line: UInt = #line) {
-    expect(snapshottable, file: file, line: line).to(recordSnapshot(named: name))
+public func 📷(file: FileString = #file, line: UInt = #line, _ snapshottable: Snapshotable, named name: String) {
+  expect(file: file, line: line, snapshottable).to(recordSnapshot(named: name))
 }
