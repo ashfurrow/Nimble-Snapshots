@@ -8,7 +8,7 @@
 @implementation XCTestObservationCenter (CurrentTestCaseTracker)
 
 + (void)load {
-    [[self sharedTestObservationCenter] addTestObserver:[CurrentTestCaseTracker shared]];
+    [[self sharedTestObservationCenter] addTestObserver:[CurrentTestCaseTracker sharedInstance]];
 }
 
 @end
