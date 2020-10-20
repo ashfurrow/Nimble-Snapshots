@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.0.0 
+
+- Renames `shared` to `sharedInstance` for Objective-C uses of `CurrentTestCaseTracker`. See #210 - robinbonin
+
 ## 8.3.0
 
 - Adds support for Nimble 9 by removing CocoaPods version specifier. See #207 - samjohn
