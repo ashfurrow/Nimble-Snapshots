@@ -43,7 +43,8 @@ class BootstrapTests: QuickSpec {
                 //expect(view).to(recordDeviceAgnosticSnapshot(identifier: "bootstrap"))
                 expect(view).to(haveValidDeviceAgnosticSnapshot(identifier: "bootstrap"))
 
-                //expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS", identifier: "boostrap"))
+                //expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS",
+                //                                             identifier: "boostrap"))
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS",
                                                                 identifier: "boostrap"))
             }

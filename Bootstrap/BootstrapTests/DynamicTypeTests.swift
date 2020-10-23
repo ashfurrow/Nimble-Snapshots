@@ -60,7 +60,8 @@ class DynamicTypeTests: QuickSpec {
                 //expect(view).to(recordDynamicTypeSnapshot(isDeviceAgnostic: true))
                 expect(view).to(haveValidDynamicTypeSnapshot(isDeviceAgnostic: true))
 
-                //expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS", isDeviceAgnostic: true))
+                //expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS",
+                //                                          isDeviceAgnostic: true))
                 expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS",
                                                              isDeviceAgnostic: true))
             }
@@ -69,7 +70,8 @@ class DynamicTypeTests: QuickSpec {
                 //expect(view).to(recordDynamicTypeSnapshot(identifier: "bootstrap"))
                 expect(view).to(haveValidDynamicTypeSnapshot(identifier: "bootstrap"))
 
-                //expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS", identifier: "bootstrap"))
+                //expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS",
+                //                                          identifier: "bootstrap"))
                 expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS",
                                                              identifier: "bootstrap"))
             }
