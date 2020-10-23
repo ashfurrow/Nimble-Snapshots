@@ -16,7 +16,6 @@ func shortCategoryName(_ category: UIContentSizeCategory) -> String {
 }
 
 func combinePredicates<T>(_ predicates: [Predicate<T>],
-                          ignoreFailures: Bool = false,
                           deferred: (() -> Void)? = nil) -> Predicate<T> {
     return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
         defer {
@@ -24,7 +23,6 @@ func combinePredicates<T>(_ predicates: [Predicate<T>],
         }
 
         return try predicates.allSatisfy { matcher -> Bool in
-            guard ignoreFailures else { return false }
             return try matcher.matches(actualExpression, failureMessage: failureMessage)
         }
     }
@@ -97,7 +95,7 @@ public func recordDynamicTypeSnapshot(named name: String? = nil,
         }
     }
 
-    return combinePredicates(predicates, ignoreFailures: true) {
+    return combinePredicates(predicates) {
         mock.stopMockingPreferredContentSizeCategory()
     }
 }

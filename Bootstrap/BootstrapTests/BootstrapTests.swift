@@ -8,7 +8,8 @@ class BootstrapTests: QuickSpec {
             var view: UIView!
 
             beforeEach {
-                setNimbleTolerance(0)
+                // Set 10% tolerance to handle antialiasing issues
+                setNimbleTolerance(0.1)
                 setNimbleTestFolder("tests")
                 view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
                 view.backgroundColor = .blue
@@ -42,7 +43,8 @@ class BootstrapTests: QuickSpec {
                 //expect(view).to(recordDeviceAgnosticSnapshot(identifier: "bootstrap"))
                 expect(view).to(haveValidDeviceAgnosticSnapshot(identifier: "bootstrap"))
 
-                //expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS", identifier: "boostrap"))
+                //expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS",
+                //                                             identifier: "boostrap"))
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS",
                                                                 identifier: "boostrap"))
             }
@@ -61,18 +63,18 @@ class BootstrapTests: QuickSpec {
 
             it("has a valid snapshot when draw rect is turned on ") {
                 UIButton.appearance().tintColor = .red
-                let imageView = UIButton(type: .contactAdd)
+                let button = UIButton(type: .contactAdd)
 
-                // expect(imageView).to( recordSnapshot(usesDrawRect: true) )
-                expect(imageView).to( haveValidSnapshot(usesDrawRect: true) )
+                //expect(button).to(recordSnapshot(usesDrawRect: true))
+                expect(button).to(haveValidSnapshot(usesDrawRect: true))
             }
 
             it("has a valid snapshot when draw rect is turned on and is using pretty syntax") {
                 UIButton.appearance().tintColor = .red
-                let imageView = UIButton(type: .contactAdd)
+                let button = UIButton(type: .contactAdd)
 
-                // expect(imageView) == recordSnapshot(usesDrawRect: true)
-                expect(imageView) == snapshot(usesDrawRect: true)
+                //expect(button) == recordSnapshot(usesDrawRect: true)
+                expect(button) == snapshot(usesDrawRect: true)
             }
 
             it("handles recording with recordSnapshot") {

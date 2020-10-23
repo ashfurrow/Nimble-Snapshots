@@ -20,8 +20,8 @@
 
 import Foundation
 
-#if canImport(NimbleCwlCatchExceptionSupport)
-import NimbleCwlCatchExceptionSupport
+#if SWIFT_PACKAGE
+import CwlCatchExceptionSupport
 #endif
 
 private func catchReturnTypeConverter<T: NSException>(_ type: T.Type, block: @escaping () -> Void) -> T? {
