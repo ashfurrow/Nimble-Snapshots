@@ -4,6 +4,7 @@ import Nimble
 
 public struct Snapshot {
     let name: String?
+    let identifier: String?
     let record: Bool
     let usesDrawRect: Bool
 
@@ -15,29 +16,22 @@ public struct Snapshot {
 }
 
 public func snapshot(_ name: String? = nil,
+                     identifier: String? = nil,
                      usesDrawRect: Bool = false) -> Snapshot {
-    return Snapshot(name: name, record: false, usesDrawRect: usesDrawRect)
+    return Snapshot(name: name, identifier: identifier, record: false, usesDrawRect: usesDrawRect)
 }
 
 public func recordSnapshot(_ name: String? = nil,
+                           identifier: String? = nil,
                            usesDrawRect: Bool = false) -> Snapshot {
-    return Snapshot(name: name, record: true, usesDrawRect: usesDrawRect)
+    return Snapshot(name: name, identifier: identifier, record: true, usesDrawRect: usesDrawRect)
 }
 
 public func == (lhs: Expectation<Snapshotable>, rhs: Snapshot) {
-    if let name = rhs.name {
-        if rhs.record {
-            lhs.to(recordSnapshot(named: name, usesDrawRect: rhs.usesDrawRect))
-        } else {
-            lhs.to(haveValidSnapshot(named: name, usesDrawRect: rhs.usesDrawRect))
-        }
-
+    if rhs.record {
+        lhs.to(recordSnapshot(named: rhs.name, identifier: rhs.identifier, usesDrawRect: rhs.usesDrawRect))
     } else {
-        if rhs.record {
-            lhs.to(recordSnapshot(usesDrawRect: rhs.usesDrawRect))
-        } else {
-            lhs.to(haveValidSnapshot(usesDrawRect: rhs.usesDrawRect))
-        }
+        lhs.to(haveValidSnapshot(named: rhs.name, identifier: rhs.identifier, usesDrawRect: rhs.usesDrawRect))
     }
 }
 
