@@ -8,8 +8,9 @@ public struct Snapshot {
     let record: Bool
     let usesDrawRect: Bool
 
-    init(name: String?, record: Bool, usesDrawRect: Bool) {
+    init(name: String?, identifier: String?, record: Bool, usesDrawRect: Bool) {
         self.name = name
+        self.identifier = identifier
         self.record = record
         self.usesDrawRect = usesDrawRect
     }
