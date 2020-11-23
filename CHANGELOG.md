@@ -4,6 +4,11 @@
 
 - Nothing yet!
 
+## 9.1.0
+
+- Adds `identifier` to snapshots. See #214 - hfehrmann
+- Updates tvOS dependency from 9.0 to 10.0. See #213 - hufkens
+
 ## 9.0.0 
 
 - Renames `shared` to `sharedInstance` for Objective-C uses of `CurrentTestCaseTracker`. See #210 - robinbonin
