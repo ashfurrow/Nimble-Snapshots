@@ -40,20 +40,20 @@ class BootstrapTests: QuickSpec {
             }
 
             it("has a valid snapshot with model and OS in name and identifier") {
-                //expect(view).to(recordDeviceAgnosticSnapshot(identifier: "bootstrap"))
+                // expect(view).to(recordDeviceAgnosticSnapshot(identifier: "bootstrap"))
                 expect(view).to(haveValidDeviceAgnosticSnapshot(identifier: "bootstrap"))
 
-                //expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS",
+                // expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS",
                 //                                             identifier: "boostrap"))
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS",
                                                                 identifier: "boostrap"))
             }
 
             it("has a valid snapshot with model and OS in name ") {
-                //expect(view).to(recordDeviceAgnosticSnapshot())
+                // expect(view).to(recordDeviceAgnosticSnapshot())
                 expect(view).to(haveValidDeviceAgnosticSnapshot())
 
-                //expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS"))
+                // expect(view).to(recordDeviceAgnosticSnapshot(named: "something custom with model and OS"))
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS"))
             }
 
@@ -65,7 +65,7 @@ class BootstrapTests: QuickSpec {
                 UIButton.appearance().tintColor = .red
                 let button = UIButton(type: .contactAdd)
 
-                //expect(button).to(recordSnapshot(usesDrawRect: true))
+                // expect(button).to(recordSnapshot(usesDrawRect: true))
                 expect(button).to(haveValidSnapshot(usesDrawRect: true))
             }
 
@@ -73,7 +73,7 @@ class BootstrapTests: QuickSpec {
                 UIButton.appearance().tintColor = .red
                 let button = UIButton(type: .contactAdd)
 
-                //expect(button) == recordSnapshot(usesDrawRect: true)
+                // expect(button) == recordSnapshot(usesDrawRect: true)
                 expect(button) == snapshot(usesDrawRect: true)
             }
 

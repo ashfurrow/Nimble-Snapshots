@@ -193,19 +193,11 @@ func getTolerance() -> CGFloat {
     return FBSnapshotTest.sharedInstance.tolerance
 }
 
-func clearFailureMessage(_ failureMessage: FailureMessage) {
-    failureMessage.actualValue = nil
-    failureMessage.expected = ""
-    failureMessage.postfixMessage = ""
-    failureMessage.to = ""
-}
-
 private func performSnapshotTest(_ name: String?,
                                  identifier: String? = nil,
                                  isDeviceAgnostic: Bool = false,
                                  usesDrawRect: Bool = false,
                                  actualExpression: Expression<Snapshotable>,
-                                 failureMessage: FailureMessage,
                                  pixelTolerance: CGFloat? = nil,
                                  tolerance: CGFloat?) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
@@ -222,21 +214,15 @@ private func performSnapshotTest(_ name: String?,
                                                 perPixelTolerance: pixelTolerance,
                                                 filename: actualExpression.location.file, identifier: identifier)
 
-    if !result {
-        clearFailureMessage(failureMessage)
-        failureMessage.expected = "expected a matching snapshot in \(snapshotName)"
-    }
-
     return PredicateResult(status: PredicateStatus(bool: result),
-                           message: .fail(failureMessage.expected))
+                           message: .fail("expected a matching snapshot in \(snapshotName)"))
 }
 
 private func recordSnapshot(_ name: String?,
                             identifier: String? = nil,
                             isDeviceAgnostic: Bool = false,
                             usesDrawRect: Bool = false,
-                            actualExpression: Expression<Snapshotable>,
-                            failureMessage: FailureMessage) -> PredicateResult {
+                            actualExpression: Expression<Snapshotable>) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -244,8 +230,7 @@ private func recordSnapshot(_ name: String?,
     let snapshotName = sanitizedTestName(name)
     let tolerance = getTolerance()
     let pixelTolerance = getPixelTolerance()
-
-    clearFailureMessage(failureMessage)
+    var message: String = ""
 
     if FBSnapshotTest.compareSnapshot(instance,
                                       isDeviceAgnostic: isDeviceAgnostic,
@@ -258,19 +243,15 @@ private func recordSnapshot(_ name: String?,
                                       filename: actualExpression.location.file,
                                       identifier: identifier) {
         let name = name ?? snapshotName
-        failureMessage.expected = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
+        message = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
+    } else if let name = name {
+        message = "expected to record a snapshot in \(name)"
     } else {
-        let expectedMessage: String
-        if let name = name {
-            expectedMessage = "expected to record a snapshot in \(name)"
-        } else {
-            expectedMessage = "expected to record a snapshot"
-        }
-        failureMessage.expected = expectedMessage
+        message = "expected to record a snapshot"
     }
 
     return PredicateResult(status: PredicateStatus(bool: false),
-                           message: .fail(failureMessage.expected))
+                           message: .fail(message))
 }
 
 private func currentTestName() -> String? {
@@ -286,20 +267,17 @@ public func haveValidSnapshot(named name: String? = nil,
                               tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
-        let failureMessage = FailureMessage()
         if switchChecksWithRecords {
             return recordSnapshot(name,
                                   identifier: identifier,
                                   usesDrawRect: usesDrawRect,
-                                  actualExpression: actualExpression,
-                                  failureMessage: failureMessage)
+                                  actualExpression: actualExpression)
         }
 
         return performSnapshotTest(name,
                                    identifier: identifier,
                                    usesDrawRect: usesDrawRect,
                                    actualExpression: actualExpression,
-                                   failureMessage: failureMessage,
                                    pixelTolerance: pixelTolerance,
                                    tolerance: tolerance)
     }
@@ -312,15 +290,21 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
                                             tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
-        let failureMessage = FailureMessage()
         if switchChecksWithRecords {
-            return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                                  actualExpression: actualExpression, failureMessage: failureMessage)
+            return recordSnapshot(name,
+                                  identifier: identifier,
+                                  isDeviceAgnostic: true,
+                                  usesDrawRect: usesDrawRect,
+                                  actualExpression: actualExpression)
         }
 
-        return performSnapshotTest(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                                   actualExpression: actualExpression, failureMessage: failureMessage,
-                                   pixelTolerance: pixelTolerance, tolerance: tolerance)
+        return performSnapshotTest(name,
+                                   identifier: identifier,
+                                   isDeviceAgnostic: true,
+                                   usesDrawRect: usesDrawRect,
+                                   actualExpression: actualExpression,
+                                   pixelTolerance: pixelTolerance,
+                                   tolerance: tolerance)
     }
 }
 
@@ -329,9 +313,8 @@ public func recordSnapshot(named name: String? = nil,
                            usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
-        let failureMessage = FailureMessage()
         return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect,
-                              actualExpression: actualExpression, failureMessage: failureMessage)
+                              actualExpression: actualExpression)
     }
 }
 
@@ -340,8 +323,7 @@ public func recordDeviceAgnosticSnapshot(named name: String? = nil,
                                          usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
-        let failureMessage = FailureMessage()
         return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                              actualExpression: actualExpression, failureMessage: failureMessage)
+                              actualExpression: actualExpression)
     }
 }
