@@ -207,7 +207,7 @@ private func performSnapshotTest(_ name: String?,
                                  actualExpression: Expression<Snapshotable>,
                                  failureMessage: FailureMessage,
                                  pixelTolerance: CGFloat? = nil,
-                                 tolerance: CGFloat?) -> Bool {
+                                 tolerance: CGFloat?) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -227,7 +227,8 @@ private func performSnapshotTest(_ name: String?,
         failureMessage.expected = "expected a matching snapshot in \(snapshotName)"
     }
 
-    return result
+    return PredicateResult(status: PredicateStatus(bool: result),
+                           message: .fail(failureMessage.expected))
 }
 
 private func recordSnapshot(_ name: String?,
@@ -235,7 +236,7 @@ private func recordSnapshot(_ name: String?,
                             isDeviceAgnostic: Bool = false,
                             usesDrawRect: Bool = false,
                             actualExpression: Expression<Snapshotable>,
-                            failureMessage: FailureMessage) -> Bool {
+                            failureMessage: FailureMessage) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -268,7 +269,8 @@ private func recordSnapshot(_ name: String?,
         failureMessage.expected = expectedMessage
     }
 
-    return false
+    return PredicateResult(status: PredicateStatus(bool: false),
+                           message: .fail(failureMessage.expected))
 }
 
 private func currentTestName() -> String? {
@@ -283,7 +285,8 @@ public func haveValidSnapshot(named name: String? = nil,
                               pixelTolerance: CGFloat? = nil,
                               tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
-    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
+    return Predicate { actualExpression in
+        let failureMessage = FailureMessage()
         if switchChecksWithRecords {
             return recordSnapshot(name,
                                   identifier: identifier,
@@ -308,7 +311,8 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
                                             pixelTolerance: CGFloat? = nil,
                                             tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
 
-    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
+    return Predicate { actualExpression in
+        let failureMessage = FailureMessage()
         if switchChecksWithRecords {
             return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
                                   actualExpression: actualExpression, failureMessage: failureMessage)
@@ -324,7 +328,8 @@ public func recordSnapshot(named name: String? = nil,
                            identifier: String? = nil,
                            usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
 
-    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
+    return Predicate { actualExpression in
+        let failureMessage = FailureMessage()
         return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression, failureMessage: failureMessage)
     }
@@ -334,7 +339,8 @@ public func recordDeviceAgnosticSnapshot(named name: String? = nil,
                                          identifier: String? = nil,
                                          usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
 
-    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
+    return Predicate { actualExpression in
+        let failureMessage = FailureMessage()
         return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression, failureMessage: failureMessage)
     }

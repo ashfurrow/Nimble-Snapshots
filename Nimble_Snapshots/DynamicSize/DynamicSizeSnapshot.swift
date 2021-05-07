@@ -153,7 +153,8 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil,
                                          pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
                                          resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
-    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
+    return Predicate { actualExpression in
+        let failureMessage = FailureMessage()
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
                                               sizes: sizes,
@@ -179,7 +180,7 @@ func performDynamicSizeSnapshotTest(_ name: String?,
                                     tolerance: CGFloat? = nil,
                                     pixelTolerance: CGFloat? = nil,
                                     isRecord: Bool,
-                                    resizeMode: ResizeMode) -> Bool {
+                                    resizeMode: ResizeMode) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -218,15 +219,18 @@ func performDynamicSizeSnapshotTest(_ name: String?,
             failureMessage.actualValue = "expected to record a snapshot in \(String(describing: name))"
         }
 
-        return false
+        return PredicateResult(status: PredicateStatus(bool: false),
+                               message: .fail(failureMessage.actualValue!))
     } else {
         if !result.filter({ !$0 }).isEmpty {
             clearFailureMessage(failureMessage)
             failureMessage.actualValue = "expected a matching snapshot in \(snapshotName)"
-            return false
+            return PredicateResult(status: PredicateStatus(bool: false),
+                                   message: .fail(failureMessage.actualValue!))
         }
 
-        return true
+        return PredicateResult(status: PredicateStatus(bool: true),
+                               message: .fail(failureMessage.actualValue!))
     }
 }
 
@@ -243,7 +247,8 @@ public func recordDynamicSizeSnapshot(named name: String? = nil,
                                       isDeviceAgnostic: Bool = false,
                                       usesDrawRect: Bool = false,
                                       resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
-    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
+    return Predicate { actualExpression in
+        let failureMessage = FailureMessage()
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
                                               sizes: sizes,
