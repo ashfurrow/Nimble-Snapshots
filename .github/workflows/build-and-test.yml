@@ -29,6 +29,9 @@ jobs:
           danger_id: 'danger-pr'
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Create output dir"
+        run: mkdir output          
       
       - name: Run tests in Swift 4.2
         run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=4.2 build test | tee output/xcodebuild_swift4.2.log | xcpretty --color --simple
