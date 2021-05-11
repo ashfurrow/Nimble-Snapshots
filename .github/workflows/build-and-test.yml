@@ -46,3 +46,24 @@ jobs:
       - name: Swiftlint
         run: |
             swiftlint lint --no-cache --reporter junit | tee result.xml
+      
+      - name: Store Swiftlint artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Swiftlint
+          path: |
+            result.xml
+
+      - name: Store output artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Output
+          path: |
+            output
+
+      - name: Store FailureDiffs artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: FailureDiffs
+          path: |
+            Bootstrap/BootstrapTests/FailureDiffs/            
