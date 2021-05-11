@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/ashfurrow/Nimble-Snapshots/tree/master.svg?style=svg)](https://circleci.com/gh/ashfurrow/Nimble-Snapshots/tree/master)
+![GitHub Actions CI](https://github.com/ashfurrow/Nimble-Snapshots/actions/workflows/build-and-test.yml/badge.svg?branch=master)
 =============================
 
 [Nimble](https://github.com/Quick/Nimble) matchers for [iOSSnapshotTestCase](https://github.com/uber/ios-snapshot-test-case).
