@@ -34,13 +34,13 @@ jobs:
         run: mkdir output
       
       - name: Run tests in Swift 4.2
-        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=4.2 build test | tee output/xcodebuild_swift4.2.log | ./vendor/bundle/2.6.5/bin/xcpretty --color --simple
+        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=4.2 build test | tee output/xcodebuild_swift4.2.log
 
       - name: Run tests in Swift 5.0
-        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log | xcpretty --color --simple
+        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
 
       - name: Run Carthage integration test
-        run: sh carthage-xcode-12.sh bootstrap --platform iOS && xcodebuild | xcpretty --color --simple
+        run: sh carthage-xcode-12.sh bootstrap --platform iOS && xcodebuild
         shell: bash
       
       - name: Swiftlint
