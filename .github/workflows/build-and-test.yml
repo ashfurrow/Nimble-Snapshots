@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Testing Nimble-Snapshots
+    name: Build and Test Nimble-Snapshots
     runs-on: macOS-latest
     steps:
       - name: Checkout repository
@@ -45,5 +45,4 @@ jobs:
       
       - name: Swiftlint
         run: |
-            HOMEBREW_NO_AUTO_UPDATE=1 brew install swiftlint
             swiftlint lint --no-cache --reporter junit | tee result.xml
