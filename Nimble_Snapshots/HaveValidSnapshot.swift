@@ -45,13 +45,16 @@ public class FBSnapshotTest: NSObject {
                                tolerance: CGFloat,
                                perPixelTolerance: CGFloat,
                                filename: String,
-                               identifier: String? = nil) -> Bool {
+                               identifier: String? = nil,
+                               isIgnoreScale: Bool = false) -> Bool {
 
         let testName = parseFilename(filename: filename)
         let snapshotController: FBSnapshotTestController = FBSnapshotTestController(test: self)
         snapshotController.folderName = testName
         if isDeviceAgnostic {
             snapshotController.fileNameOptions = [.device, .OS, .screenSize, .screenScale]
+        } else if isIgnoreScale {
+            snapshotController.fileNameOptions = .none
         } else {
             snapshotController.fileNameOptions = .screenScale
         }
