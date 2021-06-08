@@ -202,7 +202,8 @@ private func performSnapshotTest(_ name: String?,
                                  usesDrawRect: Bool = false,
                                  actualExpression: Expression<Snapshotable>,
                                  pixelTolerance: CGFloat? = nil,
-                                 tolerance: CGFloat?) -> PredicateResult {
+                                 tolerance: CGFloat?,
+                                 isIgnoreScale: Bool) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -215,7 +216,7 @@ private func performSnapshotTest(_ name: String?,
                                                 usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false,
                                                 referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                                 perPixelTolerance: pixelTolerance,
-                                                filename: actualExpression.location.file, identifier: identifier)
+                                                filename: actualExpression.location.file, identifier: identifier, isIgnoreScale: isIgnoreScale)
 
     return PredicateResult(status: PredicateStatus(bool: result),
                            message: .fail("expected a matching snapshot in \(snapshotName)"))
@@ -225,7 +226,8 @@ private func recordSnapshot(_ name: String?,
                             identifier: String? = nil,
                             isDeviceAgnostic: Bool = false,
                             usesDrawRect: Bool = false,
-                            actualExpression: Expression<Snapshotable>) -> PredicateResult {
+                            actualExpression: Expression<Snapshotable>,
+                            isIgnoreScale: Bool) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -244,7 +246,8 @@ private func recordSnapshot(_ name: String?,
                                       tolerance: tolerance,
                                       perPixelTolerance: pixelTolerance,
                                       filename: actualExpression.location.file,
-                                      identifier: identifier) {
+                                      identifier: identifier,
+                                      isIgnoreScale: isIgnoreScale) {
         let name = name ?? snapshotName
         message = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else if let name = name {
@@ -267,14 +270,16 @@ public func haveValidSnapshot(named name: String? = nil,
                               identifier: String? = nil,
                               usesDrawRect: Bool = false,
                               pixelTolerance: CGFloat? = nil,
-                              tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
+                              tolerance: CGFloat? = nil,
+                              isIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
         if switchChecksWithRecords {
             return recordSnapshot(name,
                                   identifier: identifier,
                                   usesDrawRect: usesDrawRect,
-                                  actualExpression: actualExpression)
+                                  actualExpression: actualExpression,
+                                  isIgnoreScale: isIgnoreScale)
         }
 
         return performSnapshotTest(name,
@@ -282,7 +287,8 @@ public func haveValidSnapshot(named name: String? = nil,
                                    usesDrawRect: usesDrawRect,
                                    actualExpression: actualExpression,
                                    pixelTolerance: pixelTolerance,
-                                   tolerance: tolerance)
+                                   tolerance: tolerance,
+                                   isIgnoreScale: isIgnoreScale)
     }
 }
 
@@ -290,7 +296,8 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
                                             identifier: String? = nil,
                                             usesDrawRect: Bool = false,
                                             pixelTolerance: CGFloat? = nil,
-                                            tolerance: CGFloat? = nil) -> Predicate<Snapshotable> {
+                                            tolerance: CGFloat? = nil,
+                                            isIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
         if switchChecksWithRecords {
@@ -298,7 +305,8 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
                                   identifier: identifier,
                                   isDeviceAgnostic: true,
                                   usesDrawRect: usesDrawRect,
-                                  actualExpression: actualExpression)
+                                  actualExpression: actualExpression,
+                                  isIgnoreScale: isIgnoreScale)
         }
 
         return performSnapshotTest(name,
@@ -307,26 +315,31 @@ public func haveValidDeviceAgnosticSnapshot(named name: String? = nil,
                                    usesDrawRect: usesDrawRect,
                                    actualExpression: actualExpression,
                                    pixelTolerance: pixelTolerance,
-                                   tolerance: tolerance)
+                                   tolerance: tolerance,
+                                   isIgnoreScale: isIgnoreScale)
     }
 }
 
 public func recordSnapshot(named name: String? = nil,
                            identifier: String? = nil,
-                           usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
+                           usesDrawRect: Bool = false,
+                           isIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
         return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect,
-                              actualExpression: actualExpression)
+                              actualExpression: actualExpression,
+                              isIgnoreScale: isIgnoreScale)
     }
 }
 
 public func recordDeviceAgnosticSnapshot(named name: String? = nil,
                                          identifier: String? = nil,
-                                         usesDrawRect: Bool = false) -> Predicate<Snapshotable> {
+                                         usesDrawRect: Bool = false,
+                                         isIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
 
     return Predicate { actualExpression in
         return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
-                              actualExpression: actualExpression)
+                              actualExpression: actualExpression,
+                              isIgnoreScale: isIgnoreScale)
     }
 }

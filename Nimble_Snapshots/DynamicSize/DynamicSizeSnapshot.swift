@@ -152,7 +152,8 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil,
                                          usesDrawRect: Bool = false,
                                          pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
-                                         resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
+                                         resizeMode: ResizeMode = .frame,
+                                         isIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
@@ -163,7 +164,8 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil,
                                               tolerance: tolerance,
                                               pixelTolerance: pixelTolerance,
                                               isRecord: false,
-                                              resizeMode: resizeMode)
+                                              resizeMode: resizeMode,
+                                              isIgnoreScale: isIgnoreScale)
     }
 }
 
@@ -176,7 +178,8 @@ func performDynamicSizeSnapshotTest(_ name: String?,
                                     tolerance: CGFloat? = nil,
                                     pixelTolerance: CGFloat? = nil,
                                     isRecord: Bool,
-                                    resizeMode: ResizeMode) -> PredicateResult {
+                                    resizeMode: ResizeMode,
+                                    isIgnoreScale: Bool = false) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -204,7 +207,8 @@ func performDynamicSizeSnapshotTest(_ name: String?,
                                               snapshot: finalSnapshotName, record: isRecord,
                                               referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                               perPixelTolerance: pixelTolerance,
-                                              filename: actualExpression.location.file, identifier: nil)
+                                              filename: actualExpression.location.file, identifier: nil,
+                                              isIgnoreScale: isIgnoreScale)
     }
 
     if isRecord {
@@ -243,7 +247,8 @@ public func recordDynamicSizeSnapshot(named name: String? = nil,
                                       sizes: [String: CGSize],
                                       isDeviceAgnostic: Bool = false,
                                       usesDrawRect: Bool = false,
-                                      resizeMode: ResizeMode = .frame) -> Predicate<Snapshotable> {
+                                      resizeMode: ResizeMode = .frame,
+                                      isIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
@@ -252,7 +257,8 @@ public func recordDynamicSizeSnapshot(named name: String? = nil,
                                               usesDrawRect: usesDrawRect,
                                               actualExpression: actualExpression,
                                               isRecord: true,
-                                              resizeMode: resizeMode)
+                                              resizeMode: resizeMode,
+                                              isIgnoreScale: isIgnoreScale)
     }
 }
 
