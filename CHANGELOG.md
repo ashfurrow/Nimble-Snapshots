@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.1.1
+
+- Adds `shouldIgnoreScale` parameter to omit `@1x`, `@2x`, `@3x` from snapshot images. See #225 – @thanasak-s
+
 ## 9.1.0
 
 - Adds `identifier` to snapshots. See #214 - hfehrmann
