@@ -2,7 +2,7 @@
 
 ## Next
 
-- Nothing yet!
+- Add Swift Package Manager support. See #227 - @dogo
 
 ## 9.1.1
 
