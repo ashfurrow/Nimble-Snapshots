@@ -51,6 +51,25 @@ Then run:
 $ carthage bootstrap --platform iOS --toolchain com.apple.dt.toolchain.Swift_3_0
 ```
 
+## Swift Package Manager
+
+To add `Nimble-Snapshots` as a dependency, you have to add it to the dependencies of your `Package.swift` file and refer to that dependency in your target.
+
+```swift
+import PackageDescription
+let package = Package(
+    name: "<Your Product Name>",
+    dependencies: [
+       .package(url: "https://github.com/ashfurrow/Nimble-Snapshots", .upToNextMajor(from: "9.0.0"))
+    ],
+    targets: [
+        .target(
+            name: "<Your Target Name>",
+            dependencies: ["Nimble-Snapshots"]),
+    ]
+)
+```
+
 Use
 ---
 
