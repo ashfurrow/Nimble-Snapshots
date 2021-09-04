@@ -203,11 +203,13 @@ func performDynamicSizeSnapshotTest(_ name: String?,
 
         resizer.resize(view: view, for: size)
 
+        let filename = "\(actualExpression.location.file)"
+
         return FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect,
                                               snapshot: finalSnapshotName, record: isRecord,
                                               referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                               perPixelTolerance: pixelTolerance,
-                                              filename: actualExpression.location.file, identifier: nil,
+                                              filename: filename, identifier: nil,
                                               shouldIgnoreScale: shouldIgnoreScale)
     }
 
