@@ -12,14 +12,18 @@ public func satisfyAnyOf<T, U>(_ matchers: U...) -> Predicate<T>
         return satisfyAnyOf(matchers.map { $0.predicate })
 }
 
-internal func satisfyAnyOf<T>(_ predicates: [Predicate<T>]) -> Predicate<T> {
+/// A Nimble matcher that succeeds when the actual value matches with any of the matchers
+/// provided in the array of matchers.
+public func satisfyAnyOf<T>(_ predicates: [Predicate<T>]) -> Predicate<T> {
         return Predicate.define { actualExpression in
             var postfixMessages = [String]()
-            var matches = false
+            var status: PredicateStatus = .doesNotMatch
             for predicate in predicates {
                 let result = try predicate.satisfies(actualExpression)
-                if result.toBoolean(expectation: .toMatch) {
-                    matches = true
+                if result.status == .fail {
+                    status = .fail
+                } else if result.status == .matches, status != .fail {
+                    status = .matches
                 }
                 postfixMessages.append("{\(result.message.expectedMessage)}")
             }
@@ -36,12 +40,12 @@ internal func satisfyAnyOf<T>(_ predicates: [Predicate<T>]) -> Predicate<T> {
                 )
             }
 
-            return PredicateResult(bool: matches, message: msg)
+            return PredicateResult(status: status, message: msg)
         }
 }
 
 public func || <T>(left: Predicate<T>, right: Predicate<T>) -> Predicate<T> {
-        return satisfyAnyOf(left, right)
+    return satisfyAnyOf(left, right)
 }
 
 @available(*, deprecated, message: "Use Predicate instead")
@@ -73,7 +77,6 @@ extension NMBPredicate {
             for matcher in matchers {
                 let elementEvaluator = Predicate<NSObject> { expression in
                     if let predicate = matcher as? NMBPredicate {
-                        // swiftlint:disable:next line_length
                         return predicate.satisfies({ try expression.evaluate() }, location: actualExpression.location).toSwift()
                     } else {
                         let failureMessage = FailureMessage()

@@ -1,12 +1,15 @@
-use_frameworks!
+platform :ios, '11.0'
 
-# Need one pod
-pod 'Forgeries'
+target 'Bootstrap' do
 
-target 'BootstrapTests' do
-  pod 'Quick'
-  pod 'Nimble'
-  pod 'iOSSnapshotTestCase', '~> 6.0'
+  use_frameworks!
+  
+  # Need one pod
+  pod 'Forgeries'
 
-  pod 'Nimble-Snapshots', :path => "../"
+  target 'BootstrapTests' do
+    pod 'Nimble-Snapshots', :path => "../"
+    pod 'Quick'
+  end
+
 end
