@@ -2,7 +2,7 @@
 #if __has_include("Nimble_Snapshots-Swift.h")
     #import "Nimble_Snapshots-Swift.h"
 #elif SWIFT_PACKAGE
-@import NimbleSnapshotsSwift;
+@import Nimble_Snapshots;
 #else
     #import <Nimble_Snapshots/Nimble_Snapshots-Swift.h>
 #endif

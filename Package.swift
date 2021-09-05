@@ -20,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "NimbleSnapshotsSwift",
+            name: "Nimble-Snapshots",
             dependencies: ["FBSnapshotTestCase",
                            "Nimble"],
             path: "Nimble_Snapshots",
@@ -40,7 +40,7 @@ let package = Package(
         .target(
             name: "NimbleSnapshotsObjc",
             dependencies: [
-                "NimbleSnapshotsSwift"
+                "Nimble-Snapshots"
             ],
             path: "Nimble_Snapshots",
             exclude: ["CurrentTestCaseTracker.swift",
