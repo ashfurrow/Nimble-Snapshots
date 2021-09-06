@@ -10,12 +10,13 @@ public class NBSMockedApplication {
     deinit {
         stopMockingPreferredContentSizeCategory()
     }
-
-    /* On iOS 9, +[UIFont preferredFontForTextStyle:] uses -[UIApplication preferredContentSizeCategory]
+    // swiftlint:disable line_length
+    /* On iOS 9, UIFont.preferredFont(forTextStyle:) uses UIApplication.shared.preferredContentSizeCategory
      to get the content size category. However, this changed on iOS 10. While I haven't found what UIFont uses to get
-     the current category, swizzling preferredFontForTextStyle: to use +[UIFont preferredFontForTextStyle: compatibleWithTraitCollection:]
+     the current category, swizzling preferredFontForTextStyle: to use UIFont.preferredFont(forTextStyle:compatibleWith:)
      (only available on iOS >= 10), passing an UITraitCollection with the desired contentSizeCategory.
      */
+    // swiftlint:enable line_length
     public func mockPreferredContentSizeCategory(_ category: UIContentSizeCategory) {
 
         UIApplication.shared.nbs_preferredContentSizeCategory = category
@@ -72,16 +73,20 @@ extension UIFont {
 
 extension UIApplication {
 
-    struct AssociatedKeys {
+    enum AssociatedKeys {
         static var contentSizeCategory: UInt8 = 0
     }
 
     @objc var nbs_preferredContentSizeCategory: UIContentSizeCategory? {
         get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.contentSizeCategory) as? UIContentSizeCategory
+            return objc_getAssociatedObject(self,
+                                            &AssociatedKeys.contentSizeCategory) as? UIContentSizeCategory
         }
         set {
-            objc_setAssociatedObject(self, &AssociatedKeys.contentSizeCategory, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self,
+                                     &AssociatedKeys.contentSizeCategory,
+                                     newValue,
+                                     .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
     }
 

@@ -3,6 +3,7 @@
 
 import PackageDescription
 
+// swiftlint:disable:next prefixed_toplevel_constant
 let package = Package(
     name: "Nimble-Snapshots",
     platforms: [.iOS(.v10), .tvOS(.v10)],

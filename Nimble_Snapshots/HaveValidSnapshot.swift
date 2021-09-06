@@ -218,7 +218,8 @@ private func performSnapshotTest(_ name: String?,
                                                 usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false,
                                                 referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                                 perPixelTolerance: pixelTolerance,
-                                                filename: filename, identifier: identifier, shouldIgnoreScale: shouldIgnoreScale)
+                                                filename: filename, identifier: identifier,
+                                                shouldIgnoreScale: shouldIgnoreScale)
 
     return PredicateResult(status: PredicateStatus(bool: result),
                            message: .fail("expected a matching snapshot in \(snapshotName)"))
