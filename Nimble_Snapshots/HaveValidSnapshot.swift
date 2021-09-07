@@ -124,7 +124,7 @@ public func recordAllSnapshots() {
     switchChecksWithRecords = true
 }
 
-func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
+func getDefaultReferenceDirectory(_ sourceFileName: FileString) -> String {
     if let globalReference = FBSnapshotTest.sharedInstance.referenceImagesDirectory {
         return globalReference
     }
@@ -137,7 +137,8 @@ func getDefaultReferenceDirectory(_ sourceFileName: String) -> String {
     // then append "/ReferenceImages" and use that.
 
     // Grab the file's path
-    let pathComponents = (sourceFileName as NSString).pathComponents as NSArray
+    let fileName = NSString(string: "\(sourceFileName)")
+    let pathComponents = fileName.pathComponents as NSArray
 
     // Find the directory in the path that ends with a test suffix.
     let testPath = pathComponents.first { component -> Bool in
@@ -211,12 +212,14 @@ private func performSnapshotTest(_ name: String?,
     let snapshotName = sanitizedTestName(name)
     let tolerance = tolerance ?? getTolerance()
     let pixelTolerance = pixelTolerance ?? getPixelTolerance()
+    let filename = "\(actualExpression.location.file)"
 
     let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic,
                                                 usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false,
                                                 referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                                 perPixelTolerance: pixelTolerance,
-                                                filename: actualExpression.location.file, identifier: identifier, shouldIgnoreScale: shouldIgnoreScale)
+                                                filename: filename, identifier: identifier,
+                                                shouldIgnoreScale: shouldIgnoreScale)
 
     return PredicateResult(status: PredicateStatus(bool: result),
                            message: .fail("expected a matching snapshot in \(snapshotName)"))
@@ -235,6 +238,7 @@ private func recordSnapshot(_ name: String?,
     let snapshotName = sanitizedTestName(name)
     let tolerance = getTolerance()
     let pixelTolerance = getPixelTolerance()
+    let filename = "\(actualExpression.location.file)"
     var message: String = ""
 
     if FBSnapshotTest.compareSnapshot(instance,
@@ -245,7 +249,7 @@ private func recordSnapshot(_ name: String?,
                                       referenceDirectory: referenceImageDirectory,
                                       tolerance: tolerance,
                                       perPixelTolerance: pixelTolerance,
-                                      filename: actualExpression.location.file,
+                                      filename: filename,
                                       identifier: identifier,
                                       shouldIgnoreScale: shouldIgnoreScale) {
         let name = name ?? snapshotName

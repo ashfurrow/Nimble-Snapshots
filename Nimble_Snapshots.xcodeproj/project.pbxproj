@@ -15,9 +15,8 @@
 		D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */; };
 		D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */; };
 		D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */; };
-		D4F7D4801ED764CD00B4D2FE /* NBSMockedApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D4F7D4811ED764CD00B4D2FE /* NBSMockedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47C1ED764CD00B4D2FE /* NBSMockedApplication.m */; };
 		D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */; };
+		DD83832926E555BC0040266F /* NBSMockedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD83832826E555BC0040266F /* NBSMockedApplication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,9 +34,8 @@
 		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
 		D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeSnapshot.swift; sourceTree = "<group>"; };
 		D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveValidDynamicTypeSnapshot.swift; sourceTree = "<group>"; };
-		D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSMockedApplication.h; sourceTree = "<group>"; };
-		D4F7D47C1ED764CD00B4D2FE /* NBSMockedApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSMockedApplication.m; sourceTree = "<group>"; };
 		D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyDynamicTypeSyntax.swift; sourceTree = "<group>"; };
+		DD83832826E555BC0040266F /* NBSMockedApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBSMockedApplication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +96,8 @@
 		D4F7D4791ED764CD00B4D2FE /* DynamicType */ = {
 			isa = PBXGroup;
 			children = (
+				DD83832826E555BC0040266F /* NBSMockedApplication.swift */,
 				D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */,
-				D4F7D47B1ED764CD00B4D2FE /* NBSMockedApplication.h */,
-				D4F7D47C1ED764CD00B4D2FE /* NBSMockedApplication.m */,
 				D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */,
 			);
 			path = DynamicType;
@@ -114,7 +111,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D47CB5F91EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h in Headers */,
-				D4F7D4801ED764CD00B4D2FE /* NBSMockedApplication.h in Headers */,
 				095B47711D4773F000880922 /* Nimble_Snapshots.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,13 +203,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				095B47911D47794300880922 /* PrettySyntax.swift in Sources */,
-				D4F7D4811ED764CD00B4D2FE /* NBSMockedApplication.m in Sources */,
 				D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */,
 				D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */,
 				095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */,
 				095B47901D47794300880922 /* CurrentTestCaseTracker.swift in Sources */,
 				D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */,
 				D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */,
+				DD83832926E555BC0040266F /* NBSMockedApplication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

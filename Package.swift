@@ -3,55 +3,54 @@
 
 import PackageDescription
 
+// swiftlint:disable:next prefixed_toplevel_constant
 let package = Package(
     name: "Nimble-Snapshots",
     platforms: [.iOS(.v10), .tvOS(.v10)],
     products: [
         .library(
             name: "Nimble-Snapshots",
-            targets: ["NimbleSnapshotsSwift",
-                      "NimbleSnapshotsObjc"]),
+            targets: ["NimbleSnapshotsObjc"])
     ],
     dependencies: [
-        .package(url: "https://github.com/uber/ios-snapshot-test-case.git", .upToNextMajor(from: "7.0.0")),
-        .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "9.0.0"))
+        .package(name: "FBSnapshotTestCase",
+                 url: "https://github.com/uber/ios-snapshot-test-case.git",
+                 .upToNextMajor(from: "7.0.0")),
+        .package(url: "https://github.com/Quick/Nimble.git",
+                 .upToNextMajor(from: "9.0.0"))
     ],
     targets: [
         .target(
-            name: "NimbleSnapshotsSwift",
-            dependencies: ["NimbleSnapshotsObjc"],
+            name: "Nimble-Snapshots",
+            dependencies: ["FBSnapshotTestCase",
+                           "Nimble"],
             path: "Nimble_Snapshots",
-            exclude: ["Nimble_Snapshots.h",
-                      "XCTestObservationCenter+CurrentTestCaseTracker.h",
+            exclude: ["XCTestObservationCenter+CurrentTestCaseTracker.h",
                       "XCTestObservationCenter+CurrentTestCaseTracker.m",
-                      "DynamicType/NBSMockedApplication.h",
-                      "DynamicType/NBSMockedApplication.m",
                       "Info.plist",
                       "Nimble_Snapshots.xcconfig"],
             sources: ["CurrentTestCaseTracker.swift",
                       "HaveValidSnapshot.swift",
                       "PrettySyntax.swift",
-                      "DynamicSize/DynamicSizeSnapshot.swift",
-                      "DynamicType/HaveValidDynamicTypeSnapshot.swift",
-                      "DynamicType/PrettyDynamicTypeSyntax.swift"]
+                      "DynamicSize",
+                      "DynamicType"]
         ),
         .target(
             name: "NimbleSnapshotsObjc",
+            dependencies: [
+                "Nimble-Snapshots"
+            ],
             path: "Nimble_Snapshots",
-            exclude: ["Nimble_Snapshots.h",
-                      "CurrentTestCaseTracker.swift",
+            exclude: ["CurrentTestCaseTracker.swift",
                       "HaveValidSnapshot.swift",
                       "PrettySyntax.swift",
-                      "DynamicSize/DynamicSizeSnapshot.swift",
-                      "DynamicType/HaveValidDynamicTypeSnapshot.swift",
-                      "DynamicType/PrettyDynamicTypeSyntax.swift",
+                      "DynamicSize",
+                      "DynamicType",
                       "Info.plist",
                       "Nimble_Snapshots.xcconfig"],
             sources: ["XCTestObservationCenter+CurrentTestCaseTracker.h",
-                      "XCTestObservationCenter+CurrentTestCaseTracker.m",
-                      "DynamicType/NBSMockedApplication.h",
-                      "DynamicType/NBSMockedApplication.m"]
-        ),
+                      "XCTestObservationCenter+CurrentTestCaseTracker.m"]
+        )
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageVersions: [.v4_2, .v5]
 )
