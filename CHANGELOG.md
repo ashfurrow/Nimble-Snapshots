@@ -2,6 +2,10 @@
 
 ## Next
 
+- Nothing yet!
+
+## 9.2.0
+
 - Update ios-snapshot-test-case to the latest version (7.0.0) - @dogo
 - Add Swift Package Manager support. See #227 - @dogo
 
