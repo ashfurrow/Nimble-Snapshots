@@ -21,7 +21,7 @@ jobs:
           bundler-cache: true
 
       - name: Danger action
-        uses: MeilCli/danger-action@v5.0.1
+        uses: MeilCli/danger-action@v5.4.11
         with:
           plugins_file: 'Gemfile'
           install_path: 'vendor/bundle'
