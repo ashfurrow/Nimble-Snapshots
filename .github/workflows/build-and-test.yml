@@ -4,7 +4,7 @@ on: [push, pull_request]
 jobs:
   test:
     name: Build and Test Nimble-Snapshots
-    runs-on: macOS-latest
+    runs-on: macOS-11
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
