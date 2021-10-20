@@ -14,10 +14,10 @@ jobs:
         with:
           xcode-version: 12.4
 
-      - name: Set up Ruby 2.6
-        uses: ruby/setup-ruby@v1.66.0
+      - name: Set up Ruby 2.7.2
+        uses: ruby/setup-ruby@v1.84.0
         with:
-          ruby-version: 2.6
+          ruby-version: 2.7.2
           bundler-cache: true
 
       - name: Danger action
