@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(name: "FBSnapshotTestCase",
                  url: "https://github.com/uber/ios-snapshot-test-case.git",
-                 .upToNextMajor(from: "7.0.0")),
+                 .upToNextMajor(from: "8.0.0")),
         .package(url: "https://github.com/Quick/Nimble.git",
                  .upToNextMajor(from: "9.0.0"))
     ],
