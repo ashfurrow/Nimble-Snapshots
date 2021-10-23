@@ -44,15 +44,15 @@ You need to be using Carthage 0.18 or higher. Your `Cartfile` (or `Cartfile.priv
 something like the following.
 
 ```rb
-github "Quick/Quick" ~> 2.0
-github "Quick/Nimble" ~> 8.0
-github "uber/ios-snapshot-test-case" "6.0.0"
+github "Quick/Quick" ~> 4.0
+github "Quick/Nimble" ~> 9.2
+github "uber/ios-snapshot-test-case" "8.0.0"
 github "ashfurrow/Nimble-Snapshots"
 ```
 
 Then run:
 ```
-$ carthage bootstrap --platform iOS --toolchain com.apple.dt.toolchain.Swift_3_0
+$ carthage bootstrap --use-xcframeworks --platform iOS
 ```
 
 ## Swift Package Manager
