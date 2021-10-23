@@ -22,6 +22,7 @@ jobs:
 
       - name: Danger action
         uses: MeilCli/danger-action@v5.4.11
+        if: github.event_name == 'pull_request'
         with:
           plugins_file: 'Gemfile'
           install_path: 'vendor/bundle'
