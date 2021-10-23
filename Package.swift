@@ -13,16 +13,16 @@ let package = Package(
             targets: ["NimbleSnapshotsObjc"])
     ],
     dependencies: [
-        .package(name: "FBSnapshotTestCase",
+        .package(name: "iOSSnapshotTestCase",
                  url: "https://github.com/uber/ios-snapshot-test-case.git",
-                 .upToNextMajor(from: "7.0.0")),
+                 .upToNextMajor(from: "8.0.0")),
         .package(url: "https://github.com/Quick/Nimble.git",
                  .upToNextMajor(from: "9.0.0"))
     ],
     targets: [
         .target(
             name: "Nimble-Snapshots",
-            dependencies: ["FBSnapshotTestCase",
+            dependencies: ["iOSSnapshotTestCase",
                            "Nimble"],
             path: "Nimble_Snapshots",
             exclude: ["XCTestObservationCenter+CurrentTestCaseTracker.h",

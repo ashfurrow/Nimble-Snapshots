@@ -40,7 +40,7 @@
       ],
       "dependencies": {
         "iOSSnapshotTestCase": [
-          "~> 7.0"
+          "~> 8.0"
         ],
         "Nimble": [
 

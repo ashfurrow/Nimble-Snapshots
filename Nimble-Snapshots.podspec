@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
     ss.source_files  = "Nimble_Snapshots/*.{h,m,swift}",
                         "Nimble_Snapshots/DynamicType/*.{swift,m,h}",
                         "Nimble_Snapshots/DynamicSize/*.{swift}"
-    ss.dependency "iOSSnapshotTestCase", "~> 7.0"
+    ss.dependency "iOSSnapshotTestCase", "~> 8.0"
     ss.dependency "Nimble"
   end
 
