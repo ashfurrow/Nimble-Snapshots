@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.3.0
+
+- Update ios-snapshot-test-case to the latest version (7.0.0) - @joaolfp 
+
 ## 9.2.0
 
 - Update ios-snapshot-test-case to the latest version (7.0.0) - @dogo
