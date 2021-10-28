@@ -8,9 +8,9 @@ PODS:
   - iOSSnapshotTestCase/SwiftSupport (8.0.0):
     - iOSSnapshotTestCase/Core
   - Nimble (9.2.1)
-  - Nimble-Snapshots (9.2.0):
-    - Nimble-Snapshots/Core (= 9.2.0)
-  - Nimble-Snapshots/Core (9.2.0):
+  - Nimble-Snapshots (9.3.1):
+    - Nimble-Snapshots/Core (= 9.3.1)
+  - Nimble-Snapshots/Core (9.3.1):
     - iOSSnapshotTestCase (~> 8.0)
     - Nimble
   - Quick (4.0.0)
@@ -35,7 +35,7 @@ SPEC CHECKSUMS:
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
   iOSSnapshotTestCase: a670511f9ee3829c2b9c23e6e68f315fd7b6790f
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
-  Nimble-Snapshots: cf8ee88cdc3119814fa7a554baaacf537b35f790
+  Nimble-Snapshots: e0c096681766cd2a6d0740664e9b33620d1b3ed6
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
 
 PODFILE CHECKSUM: c3171133ba8d8bc9cf4cdaa6946313041b273157
