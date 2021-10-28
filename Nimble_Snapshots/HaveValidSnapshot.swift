@@ -1,4 +1,4 @@
-import FBSnapshotTestCase
+import iOSSnapshotTestCase
 import Foundation
 import Nimble
 import QuartzCore

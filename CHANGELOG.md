@@ -2,11 +2,11 @@
 
 ## Next
 
-- Nothing yet!
+- Fix SPM compilation with iOSSanpshotTestCase 8.0.0 - @dogo
 
 ## 9.3.0
 
-- Update ios-snapshot-test-case to the latest version (7.0.0) - @joaolfp 
+- Update ios-snapshot-test-case to the latest version (8.0.0) - @joaolfp 
 
 ## 9.2.0
 
