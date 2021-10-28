@@ -41,7 +41,7 @@ jobs:
         run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
 
       - name: Run Carthage integration test
-        run: carthage bootstrap --use-xcframeworks --platform iOS
+        run: carthage bootstrap --use-xcframeworks --platform iOS && xcodebuild
         shell: bash
       
       - name: Swiftlint
