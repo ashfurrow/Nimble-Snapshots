@@ -1,4 +1,9 @@
+#if SWIFT_PACKAGE
 import iOSSnapshotTestCase
+#else
+import FBSnapshotTestCase
+#endif
+
 import Foundation
 import Nimble
 import QuartzCore
