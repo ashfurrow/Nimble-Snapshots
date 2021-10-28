@@ -2,6 +2,10 @@
 
 ## Next
 
+- Nothing yet!
+
+## 9.3.1
+
 - Fix SPM compilation with iOSSanpshotTestCase 8.0.0 - @dogo
 
 ## 9.3.0
