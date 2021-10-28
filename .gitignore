@@ -16,6 +16,7 @@ Nimble_Snapshots.xcodeproj/xcuserdata/
 # Carthage
 Carthage/Checkouts
 Carthage/Build
+build
 
 # Swift Package Manager
 .swiftpm
