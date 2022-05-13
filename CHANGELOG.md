@@ -2,7 +2,7 @@
 
 ## Next
 
-- Nothing yet!
+- Update SPM dependency Nimble to 10.0.0 - @dogo
 
 ## 9.3.1
 

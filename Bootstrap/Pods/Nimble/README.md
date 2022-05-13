@@ -1,9 +1,8 @@
 # Nimble
 
-[![Build Status](https://travis-ci.org/Quick/Nimble.svg?branch=master)](https://travis-ci.org/Quick/Nimble)
+[![Build Status](https://github.com/Quick/Nimble/actions/workflows/ci-xcode.yml/badge.svg)](https://github.com/Quick/Nimble/actions/workflows/ci-xcode.yml)
 [![CocoaPods](https://img.shields.io/cocoapods/v/Nimble.svg)](https://cocoapods.org/pods/Nimble)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Accio supported](https://img.shields.io/badge/Accio-supported-0A7CF5.svg?style=flat)](https://github.com/JamitLabs/Accio)
 [![Platforms](https://img.shields.io/cocoapods/p/Nimble.svg)](https://cocoapods.org/pods/Nimble)
 
 Use Nimble to express the expected outcomes of Swift
@@ -51,6 +50,7 @@ expect(ocean.isClean).toEventually(beTruthy())
   - [Collection Elements](#collection-elements)
   - [Collection Count](#collection-count)
   - [Notifications](#notifications)
+  - [Result](#result)
   - [Matching a value to any of a group of matchers](#matching-a-value-to-any-of-a-group-of-matchers)
   - [Custom Validation](#custom-validation)
 - [Writing Your Own Matchers](#writing-your-own-matchers)
@@ -63,14 +63,9 @@ expect(ocean.isClean).toEventually(beTruthy())
   - [Supporting Objective-C](#supporting-objective-c)
     - [Properly Handling `nil` in Objective-C Matchers](#properly-handling-nil-in-objective-c-matchers)
   - [Migrating from the Old Matcher API](#migrating-from-the-old-matcher-api)
-    - [Minimal Step - Use `.predicate`](#minimal-step---use-predicate)
-    - [Convert to use `Predicate` Type with Old Matcher Constructor](#convert-to-use-predicate-type-with-old-matcher-constructor)
-    - [Convert to `Predicate` Type with Preferred Constructor](#convert-to-predicate-type-with-preferred-constructor)
-    - [Deprecation Roadmap](#deprecation-roadmap)
 - [Installing Nimble](#installing-nimble)
   - [Installing Nimble as a Submodule](#installing-nimble-as-a-submodule)
   - [Installing Nimble via CocoaPods](#installing-nimble-via-cocoapods)
-  - [Installing Nimble via Accio](#installing-nimble-via-accio)
   - [Using Nimble without XCTest](#using-nimble-without-xctest)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -337,6 +332,22 @@ In the above example, `ocean` is constantly re-evaluated. If it ever
 contains dolphins and whales, the expectation passes. If `ocean` still
 doesn't contain them, even after being continuously re-evaluated for one
 whole second, the expectation fails.
+
+You can also test that a value always or never matches throughout the length of the timeout. Use `toNever` and `toAlways` for this:
+
+```swift
+// Swift
+ocean.add("dolphins")
+expect(ocean).toAlways(contain("dolphins"))
+expect(ocean).toNever(contain("hares"))
+```
+
+```objc
+// Objective-C
+[ocean add:@"dolphins"]
+expect(ocean).toAlways(contain(@"dolphins"))
+expect(ocean).toNever(contain(@"hares"))
+```
 
 Sometimes it takes more than a second for a value to update. In those
 cases, use the `timeout` parameter:
@@ -727,8 +738,7 @@ expect([0.0, 2.0]).to(beCloseTo([0.1, 2.1], within: 0.1))
 
 ```
 
-> Values given to the `beCloseTo` matcher must be coercable into a
-  `Double`.
+> Values given to the `beCloseTo` matcher must conform to `FloatingPoint`.
 
 ## Types/Classes
 
@@ -842,7 +852,6 @@ expect(reachedPoint2) == false
 Notes:
 
 * This feature is only available in Swift.
-* It is only supported for `x86_64` binaries, meaning _you cannot run this matcher on iOS devices, only simulators_.
 * The tvOS simulator is supported, but using a different mechanism, requiring you to turn off the `Debug executable` scheme setting for your tvOS scheme's Test configuration.
 
 ## Swift Error Handling
@@ -1062,6 +1071,18 @@ expect(turtles).to(containElementSatisfying(^BOOL(id __nonnull object) {
 }));
 ```
 
+For asserting on if the given `Comparable` value is inside of a `Range`, use the `beWithin` matcher.
+
+```swift
+// Swift
+
+// Passes if 5 is within the range 1 through 10, inclusive
+expect(5).to(beWithin(1...10))
+
+// Passes if 5 is not within the range 2 through 4.
+expect(5).toNot(beWithin(2..<5))
+```
+
 ## Strings
 
 ```swift
@@ -1115,7 +1136,7 @@ In Swift, the collection must be an instance of a type conforming to
 // Swift
 
 // Providing a custom function:
-expect([1, 2, 3, 4]).to(allPass { $0! < 5 })
+expect([1, 2, 3, 4]).to(allPass { $0 < 5 })
 
 // Composing the expectation with another matcher:
 expect([1, 2, 3, 4]).to(allPass(beLessThan(5)))
@@ -1197,6 +1218,37 @@ expect {
 }.toEventually(postDistributedNotifications(equal([testNotification]),
                                   from: distributedNotificationCenter,
                                   names: [testNotification.name]))
+```
+
+> This matcher is only available in Swift.
+
+## Result
+
+```swift
+// Swift
+let aResult: Result<String, Error> = .success("Hooray") 
+
+// passes if result is .success
+expect(aResult).to(beSuccess()) 
+
+// passes if result value is .success and validates Success value
+expect(aResult).to(beSuccess { value in
+    expect(value).to(equal("Hooray"))
+})
+
+
+enum AnError: Error {
+    case somethingHappened
+}
+let otherResult: Result<String, AnError> = .failure(.somethingHappened) 
+
+// passes if result is .failure
+expect(otherResult).to(beFailure()) 
+
+// passes if result value is .failure and validates error
+expect(otherResult).to(beFailure { error in
+    expect(error).to(matchError(AnError.somethingHappened))
+}) 
 ```
 
 > This matcher is only available in Swift.
@@ -1307,7 +1359,7 @@ in an Xcode project you distribute to others.
   distribute it yourself via GitHub.
 
 For examples of how to write your own matchers, just check out the
-[`Matchers` directory](https://github.com/Quick/Nimble/tree/master/Sources/Nimble/Matchers)
+[`Matchers` directory](https://github.com/Quick/Nimble/tree/main/Sources/Nimble/Matchers)
 to see how Nimble's built-in set of matchers are implemented. You can
 also check out the tips below.
 
@@ -1600,83 +1652,15 @@ Previously (`<7.0.0`), Nimble supported matchers via the following types:
 - `NonNilMatcherFunc`
 - `MatcherFunc`
 
-All of those types have been replaced by `Predicate`. While migrating can be a
-lot of work, Nimble currently provides several steps to aid migration of your
-custom matchers:
-
-### Minimal Step - Use `.predicate`
-
-Nimble provides an extension to the old types that automatically naively
-converts those types to the newer `Predicate`.
-
-```swift
-// Swift
-public func beginWith<S: Sequence>(_ startingElement: S.Element) -> Predicate<S> where S.Element: Equatable {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "begin with <\(startingElement)>"
-        if let actualValue = actualExpression.evaluate() {
-            var actualGenerator = actualValue.makeIterator()
-            return actualGenerator.next() == startingElement
-        }
-        return false
-    }.predicate
-}
-```
-
-This is the simpliest way to externally support `Predicate` which allows easier
-composition than the old Nimble matcher interface, with minimal effort to change.
-
-### Convert to use `Predicate` Type with Old Matcher Constructor
-
-The second most convenient step is to utilize special constructors that
-`Predicate` supports that closely align to the constructors of the old Nimble
-matcher types.
-
-```swift
-// Swift
-public func beginWith<S: Sequence>(_ startingElement: S.Element) -> Predicate<S> where S.Element: Equatable {
-    return Predicate.fromDeprecatedClosure { actualExpression, failureMessage in
-        failureMessage.postfixMessage = "begin with <\(startingElement)>"
-        if let actualValue = actualExpression.evaluate() {
-            var actualGenerator = actualValue.makeIterator()
-            return actualGenerator.next() == startingElement
-        }
-        return false
-    }
-}
-```
-
-This allows you to completely drop the old types from your code, although the
-intended behavior may alter slightly to what is desired.
-
-### Convert to `Predicate` Type with Preferred Constructor
-
-Finally, you can convert to the native `Predicate` format using one of the
-constructors not used to assist in the migration.
-
-### Deprecation Roadmap
-
-Nimble 7 introduces `Predicate` but will support the old types with warning
-deprecations. A couple major releases of Nimble will remain backwards
-compatible with the old matcher api, although new features may not be
-backported.
-
-The deprecating plan is a 3 major versions removal. Which is as follows:
-
- 1. Introduce new `Predicate` API, deprecation warning for old matcher APIs.
-    (Nimble `v7.x.x` and `v8.x.x`)
- 2. Introduce warnings on migration-path features (`.predicate`,
-    `Predicate`-constructors with similar arguments to old API). (Nimble
-    `v9.x.x`)
- 3. Remove old API. (Nimble `v10.x.x`)
-
+All of those types have been replaced by `Predicate`. The old API has been
+removed completely in Nimble v10.
 
 # Installing Nimble
 
 > Nimble can be used on its own, or in conjunction with its sister
   project, [Quick](https://github.com/Quick/Quick). To install both
   Quick and Nimble, follow [the installation instructions in the Quick
-  Documentation](https://github.com/Quick/Quick/blob/master/Documentation/en-us/InstallingQuick.md).
+  Documentation](https://github.com/Quick/Quick/blob/main/Documentation/en-us/InstallingQuick.md).
 
 Nimble can currently be installed in one of two ways: using CocoaPods, or with
 git submodules.
@@ -1716,27 +1700,6 @@ end
 ```
 
 Finally run `pod install`.
-
-## Installing Nimble via Accio
-
-Add the following to your Package.swift:
-
-```swift
-.package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "8.0.1")),
-```
-
-Next, add `Nimble` to your App targets dependencies like so:
-
-```swift
-.testTarget(
-    name: "AppTests",
-    dependencies: [
-        "Nimble",
-    ]
-),
-```
-
-Then run `accio update`.
 
 ## Using Nimble without XCTest
 
