@@ -1,10 +1,14 @@
-import Bootstrap
 import Nimble
 import Nimble_Snapshots
 import Quick
+import UIKit
 
-class DynamicTypeTests: QuickSpec {
+@testable import Bootstrap
+
+final class DynamicTypeTests: QuickSpec {
+
     override func spec() {
+
         describe("in some context") {
             var view: UIView!
 
