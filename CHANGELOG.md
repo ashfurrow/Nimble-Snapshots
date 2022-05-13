@@ -2,7 +2,14 @@
 
 ## Next
 
+- Nothing yet!
+
+## 9.4.0
+
+- Set swift-tools-version to 5.3 - @dogo
 - Update SPM dependency Nimble to 10.0.0 - @dogo
+- Fix ios-snapshot-test-case compilation with Carthage - @dogo
+- Fix SPM class name is not removed from snapshot image name. See #246 - dogo
 
 ## 9.3.1
 
