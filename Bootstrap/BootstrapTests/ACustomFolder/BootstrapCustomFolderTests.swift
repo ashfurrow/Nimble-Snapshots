@@ -2,8 +2,10 @@ import Nimble
 import Nimble_Snapshots
 import Quick
 
-class BootstrapCustomFormatTests: QuickSpec {
+final class BootstrapCustomFormatTests: QuickSpec {
+
     override func spec() {
+
         describe("in some context") {
             var view: UIView!
 
