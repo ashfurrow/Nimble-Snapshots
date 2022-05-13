@@ -4,7 +4,7 @@ import XCTest
 #if SWIFT_PACKAGE
 
 open class QuickConfiguration: NSObject {
-    open class func configure(_ configuration: Configuration) {}
+    open class func configure(_ configuration: QCKConfiguration) {}
 }
 
 #endif
@@ -30,14 +30,15 @@ extension QuickConfiguration {
         let classes = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(classesCount))
         defer { free(classes) }
 
-        objc_getClassList(AutoreleasingUnsafeMutablePointer(classes), classesCount)
+        let autoreleasingClasses = AutoreleasingUnsafeMutablePointer<AnyClass>(classes)
+        objc_getClassList(autoreleasingClasses, classesCount)
 
         var configurationSubclasses: [QuickConfiguration.Type] = []
         for index in 0..<classesCount {
             guard
                 let subclass = classes[Int(index)],
                 let superclass = class_getSuperclass(subclass),
-                superclass is QuickConfiguration.Type
+                superclass.isSubclass(of: QuickConfiguration.self)
                 else { continue }
 
             // swiftlint:disable:next force_cast

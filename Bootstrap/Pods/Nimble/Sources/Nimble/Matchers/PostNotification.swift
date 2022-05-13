@@ -1,3 +1,5 @@
+#if !os(WASI)
+
 #if canImport(Foundation)
 import Foundation
 
@@ -87,14 +89,6 @@ public func postNotifications<Out>(
     _postNotifications(predicate, from: center)
 }
 
-@available(*, deprecated, renamed: "postNotifications(_:from:)")
-public func postNotifications<Out>(
-    _ predicate: Predicate<[Notification]>,
-    fromNotificationCenter center: NotificationCenter
-) -> Predicate<Out> {
-    postNotifications(predicate, from: center)
-}
-
 #if os(macOS)
 public func postDistributedNotifications<Out>(
     _ predicate: Predicate<[Notification]>,
@@ -105,43 +99,6 @@ public func postDistributedNotifications<Out>(
 }
 #endif
 
-@available(*, deprecated, message: "Use Predicate instead")
-public func postNotifications<T>(
-    _ notificationsMatcher: T,
-    from center: NotificationCenter = .default
-) -> Predicate<Any> where T: Matcher, T.ValueType == [Notification] {
-    _ = mainThread // Force lazy-loading of this value
-    let collector = NotificationCollector(notificationCenter: center)
-    collector.startObserving()
-    var once: Bool = false
+#endif // #if canImport(Foundation)
 
-    return Predicate { actualExpression in
-        let collectorNotificationsExpression = Expression(memoizedExpression: { _ in
-            return collector.observedNotifications
-            }, location: actualExpression.location, withoutCaching: true)
-
-        assert(pthread_equal(mainThread, pthread_self()) != 0, "Only expecting closure to be evaluated on main thread.")
-        if !once {
-            once = true
-            _ = try actualExpression.evaluate()
-        }
-
-        let failureMessage = FailureMessage()
-        let match = try notificationsMatcher.matches(collectorNotificationsExpression, failureMessage: failureMessage)
-        if collector.observedNotifications.isEmpty {
-            failureMessage.actualValue = "no notifications"
-        } else {
-            failureMessage.actualValue = "<\(stringify(collector.observedNotifications))>"
-        }
-        return PredicateResult(bool: match, message: failureMessage.toExpectationMessage())
-    }
-}
-
-@available(*, deprecated, renamed: "postNotifications(_:from:)")
-public func postNotifications<T>(
-    _ notificationsMatcher: T,
-    fromNotificationCenter center: NotificationCenter
-) -> Predicate<Any> where T: Matcher, T.ValueType == [Notification] {
-    return postNotifications(notificationsMatcher, from: center)
-}
-#endif
+#endif // #if !os(WASI)
