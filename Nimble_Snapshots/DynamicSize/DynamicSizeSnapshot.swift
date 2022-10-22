@@ -264,7 +264,7 @@ public func recordDynamicSizeSnapshot(named name: String? = nil,
     }
 }
 
-public func == (lhs: Expectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
+public func ==<Expectation: Nimble.Expectation>(lhs: Expectation, rhs: DynamicSizeSnapshot) where Expectation.Value == Snapshotable {
     if rhs.record {
         lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
                                          identifier: rhs.identifier,
