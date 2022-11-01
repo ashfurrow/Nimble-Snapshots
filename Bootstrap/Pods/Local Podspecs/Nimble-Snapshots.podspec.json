@@ -13,8 +13,8 @@
   },
   "social_media_url": "http://twitter.com/ashfurrow",
   "platforms": {
-    "ios": "10.0",
-    "tvos": "10.0"
+    "ios": "13.0",
+    "tvos": "13.0"
   },
   "swift_versions": "5.0",
   "pod_target_xcconfig": {
@@ -43,7 +43,7 @@
           "~> 8.0"
         ],
         "Nimble": [
-
+          "~> 11.0"
         ]
       }
     },

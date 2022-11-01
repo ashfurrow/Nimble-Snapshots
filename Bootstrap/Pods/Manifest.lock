@@ -7,13 +7,13 @@ PODS:
   - iOSSnapshotTestCase/Core (8.0.0)
   - iOSSnapshotTestCase/SwiftSupport (8.0.0):
     - iOSSnapshotTestCase/Core
-  - Nimble (10.0.0)
+  - Nimble (11.0.0)
   - Nimble-Snapshots (9.4.0):
     - Nimble-Snapshots/Core (= 9.4.0)
   - Nimble-Snapshots/Core (9.4.0):
     - iOSSnapshotTestCase (~> 8.0)
-    - Nimble
-  - Quick (5.0.1)
+    - Nimble (~> 11.0)
+  - Quick (6.0.0)
 
 DEPENDENCIES:
   - Forgeries
@@ -34,10 +34,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
   iOSSnapshotTestCase: a670511f9ee3829c2b9c23e6e68f315fd7b6790f
-  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
-  Nimble-Snapshots: ef281b908c604f78c8313587e25ea92c8ab513d7
-  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+  Nimble: a854c12888a21d9e25a0413bb743ad76c37ef50c
+  Nimble-Snapshots: 9f29ff080d7aeceedd1c9b929cdb690e0a86439a
+  Quick: 4d5ab9e81f0a632cbf9bc4f3069b55e5eeb175df
 
-PODFILE CHECKSUM: c3171133ba8d8bc9cf4cdaa6946313041b273157
+PODFILE CHECKSUM: cd5b709b72116303d001ccd6a46fecaf6ce2c21b
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

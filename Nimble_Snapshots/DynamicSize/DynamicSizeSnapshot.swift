@@ -145,7 +145,7 @@ public func snapshot(_ name: String? = nil,
     return DynamicSizeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func haveValidDynamicSizeSnapshot(named name: String? = nil,
+public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
                                          identifier: String? = nil,
                                          sizes: [String: CGSize],
                                          isDeviceAgnostic: Bool = false,
@@ -153,7 +153,7 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil,
                                          pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
                                          resizeMode: ResizeMode = .frame,
-                                         shouldIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
+                                         shouldIgnoreScale: Bool = false) -> Predicate<T> {
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
@@ -169,12 +169,12 @@ public func haveValidDynamicSizeSnapshot(named name: String? = nil,
     }
 }
 
-func performDynamicSizeSnapshotTest(_ name: String?,
+func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
                                     identifier: String? = nil,
                                     sizes: [String: CGSize],
                                     isDeviceAgnostic: Bool = false,
                                     usesDrawRect: Bool = false,
-                                    actualExpression: Expression<Snapshotable>,
+                                    actualExpression: Expression<T>,
                                     tolerance: CGFloat? = nil,
                                     pixelTolerance: CGFloat? = nil,
                                     isRecord: Bool,
@@ -244,13 +244,13 @@ public func recordSnapshot(_ name: String? = nil,
     return DynamicSizeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func recordDynamicSizeSnapshot(named name: String? = nil,
+public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
                                       identifier: String? = nil,
                                       sizes: [String: CGSize],
                                       isDeviceAgnostic: Bool = false,
                                       usesDrawRect: Bool = false,
                                       resizeMode: ResizeMode = .frame,
-                                      shouldIgnoreScale: Bool = false) -> Predicate<Snapshotable> {
+                                      shouldIgnoreScale: Bool = false) -> Predicate<T> {
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
@@ -264,7 +264,7 @@ public func recordDynamicSizeSnapshot(named name: String? = nil,
     }
 }
 
-public func == (lhs: Expectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
+public func ==<Expectation: Nimble.Expectation>(lhs: Expectation, rhs: DynamicSizeSnapshot) where Expectation.Value: Snapshotable {
     if rhs.record {
         lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
                                          identifier: rhs.identifier,

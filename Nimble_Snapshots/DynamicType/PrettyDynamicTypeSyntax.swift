@@ -41,7 +41,7 @@ public func recordDynamicTypeSnapshot(_ name: String? = nil,
                                deviceAgnostic: deviceAgnostic)
 }
 
-public func == (lhs: Expectation<Snapshotable>, rhs: DynamicTypeSnapshot) {
+public func ==<Expectation: Nimble.Expectation>(lhs: Expectation, rhs: DynamicTypeSnapshot) where Expectation.Value: Snapshotable {
     if let name = rhs.name {
         if rhs.record {
             lhs.to(recordDynamicTypeSnapshot(named: name, sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
