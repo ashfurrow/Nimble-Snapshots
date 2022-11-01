@@ -5,6 +5,7 @@ import UIKit
 
 @testable import Bootstrap
 
+@MainActor
 final class DynamicTypeTests: QuickSpec {
 
     override func spec() {

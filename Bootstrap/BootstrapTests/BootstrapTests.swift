@@ -3,6 +3,7 @@ import Nimble_Snapshots
 import Quick
 import UIKit
 
+@MainActor
 final class BootstrapTests: QuickSpec {
 
     override func spec() {

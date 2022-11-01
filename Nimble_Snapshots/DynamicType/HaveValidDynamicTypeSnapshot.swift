@@ -31,16 +31,16 @@ func combinePredicates<T>(_ predicates: [Predicate<T>],
     }
 }
 
-public func haveValidDynamicTypeSnapshot(named name: String? = nil,
+public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil,
                                          identifier: String? = nil,
                                          usesDrawRect: Bool = false,
                                          pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
                                          sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                         isDeviceAgnostic: Bool = false) -> Predicate<Snapshotable> {
+                                         isDeviceAgnostic: Bool = false) -> Predicate<T> {
     let mock = NBSMockedApplication()
 
-    let predicates: [Predicate<Snapshotable>] = sizes.map { category in
+    let predicates: [Predicate<T>] = sizes.map { category in
         let sanitizedName = sanitizedTestName(name)
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
@@ -48,7 +48,7 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil,
             mock.mockPreferredContentSizeCategory(category)
             updateTraitCollection(on: actualExpression)
 
-            let predicate: Predicate<Snapshotable>
+            let predicate: Predicate<T>
             if isDeviceAgnostic {
                 predicate = haveValidDeviceAgnosticSnapshot(named: nameWithCategory, identifier: identifier,
                                                             usesDrawRect: usesDrawRect, pixelTolerance: pixelTolerance,
@@ -70,14 +70,14 @@ public func haveValidDynamicTypeSnapshot(named name: String? = nil,
     }
 }
 
-public func recordDynamicTypeSnapshot(named name: String? = nil,
+public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil,
                                       identifier: String? = nil,
                                       usesDrawRect: Bool = false,
                                       sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                      isDeviceAgnostic: Bool = false) -> Predicate<Snapshotable> {
+                                      isDeviceAgnostic: Bool = false) -> Predicate<T> {
     let mock = NBSMockedApplication()
 
-    let predicates: [Predicate<Snapshotable>] = sizes.map { category in
+    let predicates: [Predicate<T>] = sizes.map { category in
         let sanitizedName = sanitizedTestName(name)
         let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
 
@@ -85,7 +85,7 @@ public func recordDynamicTypeSnapshot(named name: String? = nil,
             mock.mockPreferredContentSizeCategory(category)
             updateTraitCollection(on: actualExpression)
 
-            let predicate: Predicate<Snapshotable>
+            let predicate: Predicate<T>
             if isDeviceAgnostic {
                 predicate = recordDeviceAgnosticSnapshot(named: nameWithCategory,
                                                          identifier: identifier,
@@ -103,7 +103,7 @@ public func recordDynamicTypeSnapshot(named name: String? = nil,
     }
 }
 
-private func updateTraitCollection(on expression: Expression<Snapshotable>) {
+private func updateTraitCollection<T: Snapshotable>(on expression: Expression<T>) {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! expression.evaluate()!
     updateTraitCollection(on: instance)

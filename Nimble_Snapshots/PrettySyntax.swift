@@ -28,7 +28,7 @@ public func recordSnapshot(_ name: String? = nil,
     return Snapshot(name: name, identifier: identifier, record: true, usesDrawRect: usesDrawRect)
 }
 
-public func ==<Expectation: Nimble.Expectation>(lhs: Expectation, rhs: Snapshot) where Expectation.Value == Snapshotable {
+public func ==<Expectation: Nimble.Expectation>(lhs: Expectation, rhs: Snapshot) where Expectation.Value: Snapshotable {
     if rhs.record {
         lhs.to(recordSnapshot(named: rhs.name, identifier: rhs.identifier, usesDrawRect: rhs.usesDrawRect))
     } else {
