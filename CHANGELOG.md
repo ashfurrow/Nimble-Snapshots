@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.5.0
+
+- Compatibility with Nimble v11. See #253 - @younata
+
 ## 9.4.0
 
 - Set swift-tools-version to 5.3 - @dogo
