@@ -13,8 +13,7 @@ let package = Package(
             targets: ["NimbleSnapshotsObjc"])
     ],
     dependencies: [
-        .package(name: "iOSSnapshotTestCase",
-                 url: "https://github.com/uber/ios-snapshot-test-case.git",
+        .package(url: "https://github.com/uber/ios-snapshot-test-case.git",
                  .upToNextMajor(from: "8.0.0")),
         .package(url: "https://github.com/Quick/Nimble.git",
                  .upToNextMajor(from: "11.0.0"))
@@ -22,8 +21,10 @@ let package = Package(
     targets: [
         .target(
             name: "Nimble-Snapshots",
-            dependencies: ["iOSSnapshotTestCase",
-                           "Nimble"],
+            dependencies: [
+                .product(name:"iOSSnapshotTestCase", package: "ios-snapshot-test-case"),
+                .product(name: "Nimble", package: "Nimble")
+            ],
             path: "Nimble_Snapshots",
             exclude: ["XCTestObservationCenter+CurrentTestCaseTracker.h",
                       "XCTestObservationCenter+CurrentTestCaseTracker.m",
@@ -49,7 +50,8 @@ let package = Package(
                       "Info.plist",
                       "Nimble_Snapshots.xcconfig"],
             sources: ["XCTestObservationCenter+CurrentTestCaseTracker.h",
-                      "XCTestObservationCenter+CurrentTestCaseTracker.m"]
+                      "XCTestObservationCenter+CurrentTestCaseTracker.m"],
+            publicHeadersPath: "."
         )
     ],
     swiftLanguageVersions: [.v5]
