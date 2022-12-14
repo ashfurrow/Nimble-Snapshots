@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.5.1
+
+- Fixes SPM definition. See #255 - @diogot
+
 ## 9.5.0
 
 - Compatibility with Nimble v11. See #253 - @younata
