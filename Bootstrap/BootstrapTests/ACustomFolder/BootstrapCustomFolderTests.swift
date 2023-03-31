@@ -16,7 +16,8 @@ final class BootstrapCustomFormatTests: QuickSpec {
             }
 
             it("fails to find the snapshots due to the custom folder") {
-                expect(view).notTo(haveValidSnapshot(named: "something custom"))
+                expect(view).notTo(haveValidSnapshot(named: "something custom", userInterfaceStyle: .dark))
+                expect(view).notTo(haveValidSnapshot(named: "something custom", userInterfaceStyle: .light))
             }
 
             it("finds the snapshots using a custom images directory") {

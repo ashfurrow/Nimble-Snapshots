@@ -8,7 +8,13 @@ public final class DynamicTypeView: UIView {
         label = UILabel()
         super.init(frame: frame)
 
-        backgroundColor = .white
+        backgroundColor = UIColor { traits -> UIColor in
+            if traits.userInterfaceStyle == .dark {
+                return .lightGray
+            } else {
+                return .white
+            }
+        }
         translatesAutoresizingMaskIntoConstraints = false
 
         label.font = .preferredFont(forTextStyle: .body)

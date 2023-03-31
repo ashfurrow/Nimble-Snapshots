@@ -16,11 +16,18 @@ final class BootstrapTests: QuickSpec {
                 setNimbleTolerance(0.1)
                 setNimbleTestFolder("tests")
                 view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
-                view.backgroundColor = .blue
+                view.backgroundColor = UIColor { traits -> UIColor in
+                    if traits.userInterfaceStyle == .dark {
+                        return .brown
+                    } else {
+                        return .blue
+                    }
+                }
             }
 
             it("has a valid snapshot") {
-                expect(view).to(haveValidSnapshot())
+                expect(view).to(haveValidSnapshot(userInterfaceStyle: .light))
+                expect(view).to(haveValidSnapshot(userInterfaceStyle: .dark))
                 expect(view).to(haveValidSnapshot(named: "something custom"))
             }
 

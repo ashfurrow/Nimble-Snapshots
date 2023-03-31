@@ -27,13 +27,27 @@ final class DynamicSizeTests: QuickSpec {
 
                 beforeEach {
                     view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
-                    view.backgroundColor = .blue
+                    view.backgroundColor = UIColor { traits -> UIColor in
+                        if traits.userInterfaceStyle == .dark {
+                            return .brown
+                        } else {
+                            return .blue
+                        }
+                    }
                 }
 
                 it("has a valid snapshot to all sizes") {
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes))
                 }
+
+                it("has a valid snapshot to all sizes in light and dark mode") {
+                    expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .light))
+                    expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .dark))
+//                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .light))
+//                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .dark))
+                }
+
 
                 it("has a valid snapshot to all sizes with identifier") {
                     // expect(view).to(recordDynamicSizeSnapshot(identifier: "bootstrap", sizes: sizes))

@@ -81,6 +81,26 @@ final class DynamicTypeTests: QuickSpec {
                                                              identifier: "bootstrap"))
             }
 
+            it("has a valid snapshot with identifier in light and dark mode") {
+                // expect(view).to(recordDynamicTypeSnapshot(identifier: "bootstrap", userInterfaceStyle: .light))
+                // expect(view).to(recordDynamicTypeSnapshot(identifier: "bootstrap", userInterfaceStyle: .dark))
+                expect(view).to(haveValidDynamicTypeSnapshot(identifier: "bootstrap", userInterfaceStyle: .light))
+                expect(view).to(haveValidDynamicTypeSnapshot(identifier: "bootstrap", userInterfaceStyle: .dark))
+
+//                 expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS",
+//                                                          identifier: "bootstrap",
+//                                                           userInterfaceStyle: .light))
+//                expect(view).to(recordDynamicTypeSnapshot(named: "something custom with model and OS",
+//                                                          identifier: "bootstrap",
+//                                                          userInterfaceStyle: .dark))
+                expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS",
+                                                             identifier: "bootstrap",
+                                                             userInterfaceStyle: .light))
+                expect(view).to(haveValidDynamicTypeSnapshot(named: "something custom with model and OS",
+                                                             identifier: "bootstrap",
+                                                             userInterfaceStyle: .dark))
+            }
+
             it("works with adjustsFontForContentSizeCategory") {
                 let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 100))
                 label.text = "Example"
