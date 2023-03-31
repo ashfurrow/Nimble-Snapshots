@@ -201,3 +201,32 @@ implement the `ViewResizer` protocol and resize yourself.
 The custom behavior can be used to record the views too.
 
 For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests/DynamicSizeTests.swift).
+
+
+
+## Light and Dark mode
+
+Testing in light and dark mode is as easy as sending an extra argument, it also supports dynamic size 
+and dynamic type, having the convetion to append `light` or `dark` on the file name when looking for it 
+or saving the screenshot.
+
+```swift
+expect(view) == snapshot("some custom name", userInterfaceStyle: .light)
+expect(view) == snapshot("some custom name", userInterfaceStyle: .dark)
+
+// expect(view).to(recordDynamicTypeSnapshot(userInterfaceStyle: .light)
+expect(view).to(haveValidDynamicTypeSnapshot(userInterfaceStyle: .light))
+// expect(view).to(recordDynamicTypeSnapshot(userInterfaceStyle: .dark)
+expect(view).to(haveValidDynamicTypeSnapshot(userInterfaceStyle: .dark))
+
+
+let sizes = ["SmallSize": CGSize(width: 44, height: 44),
+"MediumSize": CGSize(width: 88, height: 88),
+"LargeSize": CGSize(width: 132, height: 132)]
+
+// expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .light))
+expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .light))
+
+// expect(view).to(recordDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .dark))
+expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes, userInterfaceStyle: .dark))
+```

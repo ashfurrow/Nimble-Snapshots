@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.6.0
+
+- Add abitlity to test in light and dark mode
+
 ## 9.5.1
 
 - Fixes SPM definition. See #255 - @diogot
