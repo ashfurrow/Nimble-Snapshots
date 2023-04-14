@@ -16,7 +16,7 @@ let package = Package(
         .package(url: "https://github.com/uber/ios-snapshot-test-case.git",
                  .upToNextMajor(from: "8.0.0")),
         .package(url: "https://github.com/Quick/Nimble.git",
-                 .upToNextMajor(from: "11.0.0"))
+                 .upToNextMajor(from: "12.0.0"))
     ],
     targets: [
         .target(
