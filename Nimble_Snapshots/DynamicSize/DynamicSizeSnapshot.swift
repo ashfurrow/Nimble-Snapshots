@@ -264,7 +264,7 @@ public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil
     }
 }
 
-public func ==<Expectation: Nimble.Expectation>(lhs: Expectation, rhs: DynamicSizeSnapshot) where Expectation.Value: Snapshotable {
+public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
     if rhs.record {
         lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
                                          identifier: rhs.identifier,
@@ -275,5 +275,19 @@ public func ==<Expectation: Nimble.Expectation>(lhs: Expectation, rhs: DynamicSi
                                             identifier: rhs.identifier,
                                             sizes: rhs.sizes,
                                             resizeMode: rhs.resizeMode))
+    }
+}
+
+public func ==(lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: DynamicSizeSnapshot) async {
+    if rhs.record {
+        await lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
+                                               identifier: rhs.identifier,
+                                               sizes: rhs.sizes,
+                                               resizeMode: rhs.resizeMode))
+    } else {
+        await lhs.to(haveValidDynamicSizeSnapshot(named: rhs.name,
+                                                  identifier: rhs.identifier,
+                                                  sizes: rhs.sizes,
+                                                  resizeMode: rhs.resizeMode))
     }
 }
