@@ -51,7 +51,8 @@ public class FBSnapshotTest: NSObject {
                                perPixelTolerance: CGFloat,
                                filename: String,
                                identifier: String? = nil,
-                               shouldIgnoreScale: Bool = false) -> Bool {
+                               shouldIgnoreScale: Bool = false,
+                               userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Bool {
 
         let testName = parseFilename(filename: filename)
         let snapshotController: FBSnapshotTestController = FBSnapshotTestController(test: self)
@@ -66,7 +67,8 @@ public class FBSnapshotTest: NSObject {
         snapshotController.recordMode = record
         snapshotController.referenceImagesDirectory = referenceDirectory
         snapshotController.imageDiffDirectory = defaultImageDiffDirectory
-        snapshotController.usesDrawViewHierarchyInRect = usesDrawRect
+        // if an userInterfaceStyle is sent, we need to force usesDrawViewHierarchyInRect
+        snapshotController.usesDrawViewHierarchyInRect = userInterfaceStyle == nil ? usesDrawRect : true
 
         let reason = "Missing value for referenceImagesDirectory - " +
                      "Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)"
@@ -74,6 +76,10 @@ public class FBSnapshotTest: NSObject {
 
         guard let snapshotObject = instance.snapshotObject else {
             fatalError("Failed unwrapping Snapshot Object")
+        }
+
+        if let userInterfaceStyle = userInterfaceStyle {
+            snapshotObject.overrideUserInterfaceStyle = userInterfaceStyle
         }
 
         do {
@@ -209,12 +215,20 @@ private func performSnapshotTest<T: Snapshotable>(_ name: String?,
                                  actualExpression: Expression<T>,
                                  pixelTolerance: CGFloat? = nil,
                                  tolerance: CGFloat?,
-                                 shouldIgnoreScale: Bool) -> PredicateResult {
+                                 shouldIgnoreScale: Bool,
+                                 userInterfaceStyle: UIUserInterfaceStyle? = nil) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = sanitizedTestName(name)
+
+    let snapshotName: String
+    if let userInterfaceStyle = userInterfaceStyle, let userInterfaceStyleIdentifier = userInterfaceStyle.identifier {
+        snapshotName = sanitizedTestName(name) + "_\(userInterfaceStyleIdentifier)"
+    } else {
+        snapshotName = sanitizedTestName(name)
+    }
+
     let tolerance = tolerance ?? getTolerance()
     let pixelTolerance = pixelTolerance ?? getPixelTolerance()
     let filename = "\(actualExpression.location.file)"
@@ -224,7 +238,8 @@ private func performSnapshotTest<T: Snapshotable>(_ name: String?,
                                                 referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                                 perPixelTolerance: pixelTolerance,
                                                 filename: filename, identifier: identifier,
-                                                shouldIgnoreScale: shouldIgnoreScale)
+                                                shouldIgnoreScale: shouldIgnoreScale,
+                                                userInterfaceStyle: userInterfaceStyle)
 
     return PredicateResult(status: PredicateStatus(bool: result),
                            message: .fail("expected a matching snapshot in \(snapshotName)"))
@@ -235,12 +250,20 @@ private func recordSnapshot<T: Snapshotable>(_ name: String?,
                             isDeviceAgnostic: Bool = false,
                             usesDrawRect: Bool = false,
                             actualExpression: Expression<T>,
-                            shouldIgnoreScale: Bool) -> PredicateResult {
+                            shouldIgnoreScale: Bool,
+                            userInterfaceStyle: UIUserInterfaceStyle? = nil) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
     let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = sanitizedTestName(name)
+
+    let snapshotName: String
+    if let userInterfaceStyle = userInterfaceStyle, let userInterfaceStyleIdentifier = userInterfaceStyle.identifier {
+        snapshotName = sanitizedTestName(name) + "_\(userInterfaceStyleIdentifier)"
+    } else {
+        snapshotName = sanitizedTestName(name)
+    }
+
     let tolerance = getTolerance()
     let pixelTolerance = getPixelTolerance()
     let filename = "\(actualExpression.location.file)"
@@ -256,7 +279,8 @@ private func recordSnapshot<T: Snapshotable>(_ name: String?,
                                       perPixelTolerance: pixelTolerance,
                                       filename: filename,
                                       identifier: identifier,
-                                      shouldIgnoreScale: shouldIgnoreScale) {
+                                      shouldIgnoreScale: shouldIgnoreScale,
+                                      userInterfaceStyle: userInterfaceStyle) {
         let name = name ?? snapshotName
         message = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
     } else if let name = name {
@@ -280,7 +304,8 @@ public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
                               usesDrawRect: Bool = false,
                               pixelTolerance: CGFloat? = nil,
                               tolerance: CGFloat? = nil,
-                              shouldIgnoreScale: Bool = false) -> Predicate<T> {
+                              shouldIgnoreScale: Bool = false,
+                              userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
 
     return Predicate { actualExpression in
         if switchChecksWithRecords {
@@ -288,7 +313,8 @@ public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
                                   identifier: identifier,
                                   usesDrawRect: usesDrawRect,
                                   actualExpression: actualExpression,
-                                  shouldIgnoreScale: shouldIgnoreScale)
+                                  shouldIgnoreScale: shouldIgnoreScale,
+                                  userInterfaceStyle: userInterfaceStyle)
         }
 
         return performSnapshotTest(name,
@@ -297,7 +323,8 @@ public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
                                    actualExpression: actualExpression,
                                    pixelTolerance: pixelTolerance,
                                    tolerance: tolerance,
-                                   shouldIgnoreScale: shouldIgnoreScale)
+                                   shouldIgnoreScale: shouldIgnoreScale,
+                                   userInterfaceStyle: userInterfaceStyle)
     }
 }
 
@@ -306,7 +333,8 @@ public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String?
                                             usesDrawRect: Bool = false,
                                             pixelTolerance: CGFloat? = nil,
                                             tolerance: CGFloat? = nil,
-                                            shouldIgnoreScale: Bool = false) -> Predicate<T> {
+                                            shouldIgnoreScale: Bool = false,
+                                            userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
 
     return Predicate { actualExpression in
         if switchChecksWithRecords {
@@ -315,7 +343,8 @@ public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String?
                                   isDeviceAgnostic: true,
                                   usesDrawRect: usesDrawRect,
                                   actualExpression: actualExpression,
-                                  shouldIgnoreScale: shouldIgnoreScale)
+                                  shouldIgnoreScale: shouldIgnoreScale,
+                                  userInterfaceStyle: userInterfaceStyle)
         }
 
         return performSnapshotTest(name,
@@ -325,30 +354,35 @@ public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String?
                                    actualExpression: actualExpression,
                                    pixelTolerance: pixelTolerance,
                                    tolerance: tolerance,
-                                   shouldIgnoreScale: shouldIgnoreScale)
+                                   shouldIgnoreScale: shouldIgnoreScale,
+                                   userInterfaceStyle: userInterfaceStyle)
     }
 }
 
 public func recordSnapshot<T: Snapshotable>(named name: String? = nil,
                            identifier: String? = nil,
                            usesDrawRect: Bool = false,
-                           shouldIgnoreScale: Bool = false) -> Predicate<T> {
+                           shouldIgnoreScale: Bool = false,
+                           userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
 
     return Predicate { actualExpression in
         return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression,
-                              shouldIgnoreScale: shouldIgnoreScale)
+                              shouldIgnoreScale: shouldIgnoreScale,
+                              userInterfaceStyle: userInterfaceStyle)
     }
 }
 
 public func recordDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
                                          identifier: String? = nil,
                                          usesDrawRect: Bool = false,
-                                         shouldIgnoreScale: Bool = false) -> Predicate<T> {
+                                         shouldIgnoreScale: Bool = false,
+                                         userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
 
     return Predicate { actualExpression in
         return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression,
-                              shouldIgnoreScale: shouldIgnoreScale)
+                              shouldIgnoreScale: shouldIgnoreScale,
+                              userInterfaceStyle: userInterfaceStyle)
     }
 }

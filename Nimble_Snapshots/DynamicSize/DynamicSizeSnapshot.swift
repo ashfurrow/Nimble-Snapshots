@@ -128,21 +128,34 @@ public struct DynamicSizeSnapshot {
     let record: Bool
     let sizes: [String: CGSize]
     let resizeMode: ResizeMode
+    let userInterfaceStyle: UIUserInterfaceStyle?
 
-    init(name: String?, identifier: String?, record: Bool, sizes: [String: CGSize], resizeMode: ResizeMode) {
+    init(name: String?,
+         identifier: String?,
+         record: Bool,
+         sizes: [String: CGSize],
+         resizeMode: ResizeMode,
+         userInterfaceStyle: UIUserInterfaceStyle?) {
         self.name = name
         self.identifier = identifier
         self.record = record
         self.sizes = sizes
         self.resizeMode = resizeMode
+        self.userInterfaceStyle = userInterfaceStyle
     }
 }
 
 public func snapshot(_ name: String? = nil,
                      identifier: String? = nil,
                      sizes: [String: CGSize],
-                     resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
-    return DynamicSizeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, resizeMode: resizeMode)
+                     resizeMode: ResizeMode = .frame,
+                     userInterfaceStyle: UIUserInterfaceStyle? = nil) -> DynamicSizeSnapshot {
+    return DynamicSizeSnapshot(name: name,
+                               identifier: identifier,
+                               record: false,
+                               sizes: sizes,
+                               resizeMode: resizeMode,
+                               userInterfaceStyle: userInterfaceStyle)
 }
 
 public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
@@ -153,7 +166,8 @@ public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = 
                                          pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
                                          resizeMode: ResizeMode = .frame,
-                                         shouldIgnoreScale: Bool = false) -> Predicate<T> {
+                                         shouldIgnoreScale: Bool = false,
+                                         userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
@@ -165,7 +179,23 @@ public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = 
                                               pixelTolerance: pixelTolerance,
                                               isRecord: false,
                                               resizeMode: resizeMode,
-                                              shouldIgnoreScale: shouldIgnoreScale)
+                                              shouldIgnoreScale: shouldIgnoreScale,
+                                              userInterfaceStyle: userInterfaceStyle)
+    }
+}
+
+extension UIUserInterfaceStyle {
+    var identifier: String? {
+        switch self {
+        case .dark:
+            return "dark"
+        case .light:
+            return "light"
+        case .unspecified:
+            return nil
+        @unknown default:
+            return nil
+        }
     }
 }
 
@@ -179,7 +209,8 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
                                     pixelTolerance: CGFloat? = nil,
                                     isRecord: Bool,
                                     resizeMode: ResizeMode,
-                                    shouldIgnoreScale: Bool = false) -> PredicateResult {
+                                    shouldIgnoreScale: Bool = false,
+                                    userInterfaceStyle: UIUserInterfaceStyle? = nil) -> PredicateResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -193,13 +224,9 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
     let result = sizes.map { sizeName, size -> Bool in
         // swiftlint:disable:next force_unwrapping
         let view = instance.snapshotObject!
-        let finalSnapshotName: String
-
-        if let identifier = identifier {
-            finalSnapshotName = "\(snapshotName)_\(identifier)_\(sizeName)"
-        } else {
-            finalSnapshotName = "\(snapshotName)_\(sizeName)"
-        }
+        let finalSnapshotName = [snapshotName, identifier, "\(sizeName)", userInterfaceStyle?.identifier]
+            .compactMap { $0 }
+            .joined(separator: "_")
 
         resizer.resize(view: view, for: size)
 
@@ -210,7 +237,7 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
                                               referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                               perPixelTolerance: pixelTolerance,
                                               filename: filename, identifier: nil,
-                                              shouldIgnoreScale: shouldIgnoreScale)
+                                              shouldIgnoreScale: shouldIgnoreScale, userInterfaceStyle: userInterfaceStyle)
     }
 
     if isRecord {
@@ -240,8 +267,14 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
 public func recordSnapshot(_ name: String? = nil,
                            identifier: String? = nil,
                            sizes: [String: CGSize],
-                           resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
-    return DynamicSizeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, resizeMode: resizeMode)
+                           resizeMode: ResizeMode = .frame,
+                           userInterfaceStyle: UIUserInterfaceStyle? = nil) -> DynamicSizeSnapshot {
+    return DynamicSizeSnapshot(name: name,
+                               identifier: identifier,
+                               record: true,
+                               sizes: sizes,
+                               resizeMode: resizeMode,
+                               userInterfaceStyle: userInterfaceStyle)
 }
 
 public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
@@ -250,7 +283,8 @@ public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil
                                       isDeviceAgnostic: Bool = false,
                                       usesDrawRect: Bool = false,
                                       resizeMode: ResizeMode = .frame,
-                                      shouldIgnoreScale: Bool = false) -> Predicate<T> {
+                                      shouldIgnoreScale: Bool = false,
+                                      userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
@@ -260,7 +294,8 @@ public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil
                                               actualExpression: actualExpression,
                                               isRecord: true,
                                               resizeMode: resizeMode,
-                                              shouldIgnoreScale: shouldIgnoreScale)
+                                              shouldIgnoreScale: shouldIgnoreScale,
+                                              userInterfaceStyle: userInterfaceStyle)
     }
 }
 
@@ -269,12 +304,14 @@ public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicSizeSnapsh
         lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
                                          identifier: rhs.identifier,
                                          sizes: rhs.sizes,
-                                         resizeMode: rhs.resizeMode))
+                                         resizeMode: rhs.resizeMode,
+                                         userInterfaceStyle: rhs.userInterfaceStyle))
     } else {
         lhs.to(haveValidDynamicSizeSnapshot(named: rhs.name,
                                             identifier: rhs.identifier,
                                             sizes: rhs.sizes,
-                                            resizeMode: rhs.resizeMode))
+                                            resizeMode: rhs.resizeMode,
+                                            userInterfaceStyle: rhs.userInterfaceStyle))
     }
 }
 

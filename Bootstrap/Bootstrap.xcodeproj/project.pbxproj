@@ -19,6 +19,7 @@
 		5EFDC7711F8699AA001453EC /* DynamicSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDC76E1F8699AA001453EC /* DynamicSizeTests.swift */; };
 		5EFDC7721F8699AA001453EC /* DynamicTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDC76F1F8699AA001453EC /* DynamicTypeTests.swift */; };
 		69BE287EA35A14E2787AC4AF /* Pods_Bootstrap_BootstrapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2E7C50C1B84B73173ED6F7 /* Pods_Bootstrap_BootstrapTests.framework */; };
+		C31D2DD929D73AFE002BD84C /* BootstrapCustomFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDC7761F8699F9001453EC /* BootstrapCustomFolderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -358,6 +359,7 @@
 			files = (
 				5EFDC7701F8699AA001453EC /* WithoutQuickTests.swift in Sources */,
 				5EFDC7711F8699AA001453EC /* DynamicSizeTests.swift in Sources */,
+				C31D2DD929D73AFE002BD84C /* BootstrapCustomFolderTests.swift in Sources */,
 				5EFDC7611F8698B4001453EC /* BootstrapTests.swift in Sources */,
 				5EFDC7721F8699AA001453EC /* DynamicTypeTests.swift in Sources */,
 			);

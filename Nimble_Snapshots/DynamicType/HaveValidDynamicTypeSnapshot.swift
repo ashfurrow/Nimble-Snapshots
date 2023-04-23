@@ -37,12 +37,16 @@ public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = 
                                          pixelTolerance: CGFloat? = nil,
                                          tolerance: CGFloat? = nil,
                                          sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                         isDeviceAgnostic: Bool = false) -> Predicate<T> {
+                                         isDeviceAgnostic: Bool = false,
+                                         userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
     let mock = NBSMockedApplication()
 
     let predicates: [Predicate<T>] = sizes.map { category in
         let sanitizedName = sanitizedTestName(name)
-        let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
+        var nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
+        if let userInterfaceStyle = userInterfaceStyle, let userInterfaceStyleIdentifier = userInterfaceStyle.identifier {
+            nameWithCategory += "_\(userInterfaceStyleIdentifier)"
+        }
 
         return Predicate { actualExpression in
             mock.mockPreferredContentSizeCategory(category)
@@ -52,13 +56,15 @@ public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = 
             if isDeviceAgnostic {
                 predicate = haveValidDeviceAgnosticSnapshot(named: nameWithCategory, identifier: identifier,
                                                             usesDrawRect: usesDrawRect, pixelTolerance: pixelTolerance,
-                                                            tolerance: tolerance)
+                                                            tolerance: tolerance,
+                                                            userInterfaceStyle: userInterfaceStyle)
             } else {
                 predicate = haveValidSnapshot(named: nameWithCategory,
                                               identifier: identifier,
                                               usesDrawRect: usesDrawRect,
                                               pixelTolerance: pixelTolerance,
-                                              tolerance: tolerance)
+                                              tolerance: tolerance,
+                                              userInterfaceStyle: userInterfaceStyle)
             }
 
             return try predicate.satisfies(actualExpression)
@@ -74,12 +80,16 @@ public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil
                                       identifier: String? = nil,
                                       usesDrawRect: Bool = false,
                                       sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                      isDeviceAgnostic: Bool = false) -> Predicate<T> {
+                                      isDeviceAgnostic: Bool = false,
+                                      userInterfaceStyle: UIUserInterfaceStyle? = nil) -> Predicate<T> {
     let mock = NBSMockedApplication()
 
     let predicates: [Predicate<T>] = sizes.map { category in
         let sanitizedName = sanitizedTestName(name)
-        let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
+        var nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
+        if let userInterfaceStyle = userInterfaceStyle, let userInterfaceStyleIdentifier = userInterfaceStyle.identifier {
+            nameWithCategory += "_\(userInterfaceStyleIdentifier)"
+        }
 
         return Predicate { actualExpression in
             mock.mockPreferredContentSizeCategory(category)
@@ -89,9 +99,13 @@ public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil
             if isDeviceAgnostic {
                 predicate = recordDeviceAgnosticSnapshot(named: nameWithCategory,
                                                          identifier: identifier,
-                                                         usesDrawRect: usesDrawRect)
+                                                         usesDrawRect: usesDrawRect,
+                                                         userInterfaceStyle: userInterfaceStyle)
             } else {
-                predicate = recordSnapshot(named: nameWithCategory, identifier: identifier, usesDrawRect: usesDrawRect)
+                predicate = recordSnapshot(named: nameWithCategory,
+                                           identifier: identifier,
+                                           usesDrawRect: usesDrawRect,
+                                           userInterfaceStyle: userInterfaceStyle)
             }
 
             return try predicate.satisfies(actualExpression)
