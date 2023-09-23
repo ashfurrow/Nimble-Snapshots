@@ -42,7 +42,7 @@ disabled_rules:
   - identifier_name
 
 excluded:
-  - Bootstrap/Pods
+  - Example
   - Carthage
 
 reporter: "xcode"      
