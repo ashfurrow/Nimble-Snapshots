@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattgallagher/CwlCatchException.git",
       "state" : {
-        "revision" : "35f9e770f54ce62dd8526470f14c6e137cef3eea",
-        "version" : "2.1.1"
+        "revision" : "3b123999de19bf04905bc1dfdb76f817b0f2cc00",
+        "version" : "2.1.2"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattgallagher/CwlPreconditionTesting.git",
       "state" : {
-        "revision" : "c21f7bab5ca8eee0a9998bbd17ca1d0eb45d4688",
-        "version" : "2.1.0"
+        "revision" : "a23ded2c91df9156628a6996ab4f347526f17b6b",
+        "version" : "2.1.2"
       }
     },
     {
@@ -34,6 +34,24 @@
       "state" : {
         "revision" : "edaedc1ec86f14ac6e2ca495b94f0ff7150d98d0",
         "version" : "12.3.0"
+      }
+    },
+    {
+      "identity" : "nimble-snapshots",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/heroesofcode/Nimble-Snapshots.git",
+      "state" : {
+        "branch" : "structure/turning-library",
+        "revision" : "9f37d1bd487ddfaa14558e2a6240da3449de6141"
+      }
+    },
+    {
+      "identity" : "quick",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Quick/Quick.git",
+      "state" : {
+        "revision" : "ef9aaf3f634b3a1ab6f54f1173fe2400b36e7cb8",
+        "version" : "7.3.0"
       }
     }
   ],
