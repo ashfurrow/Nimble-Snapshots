@@ -20,6 +20,3 @@ jobs:
       
     - name: Build iOS
       run: make build-ios
-
-    - name: Build tvOS
-      run: make build-tvos
