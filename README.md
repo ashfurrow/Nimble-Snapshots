@@ -8,72 +8,6 @@
 [Nimble](https://github.com/Quick/Nimble) matchers for [iOSSnapshotTestCase](https://github.com/uber/ios-snapshot-test-case).
 Originally derived from [Expecta Matchers for FBSnapshotTestCase](https://github.com/dblock/ios-snapshot-test-case-expecta).
 
-<p align="center">
-<img src="http://gifs.ashfurrow.com/click.gif" />
-</p>
-
-Installing
-----------
-
-## CocoaPods
-
-You need to be using CocoaPods 0.36 Beta 1 or higher. Your `Podfile` should look
-something like the following.
-
-```rb
-platform :ios, '10.0'
-
-source 'https://github.com/CocoaPods/Specs.git'
-
-# Whichever pods you need for your app go here.
-
-target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
-  pod 'Nimble-Snapshots'
-  pod 'Quick' # if you want to use it with Quick
-end
-```
-
-Then run:
-```
-$ pod install
-```
-
-## Carthage
-
-You need to be using Carthage 0.18 or higher. Your `Cartfile` (or `Cartfile.private`) should look
-something like the following.
-
-```rb
-github "Quick/Quick" ~> 4.0
-github "Quick/Nimble" ~> 9.2
-github "uber/ios-snapshot-test-case" "8.0.0"
-github "ashfurrow/Nimble-Snapshots"
-```
-
-Then run:
-```
-$ carthage bootstrap --use-xcframeworks --platform iOS
-```
-
-## Swift Package Manager
-
-To add `Nimble-Snapshots` as a dependency, you have to add it to the dependencies of your `Package.swift` file and refer to that dependency in your target.
-
-```swift
-import PackageDescription
-let package = Package(
-    name: "<Your Product Name>",
-    dependencies: [
-       .package(url: "https://github.com/ashfurrow/Nimble-Snapshots", .upToNextMajor(from: "9.0.0"))
-    ],
-    targets: [
-        .target(
-            name: "<Your Target Name>",
-            dependencies: ["Nimble-Snapshots"]),
-    ]
-)
-```
-
 Use
 ---
 
@@ -158,9 +92,7 @@ so your views/view controllers need to observe that and update themselves.
 For more info on usage, check out the
 [dynamic type tests](Bootstrap/BootstrapTests/DynamicTypeTests.swift).
 
-
-
-## Dynamic Size
+### Dynamic Size
 
 Testing the same view with many sizes is easy but error prone. It easy to fix one test
 on change and forget the others. For this we create a easy way to tests all sizes at same time.
@@ -200,4 +132,36 @@ For custom behavior you can use `ResizeMode.block`. The block will be call on ev
 implement the `ViewResizer` protocol and resize yourself.
 The custom behavior can be used to record the views too.
 
-For more info on usage, check the [dynamic sizes tests](Bootstrap/BootstrapTests/DynamicSizeTests.swift).
+Installing
+----------
+
+## Swift Package Manager
+
+To add `Nimble-Snapshots` as a dependency, you have to add it to the dependencies of your `Package.swift` file and refer to that dependency in your target.
+
+```swift
+import PackageDescription
+let package = Package(
+    name: "<Your Product Name>",
+    dependencies: [
+       .package(url: "https://github.com/heroesofcode/Nimble-Snapshots", .upToNextMajor(from: "1.0.0"))
+    ],
+    targets: [
+        .target(
+            name: "<Your Target Name>",
+            dependencies: ["Nimble-Snapshots"]),
+    ]
+)
+```
+
+Credits
+----------
+
+[Nimble-Snapshots](https://github.com/ashfurrow/Nimble-Snapshots)
+<br>
+[Ash Furrow](https://github.com/ashfurrow)
+
+License
+----------
+
+Nimble-Snapshots is released under the MIT license. See LICENSE for details.
