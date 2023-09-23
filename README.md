@@ -1,7 +1,7 @@
+# Nimble-Snapshots
+
 ![GitHub Actions CI](https://github.com/ashfurrow/Nimble-Snapshots/actions/workflows/build-and-test.yml/badge.svg?branch=master)
-[![Cocoapods compatible](https://img.shields.io/cocoapods/v/Nimble-Snapshots.svg)](https://cocoapods.org/?q=Nimble-Snapshots)
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-brightgreen)](https://swift.org/package-manager)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/github/license/ashfurrow/Nimble-Snapshots.svg)](https://github.com/ashfurrow/Nimble-Snapshots/blob/master/LICENSE)
 =============================
 
