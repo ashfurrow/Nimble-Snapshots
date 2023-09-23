@@ -1,6 +1,6 @@
 # Nimble-Snapshots
 
-![GitHub Actions CI](https://github.com/ashfurrow/Nimble-Snapshots/actions/workflows/build-and-test.yml/badge.svg?branch=master)
+[![CI](https://github.com/heroesofcode/Nimble-Snapshots/actions/workflows/CI.yml/badge.svg)](https://github.com/heroesofcode/Nimble-Snapshots/actions/workflows/CI.yml)
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-brightgreen)](https://swift.org/package-manager)
 [![License](https://img.shields.io/github/license/ashfurrow/Nimble-Snapshots.svg)](https://github.com/ashfurrow/Nimble-Snapshots/blob/master/LICENSE)
 =============================
