@@ -22,4 +22,4 @@ jobs:
             swiftlint
       
     - name: Build iOS
-      run: bundle exec rake build:package:iOS
+      run: bundle exec rake build:package:all
