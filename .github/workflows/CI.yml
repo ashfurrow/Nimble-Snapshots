@@ -19,4 +19,4 @@ jobs:
             swiftlint
       
     - name: Build iOS
-      run: build-ios
+      run: make build-ios
