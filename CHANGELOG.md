@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.6.0
+
+- Compatibility with Xcode 15 / new Predicate type. See #268 - @younata
+
 ## 9.5.1
 
 - Fixes SPM definition. See #255 - @diogot
