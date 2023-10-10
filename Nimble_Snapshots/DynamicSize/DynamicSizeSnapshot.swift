@@ -145,15 +145,17 @@ public func snapshot(_ name: String? = nil,
     return DynamicSizeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
-                                         identifier: String? = nil,
-                                         sizes: [String: CGSize],
-                                         isDeviceAgnostic: Bool = false,
-                                         usesDrawRect: Bool = false,
-                                         pixelTolerance: CGFloat? = nil,
-                                         tolerance: CGFloat? = nil,
-                                         resizeMode: ResizeMode = .frame,
-                                         shouldIgnoreScale: Bool = false) -> Nimble.Predicate<T> {
+public func haveValidDynamicSizeSnapshot<T: Snapshotable>(
+    named name: String? = nil,
+    identifier: String? = nil,
+    sizes: [String: CGSize],
+    isDeviceAgnostic: Bool = false,
+    usesDrawRect: Bool = false,
+    pixelTolerance: CGFloat? = nil,
+    tolerance: CGFloat? = nil,
+    resizeMode: ResizeMode = .frame,
+    shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+        
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,
@@ -179,7 +181,7 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
                                     pixelTolerance: CGFloat? = nil,
                                     isRecord: Bool,
                                     resizeMode: ResizeMode,
-                                    shouldIgnoreScale: Bool = false) -> PredicateResult {
+                                    shouldIgnoreScale: Bool = false) -> MatcherResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.file
@@ -222,18 +224,15 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
             message = "expected to record a snapshot in \(name)"
         }
 
-        return PredicateResult(status: PredicateStatus(bool: false),
-                               message: .fail(message))
+        return MatcherResult(status: MatcherStatus(bool: false), message: .fail(message))
     } else {
         var message: String = ""
         if !result.filter({ !$0 }).isEmpty {
             message = "expected a matching snapshot in \(snapshotName)"
-            return PredicateResult(status: PredicateStatus(bool: false),
-                                   message: .fail(message))
+            return MatcherResult(status: MatcherStatus(bool: false), message: .fail(message))
         }
 
-        return PredicateResult(status: PredicateStatus(bool: true),
-                               message: .fail(message))
+        return MatcherResult(status: MatcherStatus(bool: true), message: .fail(message))
     }
 }
 
@@ -244,13 +243,15 @@ public func recordSnapshot(_ name: String? = nil,
     return DynamicSizeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, resizeMode: resizeMode)
 }
 
-public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
-                                      identifier: String? = nil,
-                                      sizes: [String: CGSize],
-                                      isDeviceAgnostic: Bool = false,
-                                      usesDrawRect: Bool = false,
-                                      resizeMode: ResizeMode = .frame,
-                                      shouldIgnoreScale: Bool = false) -> Nimble.Predicate<T> {
+public func recordDynamicSizeSnapshot<T: Snapshotable>(
+    named name: String? = nil,
+    identifier: String? = nil,
+    sizes: [String: CGSize],
+    isDeviceAgnostic: Bool = false,
+    usesDrawRect: Bool = false,
+    resizeMode: ResizeMode = .frame,
+    shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+        
     return Predicate { actualExpression in
         return performDynamicSizeSnapshotTest(name,
                                               identifier: identifier,

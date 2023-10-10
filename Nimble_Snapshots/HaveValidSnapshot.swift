@@ -202,71 +202,78 @@ func getTolerance() -> CGFloat {
     return FBSnapshotTest.sharedInstance.tolerance
 }
 
-private func performSnapshotTest<T: Snapshotable>(_ name: String?,
-                                 identifier: String? = nil,
-                                 isDeviceAgnostic: Bool = false,
-                                 usesDrawRect: Bool = false,
-                                 actualExpression: Expression<T>,
-                                 pixelTolerance: CGFloat? = nil,
-                                 tolerance: CGFloat?,
-                                 shouldIgnoreScale: Bool) -> PredicateResult {
-    // swiftlint:disable:next force_try force_unwrapping
-    let instance = try! actualExpression.evaluate()!
-    let testFileLocation = actualExpression.location.file
-    let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = sanitizedTestName(name)
-    let tolerance = tolerance ?? getTolerance()
-    let pixelTolerance = pixelTolerance ?? getPixelTolerance()
-    let filename = "\(actualExpression.location.file)"
-
-    let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic,
-                                                usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false,
-                                                referenceDirectory: referenceImageDirectory, tolerance: tolerance,
-                                                perPixelTolerance: pixelTolerance,
-                                                filename: filename, identifier: identifier,
-                                                shouldIgnoreScale: shouldIgnoreScale)
-
-    return PredicateResult(status: PredicateStatus(bool: result),
-                           message: .fail("expected a matching snapshot in \(snapshotName)"))
+private func performSnapshotTest<T: Snapshotable>(
+    _ name: String?,
+    identifier: String? = nil,
+    isDeviceAgnostic: Bool = false,
+    usesDrawRect: Bool = false,
+    actualExpression: Expression<T>,
+    pixelTolerance: CGFloat? = nil,
+    tolerance: CGFloat?,
+    shouldIgnoreScale: Bool) -> MatcherResult {
+        
+        // swiftlint:disable:next force_try force_unwrapping
+        let instance = try! actualExpression.evaluate()!
+        let testFileLocation = actualExpression.location.file
+        let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
+        let snapshotName = sanitizedTestName(name)
+        let tolerance = tolerance ?? getTolerance()
+        let pixelTolerance = pixelTolerance ?? getPixelTolerance()
+        let filename = "\(actualExpression.location.file)"
+        
+        let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic,
+                                                    usesDrawRect: usesDrawRect, 
+                                                    snapshot: snapshotName,
+                                                    record: false,
+                                                    referenceDirectory: referenceImageDirectory,
+                                                    tolerance: tolerance,
+                                                    perPixelTolerance: pixelTolerance,
+                                                    filename: filename, 
+                                                    identifier: identifier,
+                                                    shouldIgnoreScale: shouldIgnoreScale)
+        
+        return MatcherResult(status: MatcherStatus(bool: result),
+                             message: .fail("expected a matching snapshot in \(snapshotName)"))
 }
 
-private func recordSnapshot<T: Snapshotable>(_ name: String?,
-                            identifier: String? = nil,
-                            isDeviceAgnostic: Bool = false,
-                            usesDrawRect: Bool = false,
-                            actualExpression: Expression<T>,
-                            shouldIgnoreScale: Bool) -> PredicateResult {
-    // swiftlint:disable:next force_try force_unwrapping
-    let instance = try! actualExpression.evaluate()!
-    let testFileLocation = actualExpression.location.file
-    let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
-    let snapshotName = sanitizedTestName(name)
-    let tolerance = getTolerance()
-    let pixelTolerance = getPixelTolerance()
-    let filename = "\(actualExpression.location.file)"
-    var message: String = ""
+private func recordSnapshot<T: Snapshotable>(
+    _ name: String?,
+    identifier: String? = nil,
+    isDeviceAgnostic: Bool = false,
+    usesDrawRect: Bool = false,
+    actualExpression: Expression<T>,
+    shouldIgnoreScale: Bool) -> MatcherResult {
+        
+        // swiftlint:disable:next force_try force_unwrapping
+        let instance = try! actualExpression.evaluate()!
+        let testFileLocation = actualExpression.location.file
+        let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
+        let snapshotName = sanitizedTestName(name)
+        let tolerance = getTolerance()
+        let pixelTolerance = getPixelTolerance()
+        let filename = "\(actualExpression.location.file)"
+        var message: String = ""
 
-    if FBSnapshotTest.compareSnapshot(instance,
-                                      isDeviceAgnostic: isDeviceAgnostic,
-                                      usesDrawRect: usesDrawRect,
-                                      snapshot: snapshotName,
-                                      record: true,
-                                      referenceDirectory: referenceImageDirectory,
-                                      tolerance: tolerance,
-                                      perPixelTolerance: pixelTolerance,
-                                      filename: filename,
-                                      identifier: identifier,
-                                      shouldIgnoreScale: shouldIgnoreScale) {
-        let name = name ?? snapshotName
-        message = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
-    } else if let name = name {
-        message = "expected to record a snapshot in \(name)"
-    } else {
-        message = "expected to record a snapshot"
-    }
+        if FBSnapshotTest.compareSnapshot(instance,
+                                          isDeviceAgnostic: isDeviceAgnostic,
+                                          usesDrawRect: usesDrawRect,
+                                          snapshot: snapshotName,
+                                          record: true,
+                                          referenceDirectory: referenceImageDirectory,
+                                          tolerance: tolerance,
+                                          perPixelTolerance: pixelTolerance,
+                                          filename: filename,
+                                          identifier: identifier,
+                                          shouldIgnoreScale: shouldIgnoreScale) {
+            let name = name ?? snapshotName
+            message = "snapshot \(name) successfully recorded, replace recordSnapshot with a check"
+        } else if let name = name {
+            message = "expected to record a snapshot in \(name)"
+        } else {
+            message = "expected to record a snapshot"
+        }
 
-    return PredicateResult(status: PredicateStatus(bool: false),
-                           message: .fail(message))
+        return MatcherResult(status: MatcherStatus(bool: false), message: .fail(message))
 }
 
 private func currentTestName() -> String? {
@@ -275,12 +282,13 @@ private func currentTestName() -> String? {
 
 internal var switchChecksWithRecords = false
 
-public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
-                              identifier: String? = nil,
-                              usesDrawRect: Bool = false,
-                              pixelTolerance: CGFloat? = nil,
-                              tolerance: CGFloat? = nil,
-                              shouldIgnoreScale: Bool = false) -> Nimble.Predicate<T> {
+public func haveValidSnapshot<T: Snapshotable>(
+    named name: String? = nil,
+    identifier: String? = nil,
+    usesDrawRect: Bool = false,
+    pixelTolerance: CGFloat? = nil,
+    tolerance: CGFloat? = nil,
+    shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Predicate { actualExpression in
         if switchChecksWithRecords {
@@ -301,12 +309,13 @@ public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
     }
 }
 
-public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
-                                            identifier: String? = nil,
-                                            usesDrawRect: Bool = false,
-                                            pixelTolerance: CGFloat? = nil,
-                                            tolerance: CGFloat? = nil,
-                                            shouldIgnoreScale: Bool = false) -> Nimble.Predicate<T> {
+public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(
+    named name: String? = nil,
+    identifier: String? = nil,
+    usesDrawRect: Bool = false,
+    pixelTolerance: CGFloat? = nil,
+    tolerance: CGFloat? = nil,
+    shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Predicate { actualExpression in
         if switchChecksWithRecords {
@@ -329,10 +338,11 @@ public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String?
     }
 }
 
-public func recordSnapshot<T: Snapshotable>(named name: String? = nil,
-                           identifier: String? = nil,
-                           usesDrawRect: Bool = false,
-                           shouldIgnoreScale: Bool = false) -> Nimble.Predicate<T> {
+public func recordSnapshot<T: Snapshotable>(
+    named name: String? = nil,
+    identifier: String? = nil,
+    usesDrawRect: Bool = false,
+    shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Predicate { actualExpression in
         return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect,
@@ -341,10 +351,11 @@ public func recordSnapshot<T: Snapshotable>(named name: String? = nil,
     }
 }
 
-public func recordDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
-                                         identifier: String? = nil,
-                                         usesDrawRect: Bool = false,
-                                         shouldIgnoreScale: Bool = false) -> Nimble.Predicate<T> {
+public func recordDeviceAgnosticSnapshot<T: Snapshotable>(
+    named name: String? = nil,
+    identifier: String? = nil,
+    usesDrawRect: Bool = false,
+    shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Predicate { actualExpression in
         return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
