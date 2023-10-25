@@ -12,7 +12,10 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "13.0"
   s.tvos.deployment_target = "13.0"
   s.swift_version = '5.0'
-  s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
+  s.pod_target_xcconfig = { 
+    'ENABLE_BITCODE' => 'NO',
+    'ENABLE_TESTING_SEARCH_PATHS' => 'YES',
+  }
   s.source       = { :git => "https://github.com/ashfurrow/Nimble-Snapshots.git", :tag => s.version }
   s.default_subspec = "Core"
   s.frameworks  = "Foundation", "XCTest", "UIKit"
