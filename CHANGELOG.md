@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.6.1
+
+- Fixes search paths (`Type 'XCTContext' has no member 'runActivity'` error) - @anton-plebanovich
+
 ## 9.6.0
 
 - Compatibility with Xcode 15 / new Predicate type. See #268 - @younata
