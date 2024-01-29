@@ -4,7 +4,7 @@
 
 - Nothing yet!
 
-## 9.6.2
+## 9.7.0
 
 - Compatibility with Nimble v13 - @ddanielczyk
 
