@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.6.2
+
+- Compatibility with Nimble v13 - @ddanielczyk
+
 ## 9.6.1
 
 - Fixes search paths (`Type 'XCTContext' has no member 'runActivity'` error) - @anton-plebanovich
