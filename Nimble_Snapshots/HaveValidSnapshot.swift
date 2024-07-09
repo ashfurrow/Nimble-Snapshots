@@ -206,7 +206,7 @@ private func performSnapshotTest<T: Snapshotable>(_ name: String?,
                                  identifier: String? = nil,
                                  isDeviceAgnostic: Bool = false,
                                  usesDrawRect: Bool = false,
-                                 actualExpression: Expression<T>,
+                                 actualExpression: Nimble.Expression<T>,
                                  pixelTolerance: CGFloat? = nil,
                                  tolerance: CGFloat?,
                                  shouldIgnoreScale: Bool) -> MatcherResult {
@@ -234,7 +234,7 @@ private func recordSnapshot<T: Snapshotable>(_ name: String?,
                             identifier: String? = nil,
                             isDeviceAgnostic: Bool = false,
                             usesDrawRect: Bool = false,
-                            actualExpression: Expression<T>,
+                            actualExpression: Nimble.Expression<T>,
                             shouldIgnoreScale: Bool) -> MatcherResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
