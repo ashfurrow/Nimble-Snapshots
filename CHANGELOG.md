@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.8.0
+
+- Adds Nimble.Expression to correct Xcode 16 beta build issue. See [#282](https://github.com/ashfurrow/Nimble-Snapshots/pull/282) - @Ripcord715
+
 ## 9.7.0
 
 - Compatibility with Nimble v13 - @ddanielczyk
