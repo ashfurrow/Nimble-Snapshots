@@ -103,7 +103,7 @@ public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil
     }
 }
 
-private func updateTraitCollection<T: Snapshotable>(on expression: Expression<T>) {
+private func updateTraitCollection<T: Snapshotable>(on expression: Nimble.Expression<T>) {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! expression.evaluate()!
     updateTraitCollection(on: instance)
