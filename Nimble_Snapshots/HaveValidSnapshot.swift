@@ -8,6 +8,7 @@ import Foundation
 import Nimble
 import QuartzCore
 import UIKit
+import SwiftUI
 
 @objc public protocol Snapshotable {
     var snapshotObject: UIView? { get }
@@ -127,6 +128,14 @@ public func setNimblePixelTolerance(_ pixelTolerance: CGFloat) {
 
 public func recordAllSnapshots() {
     switchChecksWithRecords = true
+}
+
+public func setNimbleSwiftUISize(_ size: CGSize?) {
+    swiftUIDefaultSize = size
+}
+
+public func getNimbleSwiftUISize() -> CGSize? {
+    swiftUIDefaultSize
 }
 
 func getDefaultReferenceDirectory(_ sourceFileName: FileString) -> String {
@@ -275,6 +284,23 @@ private func currentTestName() -> String? {
 
 internal var switchChecksWithRecords = false
 
+internal var swiftUIDefaultSize: CGSize? = nil
+
+extension SwiftUI.View {
+    fileprivate func snapshotable(size: CGSize? = nil) -> Snapshotable {
+        let window = UIWindow()
+        let controller = UIHostingController(rootView: self)
+
+        window.rootViewController = UIHostingController(rootView: self)
+        window.makeKeyAndVisible()
+        if let size = size ?? swiftUIDefaultSize {
+            window.frame = CGRect(origin: .zero, size: size)
+        }
+        window.sizeToFit()
+        return window
+    }
+}
+
 public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
                               identifier: String? = nil,
                               usesDrawRect: Bool = false,
@@ -298,6 +324,28 @@ public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
                                    pixelTolerance: pixelTolerance,
                                    tolerance: tolerance,
                                    shouldIgnoreScale: shouldIgnoreScale)
+    }
+}
+
+public func haveValidSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                              size: CGSize? = nil,
+                              identifier: String? = nil,
+                              usesDrawRect: Bool = false,
+                              pixelTolerance: CGFloat? = nil,
+                              tolerance: CGFloat? = nil,
+                              shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+
+    return Matcher { expression in
+        try haveValidSnapshot(
+            named: name,
+            identifier: identifier,
+            usesDrawRect: usesDrawRect,
+            pixelTolerance: pixelTolerance,
+            tolerance: tolerance,
+            shouldIgnoreScale: shouldIgnoreScale
+        ).satisfies(Expression(expression: {
+            try expression.evaluate()?.snapshotable(size: size)
+        }, location: expression.location))
     }
 }
 
@@ -329,6 +377,28 @@ public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String?
     }
 }
 
+public func haveValidDeviceAgnosticSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                                            size: CGSize? = nil,
+                                            identifier: String? = nil,
+                                            usesDrawRect: Bool = false,
+                                            pixelTolerance: CGFloat? = nil,
+                                            tolerance: CGFloat? = nil,
+                                            shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+
+    return Matcher { expression in
+        try haveValidDeviceAgnosticSnapshot(
+            named: name,
+            identifier: identifier,
+            usesDrawRect: usesDrawRect,
+            pixelTolerance: pixelTolerance,
+            tolerance: tolerance,
+            shouldIgnoreScale: shouldIgnoreScale
+        ).satisfies(Expression(expression: {
+            try expression.evaluate()?.snapshotable(size: size)
+        }, location: expression.location))
+    }
+}
+
 public func recordSnapshot<T: Snapshotable>(named name: String? = nil,
                            identifier: String? = nil,
                            usesDrawRect: Bool = false,
@@ -341,6 +411,23 @@ public func recordSnapshot<T: Snapshotable>(named name: String? = nil,
     }
 }
 
+public func recordSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                           size: CGSize? = nil,
+                           identifier: String? = nil,
+                           usesDrawRect: Bool = false,
+                           shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+    return Matcher { expression in
+        try recordSnapshot(
+            named: name,
+            identifier: identifier,
+            usesDrawRect: usesDrawRect,
+            shouldIgnoreScale: shouldIgnoreScale
+        ).satisfies(Expression(expression: {
+            try expression.evaluate()?.snapshotable(size: size)
+        }, location: expression.location))
+    }
+}
+
 public func recordDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
                                          identifier: String? = nil,
                                          usesDrawRect: Bool = false,
@@ -350,5 +437,22 @@ public func recordDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = 
         return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression,
                               shouldIgnoreScale: shouldIgnoreScale)
+    }
+}
+
+public func recordDeviceAgnosticSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                                         size: CGSize? = nil,
+                                         identifier: String? = nil,
+                                         usesDrawRect: Bool = false,
+                                         shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+    return Matcher { expression in
+        try recordDeviceAgnosticSnapshot(
+            named: name,
+            identifier: identifier,
+            usesDrawRect: usesDrawRect,
+            shouldIgnoreScale: shouldIgnoreScale
+        ).satisfies(Expression(expression: {
+            try expression.evaluate()?.snapshotable(size: size)
+        }, location: expression.location))
     }
 }
