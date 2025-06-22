@@ -1,0 +1,6 @@
+framework module CwlCatchExceptionSupport {
+  umbrella header "CwlCatchExceptionSupport-umbrella.h"
+
+  export *
+  module * { export * }
+}

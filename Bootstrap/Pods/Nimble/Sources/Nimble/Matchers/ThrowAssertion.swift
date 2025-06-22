@@ -1,5 +1,5 @@
 // swiftlint:disable all
-#if canImport(CwlPreconditionTesting) && (os(macOS) || os(iOS))
+#if canImport(CwlPreconditionTesting) && (os(macOS) || os(iOS) || os(visionOS))
 import CwlPreconditionTesting
 #elseif canImport(CwlPosixPreconditionTesting)
 import CwlPosixPreconditionTesting
@@ -81,9 +81,10 @@ public func catchBadInstruction(block: @escaping () -> Void) -> BadInstructionEx
 }
 #endif
 
-public func throwAssertion<Out>() -> Predicate<Out> {
-    return Predicate { actualExpression in
-    #if (arch(x86_64) || arch(arm64)) && (canImport(Darwin) || canImport(Glibc))
+public func throwAssertion<Out>() -> Matcher<Out> {
+    return Matcher { actualExpression in
+    #if (arch(x86_64) || arch(arm64))
+        #if (canImport(CwlPreconditionTesting) || canImport(CwlPosixPreconditionTesting) || canImport(Glibc))
         let message = ExpectationMessage.expectedTo("throw an assertion")
         var actualError: Error?
         let caughtException: BadInstructionException? = catchBadInstruction {
@@ -126,13 +127,21 @@ public func throwAssertion<Out>() -> Predicate<Out> {
         }
 
         if let actualError = actualError {
-            return PredicateResult(
+            return MatcherResult(
                 bool: false,
                 message: message.appended(message: "; threw error instead <\(actualError)>")
             )
         } else {
-            return PredicateResult(bool: caughtException != nil, message: message)
+            return MatcherResult(bool: caughtException != nil, message: message)
         }
+        #else
+        let message = """
+            The throwAssertion Nimble matcher does not support your platform.
+            Note: throwAssertion no longer works on tvOS or watchOS platforms when you use Nimble with Cocoapods.
+                  You will have to use Nimble with Swift Package Manager or Carthage.
+            """
+        fatalError(message)
+        #endif
     #else
         let message = """
             The throwAssertion Nimble matcher can only run on x86_64 and arm64 platforms.

@@ -1,8 +1,18 @@
 import Foundation
 import XCTest
 
-/// Default handler for Nimble. This assertion handler passes failures along to
-/// XCTest.
+/// Default handler for Nimble. This assertion handler passes on to Swift Testing or XCTest.
+public class NimbleTestingHandler: AssertionHandler {
+    public func assert(_ assertion: Bool, message: FailureMessage, location: SourceLocation) {
+        if isRunningSwiftTest() {
+            NimbleSwiftTestingHandler().assert(assertion, message: message, location: location)
+        } else {
+            NimbleXCTestHandler().assert(assertion, message: message, location: location)
+        }
+    }
+}
+
+/// This assertion handler passes failures along to XCTest.
 public class NimbleXCTestHandler: AssertionHandler {
     public func assert(_ assertion: Bool, message: FailureMessage, location: SourceLocation) {
         if !assertion {
@@ -27,25 +37,25 @@ public class NimbleShortXCTestHandler: AssertionHandler {
     }
 }
 
-/// Fallback handler in case XCTest is unavailable. This assertion handler will abort
+/// Fallback handler in case XCTest/Swift Testing is unavailable. This assertion handler will abort
 /// the program if it is invoked.
-class NimbleXCTestUnavailableHandler: AssertionHandler {
+class NimbleTestingUnavailableHandler: AssertionHandler {
     func assert(_ assertion: Bool, message: FailureMessage, location: SourceLocation) {
-        fatalError("XCTest is not available and no custom assertion handler was configured. Aborting.")
+        fatalError("XCTest and Swift Testing are not available and no custom assertion handler was configured. Aborting.")
     }
 }
 
-#if !SWIFT_PACKAGE
+#if canImport(Darwin)
 /// Helper class providing access to the currently executing XCTestCase instance, if any
-@objc final internal class CurrentTestCaseTracker: NSObject, XCTestObservation {
-    @objc static let sharedInstance = CurrentTestCaseTracker()
+@objc final public class CurrentTestCaseTracker: NSObject, XCTestObservation {
+    @objc public static let sharedInstance = CurrentTestCaseTracker()
 
     private(set) var currentTestCase: XCTestCase?
 
     private var stashed_swift_reportFatalErrorsToDebugger: Bool = false
 
-    @objc func testCaseWillStart(_ testCase: XCTestCase) {
-        #if os(macOS) || os(iOS)
+    @objc public func testCaseWillStart(_ testCase: XCTestCase) {
+        #if (os(macOS) || os(iOS) || os(visionOS)) && !SWIFT_PACKAGE
         stashed_swift_reportFatalErrorsToDebugger = _swift_reportFatalErrorsToDebugger
         _swift_reportFatalErrorsToDebugger = false
         #endif
@@ -53,10 +63,10 @@ class NimbleXCTestUnavailableHandler: AssertionHandler {
         currentTestCase = testCase
     }
 
-    @objc func testCaseDidFinish(_ testCase: XCTestCase) {
+    @objc public func testCaseDidFinish(_ testCase: XCTestCase) {
         currentTestCase = nil
 
-        #if os(macOS) || os(iOS)
+        #if (os(macOS) || os(iOS) || os(visionOS)) && !SWIFT_PACKAGE
         _swift_reportFatalErrorsToDebugger = stashed_swift_reportFatalErrorsToDebugger
         #endif
     }
@@ -73,12 +83,12 @@ func isXCTestAvailable() -> Bool {
 }
 
 public func recordFailure(_ message: String, location: SourceLocation) {
-#if SWIFT_PACKAGE
+#if !canImport(Darwin)
     XCTFail("\(message)", file: location.file, line: location.line)
 #else
     if let testCase = CurrentTestCaseTracker.sharedInstance.currentTestCase {
         let line = Int(location.line)
-        let location = XCTSourceCodeLocation(filePath: location.file, lineNumber: line)
+        let location = XCTSourceCodeLocation(filePath: location.filePath, lineNumber: line)
         let sourceCodeContext = XCTSourceCodeContext(location: location)
         let issue = XCTIssue(type: .assertionFailure, compactDescription: message, sourceCodeContext: sourceCodeContext)
         testCase.record(issue)
@@ -86,7 +96,7 @@ public func recordFailure(_ message: String, location: SourceLocation) {
         let msg = """
             Attempted to report a test failure to XCTest while no test case was running. The failure was:
             \"\(message)\"
-            It occurred at: \(location.file):\(location.line)
+            It occurred at: \(location)
             """
         NSException(name: .internalInconsistencyException, reason: msg, userInfo: nil).raise()
     }

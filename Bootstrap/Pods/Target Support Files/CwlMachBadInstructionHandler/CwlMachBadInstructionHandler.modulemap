@@ -1,0 +1,6 @@
+framework module CwlMachBadInstructionHandler {
+  umbrella header "CwlMachBadInstructionHandler-umbrella.h"
+
+  export *
+  module * { export * }
+}

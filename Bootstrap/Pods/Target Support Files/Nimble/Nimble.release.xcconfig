@@ -4,13 +4,14 @@ CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/Nimble
 DEFINES_MODULE = YES
 ENABLE_BITCODE = NO
 ENABLE_TESTING_SEARCH_PATHS = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks" "${PODS_CONFIGURATION_BUILD_DIR}/CwlCatchException" "${PODS_CONFIGURATION_BUILD_DIR}/CwlCatchExceptionSupport" "${PODS_CONFIGURATION_BUILD_DIR}/CwlMachBadInstructionHandler" "${PODS_CONFIGURATION_BUILD_DIR}/CwlPosixPreconditionTesting" "${PODS_CONFIGURATION_BUILD_DIR}/CwlPreconditionTesting"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-LIBRARY_SEARCH_PATHS = $(inherited) "${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
-OTHER_LDFLAGS = $(inherited) -Xlinker -no_application_extension -weak-lXCTestSwiftSupport -weak_framework "XCTest"
+LIBRARY_SEARCH_PATHS = $(inherited) "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
+OTHER_LDFLAGS = $(inherited) -Xlinker -no_application_extension -weak-lXCTestSwiftSupport -framework "CwlPreconditionTesting" -weak_framework "XCTest"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS $(inherited) -suppress-warnings
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_DEVELOPMENT_LANGUAGE = ${DEVELOPMENT_LANGUAGE}
 PODS_ROOT = ${SRCROOT}
 PODS_TARGET_SRCROOT = ${PODS_ROOT}/Nimble
 PODS_XCFRAMEWORKS_BUILD_DIR = $(PODS_CONFIGURATION_BUILD_DIR)/XCFrameworkIntermediates

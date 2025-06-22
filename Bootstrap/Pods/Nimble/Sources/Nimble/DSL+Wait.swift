@@ -12,26 +12,29 @@ private enum ErrorResult {
 /// Only classes, protocols, methods, properties, and subscript declarations can be
 /// bridges to Objective-C via the @objc keyword. This class encapsulates callback-style
 /// asynchronous waiting logic so that it may be called from Objective-C and Swift.
-internal class NMBWait: NSObject {
+public class NMBWait: NSObject {
 // About these kind of lines, `@objc` attributes are only required for Objective-C
-// support, so that should be conditional on Darwin platforms and normal Xcode builds
-// (non-SwiftPM builds).
-#if canImport(Darwin) && !SWIFT_PACKAGE
+// support, so that should be conditional on Darwin platforms.
+#if canImport(Darwin)
     @objc
-    internal class func until(
+    public class func until(
         timeout: TimeInterval,
-        file: FileString = #file,
+        fileID: String = #fileID,
+        file: FileString = #filePath,
         line: UInt = #line,
+        column: UInt = #column,
         action: @escaping (@escaping () -> Void) -> Void) {
-            // Convert TimeInterval to DispatchTimeInterval
-            until(timeout: timeout.dispatchInterval, file: file, line: line, action: action)
+            // Convert TimeInterval to NimbleTimeInterval
+            until(timeout: timeout.nimbleInterval, file: file, line: line, action: action)
     }
 #endif
 
-    internal class func until(
-        timeout: DispatchTimeInterval,
-        file: FileString = #file,
+    public class func until(
+        timeout: NimbleTimeInterval,
+        fileID: String = #fileID,
+        file: FileString = #filePath,
         line: UInt = #line,
+        column: UInt = #column,
         action: @escaping (@escaping () -> Void) -> Void) {
             return throwableUntil(timeout: timeout, file: file, line: line) { done in
                 action(done)
@@ -39,10 +42,12 @@ internal class NMBWait: NSObject {
     }
 
     // Using a throwable closure makes this method not objc compatible.
-    internal class func throwableUntil(
-        timeout: DispatchTimeInterval,
-        file: FileString = #file,
+    public class func throwableUntil(
+        timeout: NimbleTimeInterval,
+        fileID: String = #fileID,
+        file: FileString = #filePath,
         line: UInt = #line,
+        column: UInt = #column,
         action: @escaping (@escaping () -> Void) throws -> Void) {
             let awaiter = NimbleEnvironment.activeInstance.awaiter
             let leeway = timeout.divided
@@ -64,47 +69,63 @@ internal class NMBWait: NSObject {
                         }
                     }
                 }
-            }.timeout(timeout, forcefullyAbortTimeout: leeway).wait("waitUntil(...)", file: file, line: line)
+            }.timeout(timeout, forcefullyAbortTimeout: leeway).wait(
+                "waitUntil(...)",
+                sourceLocation: SourceLocation(fileID: fileID, filePath: file, line: line, column: column)
+            )
 
             switch result {
             case .incomplete: internalError("Reached .incomplete state for waitUntil(...).")
             case .blockedRunLoop:
                 fail(blockedRunLoopErrorMessageFor("-waitUntil()", leeway: leeway),
-                    file: file, line: line)
+                     fileID: fileID, file: file, line: line, column: column)
             case .timedOut:
-                fail("Waited more than \(timeout.description)", file: file, line: line)
+                fail("Waited more than \(timeout.description)",
+                     fileID: fileID, file: file, line: line, column: column)
             case let .raisedException(exception):
-                fail("Unexpected exception raised: \(exception)")
+                fail("Unexpected exception raised: \(exception)",
+                     fileID: fileID, file: file, line: line, column: column
+                )
             case let .errorThrown(error):
-                fail("Unexpected error thrown: \(error)")
+                fail("Unexpected error thrown: \(error)",
+                     fileID: fileID, file: file, line: line, column: column
+                )
             case .completed(.exception(let exception)):
-                fail("Unexpected exception raised: \(exception)")
+                fail("Unexpected exception raised: \(exception)",
+                     fileID: fileID, file: file, line: line, column: column
+                )
             case .completed(.error(let error)):
-                fail("Unexpected error thrown: \(error)")
+                fail("Unexpected error thrown: \(error)",
+                     fileID: fileID, file: file, line: line, column: column
+                )
             case .completed(.none): // success
                 break
             }
     }
 
-#if canImport(Darwin) && !SWIFT_PACKAGE
-    @objc(untilFile:line:action:)
-    internal class func until(
-        _ file: FileString = #file,
+#if canImport(Darwin)
+    @objc(untilFileID:file:line:column:action:)
+    public class func until(
+        _ fileID: String = #fileID,
+        file: FileString = #filePath,
         line: UInt = #line,
+        column: UInt = #column,
         action: @escaping (@escaping () -> Void) -> Void) {
-        until(timeout: .seconds(1), file: file, line: line, action: action)
+        until(timeout: .seconds(1), fileID: fileID, file: file, line: line, column: column, action: action)
     }
 #else
-    internal class func until(
-        _ file: FileString = #file,
+    public class func until(
+        _ fileID: String = #fileID,
+        file: FileString = #filePath,
         line: UInt = #line,
+        column: UInt = #column,
         action: @escaping (@escaping () -> Void) -> Void) {
-        until(timeout: .seconds(1), file: file, line: line, action: action)
+        until(timeout: .seconds(1), fileID: fileID, file: file, line: line, column: column, action: action)
     }
 #endif
 }
 
-internal func blockedRunLoopErrorMessageFor(_ fnName: String, leeway: DispatchTimeInterval) -> String {
+internal func blockedRunLoopErrorMessageFor(_ fnName: String, leeway: NimbleTimeInterval) -> String {
     // swiftlint:disable:next line_length
     return "\(fnName) timed out but was unable to run the timeout handler because the main thread is unresponsive (\(leeway.description) is allow after the wait times out). Conditions that may cause this include processing blocking IO on the main thread, calls to sleep(), deadlocks, and synchronous IPC. Nimble forcefully stopped run loop which may cause future failures in test run."
 }
@@ -116,8 +137,9 @@ internal func blockedRunLoopErrorMessageFor(_ fnName: String, leeway: DispatchTi
 /// 
 /// This function manages the main run loop (`NSRunLoop.mainRunLoop()`) while this function
 /// is executing. Any attempts to touch the run loop may cause non-deterministic behavior.
-public func waitUntil(timeout: DispatchTimeInterval = AsyncDefaults.timeout, file: FileString = #file, line: UInt = #line, action: @escaping (@escaping () -> Void) -> Void) {
-    NMBWait.until(timeout: timeout, file: file, line: line, action: action)
+@available(*, noasync, message: "the sync variant of `waitUntil` does not work in async contexts. Use the async variant as a drop-in replacement")
+public func waitUntil(timeout: NimbleTimeInterval = PollingDefaults.timeout, fileID: String = #fileID, file: FileString = #filePath, line: UInt = #line, column: UInt = #column, action: @escaping (@escaping () -> Void) -> Void) {
+    NMBWait.until(timeout: timeout, fileID: fileID, file: file, line: line, column: column, action: action)
 }
 
 #endif // #if !os(WASI)
