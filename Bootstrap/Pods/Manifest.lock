@@ -1,4 +1,13 @@
 PODS:
+  - CwlCatchException (2.2.1):
+    - CwlCatchExceptionSupport (~> 2.2.1)
+  - CwlCatchExceptionSupport (2.2.1)
+  - CwlMachBadInstructionHandler (2.2.2)
+  - CwlPosixPreconditionTesting (2.2.2)
+  - CwlPreconditionTesting (2.2.2):
+    - CwlCatchException (~> 2.2.1)
+    - CwlMachBadInstructionHandler (~> 2.2.2)
+    - CwlPosixPreconditionTesting (~> 2.2.2)
   - Forgeries (1.0.0):
     - Forgeries/Core (= 1.0.0)
   - Forgeries/Core (1.0.0)
@@ -7,21 +16,27 @@ PODS:
   - iOSSnapshotTestCase/Core (8.0.0)
   - iOSSnapshotTestCase/SwiftSupport (8.0.0):
     - iOSSnapshotTestCase/Core
-  - Nimble (11.0.0)
-  - Nimble-Snapshots (9.4.0):
-    - Nimble-Snapshots/Core (= 9.4.0)
-  - Nimble-Snapshots/Core (9.4.0):
+  - Nimble (13.5.0):
+    - CwlPreconditionTesting (~> 2.2.0)
+  - Nimble-Snapshots (9.8.0):
+    - Nimble-Snapshots/Core (= 9.8.0)
+  - Nimble-Snapshots/Core (9.8.0):
     - iOSSnapshotTestCase (~> 8.0)
-    - Nimble (~> 11.0)
+    - Nimble (~> 13.0)
   - Quick (6.0.0)
 
 DEPENDENCIES:
-  - Forgeries
+  - Forgeries (= 1.0.0)
   - Nimble-Snapshots (from `../`)
-  - Quick
+  - Quick (= 6.0.0)
 
 SPEC REPOS:
   trunk:
+    - CwlCatchException
+    - CwlCatchExceptionSupport
+    - CwlMachBadInstructionHandler
+    - CwlPosixPreconditionTesting
+    - CwlPreconditionTesting
     - Forgeries
     - iOSSnapshotTestCase
     - Nimble
@@ -32,12 +47,17 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
+  CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
+  CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
+  CwlPosixPreconditionTesting: ecd095aa2129e740b44301c34571e8d85906fb88
+  CwlPreconditionTesting: 67a0047dd4de4382b93442c0e3f25207f984f35a
   Forgeries: 64ced144ea8341d89a7eec9d1d7986f0f1366250
   iOSSnapshotTestCase: a670511f9ee3829c2b9c23e6e68f315fd7b6790f
-  Nimble: a854c12888a21d9e25a0413bb743ad76c37ef50c
-  Nimble-Snapshots: 9f29ff080d7aeceedd1c9b929cdb690e0a86439a
+  Nimble: cc0469644d253140c6bab7e88d4ee3bbed59a25c
+  Nimble-Snapshots: c6a81b8122a4ee0762290e718ef50ccf63c88a4d
   Quick: 4d5ab9e81f0a632cbf9bc4f3069b55e5eeb175df
 
-PODFILE CHECKSUM: cd5b709b72116303d001ccd6a46fecaf6ce2c21b
+PODFILE CHECKSUM: d88741900f84099f5a61a8aa9287fc1ec6b62f6b
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.16.2

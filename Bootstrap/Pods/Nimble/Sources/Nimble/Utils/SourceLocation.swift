@@ -5,27 +5,35 @@ import Foundation
 // stdlib, and because recent versions of the XCTest overlay require `StaticString`
 // when calling `XCTFail`. Under the Objective-C runtime (i.e. building on Mac), we
 // have to use `String` instead because StaticString can't be generated from Objective-C
-#if SWIFT_PACKAGE
+#if !canImport(Darwin)
 public typealias FileString = StaticString
 #else
 public typealias FileString = String
 #endif
 
-public final class SourceLocation: NSObject {
-    public let file: FileString
+public final class SourceLocation: NSObject, Sendable {
+    public let fileID: String
+    @available(*, deprecated, renamed: "filePath")
+    public var file: FileString { filePath }
+    public let filePath: FileString
     public let line: UInt
+    public let column: UInt
 
     override init() {
-        file = "Unknown File"
+        fileID = "Unknown/File"
+        filePath = "Unknown File"
         line = 0
+        column = 0
     }
 
-    init(file: FileString, line: UInt) {
-        self.file = file
+    init(fileID: String, filePath: FileString, line: UInt, column: UInt) {
+        self.fileID = fileID
+        self.filePath = filePath
         self.line = line
+        self.column = column
     }
 
     override public var description: String {
-        return "\(file):\(line)"
+        return "\(filePath):\(line):\(column)"
     }
 }

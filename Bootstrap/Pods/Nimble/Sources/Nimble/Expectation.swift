@@ -1,10 +1,10 @@
-internal func execute<T>(_ expression: Expression<T>, _ style: ExpectationStyle, _ predicate: Predicate<T>, to: String, description: String?, captureExceptions: Bool = true) -> (Bool, FailureMessage) {
+internal func execute<T>(_ expression: Expression<T>, _ style: ExpectationStyle, _ matcher: Matcher<T>, to: String, description: String?, captureExceptions: Bool = true) -> (Bool, FailureMessage) {
     func run() -> (Bool, FailureMessage) {
         let msg = FailureMessage()
         msg.userDescription = description
         msg.to = to
         do {
-            let result = try predicate.satisfies(expression)
+            let result = try matcher.satisfies(expression)
             result.message.update(failureMessage: msg)
             if msg.actualValue == "" {
                 msg.actualValue = "<\(stringify(try expression.evaluate()))>"
@@ -33,18 +33,35 @@ internal func execute<T>(_ expression: Expression<T>, _ style: ExpectationStyle,
     return result
 }
 
+internal func execute<T>(_ expression: AsyncExpression<T>, _ style: ExpectationStyle, _ matcher: AsyncMatcher<T>, to: String, description: String?) async -> (Bool, FailureMessage) {
+    let msg = FailureMessage()
+    msg.userDescription = description
+    msg.to = to
+    do {
+        let result = try await matcher.satisfies(expression)
+        result.message.update(failureMessage: msg)
+        if msg.actualValue == "" {
+            msg.actualValue = "<\(stringify(try await expression.evaluate()))>"
+        }
+        return (result.toBoolean(expectation: style), msg)
+    } catch let error {
+        msg.stringValue = "unexpected error thrown: <\(error)>"
+        return (false, msg)
+    }
+}
+
 public enum ExpectationStatus: Equatable {
 
-    /// No predicates have been performed.
+    /// No matchers have been performed.
     case pending
 
-    /// All predicates have passed.
+    /// All matchers have passed.
     case passed
 
-    /// All predicates have failed.
+    /// All matchers have failed.
     case failed
 
-    /// Multiple predicates have been peformed, with at least one passing and one failing.
+    /// Multiple matchers have been peformed, with at least one passing and one failing.
     case mixed
 }
 
@@ -62,11 +79,9 @@ extension ExpectationStatus {
 }
 
 public protocol Expectation {
-    associatedtype Value
+    var location: SourceLocation { get }
 
-    var expression: Expression<Value> { get }
-
-    /// The status of the test after predicates have been evaluated.
+    /// The status of the test after matchers have been evaluated.
     ///
     /// This property can be used for changing test behavior based whether an expectation has
     /// passed.
@@ -92,30 +107,6 @@ public protocol Expectation {
 }
 
 extension Expectation {
-    /// Tests the actual value using a matcher to match.
-    @discardableResult
-    public func to(_ predicate: Predicate<Value>, description: String? = nil) -> Self {
-        let (pass, msg) = execute(expression, .toMatch, predicate, to: "to", description: description)
-        return verify(pass, msg)
-    }
-
-    /// Tests the actual value using a matcher to not match.
-    @discardableResult
-    public func toNot(_ predicate: Predicate<Value>, description: String? = nil) -> Self {
-        let (pass, msg) = execute(expression, .toNotMatch, predicate, to: "to not", description: description)
-        return verify(pass, msg)
-    }
-
-    /// Tests the actual value using a matcher to not match.
-    ///
-    /// Alias to toNot().
-    @discardableResult
-    public func notTo(_ predicate: Predicate<Value>, description: String? = nil) -> Self {
-        return toNot(predicate, description: description)
-    }
-}
-
-extension Expectation {
     /// Throws the supplied error if the expectation has previously failed.
     ///
     /// This provides a mechanism for halting tests when a failure occurs.  This can be used in
@@ -130,21 +121,27 @@ extension Expectation {
     /// expect(array[9]).to(...)
     /// ```
     ///
-    /// - Warning: This method **MUST** be called after a predicate method like `to` or `not`.
+    /// - Warning: This method **MUST** be called after a matcher method like `to` or `not`.
     ///            Otherwise, this expectation will be in an indeterminate state and will
     ///            unconditionally log an error.
     ///
     /// - Remark: Similar functionality can be achieved using the `status` property.
+    /// - Attention: This is deprecated in favor of the `require` dsl (``require``, ``unwrap``,
+    ///              ``pollUnwrap``), which integrates the matcher seemlessly, or, in the case of
+    ///              `unwrap` and `pollUnwrap`, acts as a shorthand when you require that an
+    ///              expression evaluate to some non-nil value. `onFailure` will be removed in
+    ///              Nimble 15.
+    @available(*, deprecated, message: "Use the require dsl")
     public func onFailure(`throw` error: Error) throws {
         switch status {
         case .pending:
             let msg = """
-                Attempted to call `Expectation.onFailure(throw:) before a predicate has been applied.
+                Attempted to call `Expectation.onFailure(throw:) before a matcher has been applied.
                 Try using `expect(...).to(...).onFailure(throw: ...`) instead.
                 """
 
             let handler = NimbleEnvironment.activeInstance.assertionHandler
-            handler.assert(false, message: .init(stringValue: msg), location: expression.location)
+            handler.assert(false, message: .init(stringValue: msg), location: location)
         case .passed:
             break
         case .failed, .mixed:
@@ -156,7 +153,7 @@ extension Expectation {
 public struct SyncExpectation<Value>: Expectation {
     public let expression: Expression<Value>
 
-    /// The status of the test after predicates have been evaluated.
+    /// The status of the test after matchers have been evaluated.
     ///
     /// This property can be used for changing test behavior based whether an expectation has
     /// passed.
@@ -192,6 +189,53 @@ public struct SyncExpectation<Value>: Expectation {
         handler.assert(pass, message: message, location: expression.location)
 
         return .init(expression: expression, status: status.applying(pass ? .passed : .failed))
+    }
+
+    public var location: SourceLocation { expression.location }
+
+    /// Tests the actual value using a matcher to match.
+    @discardableResult
+    public func to(_ matcher: Matcher<Value>, description: String? = nil) -> Self {
+        let (pass, msg) = execute(expression, .toMatch, matcher, to: "to", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    @discardableResult
+    public func toNot(_ matcher: Matcher<Value>, description: String? = nil) -> Self {
+        let (pass, msg) = execute(expression, .toNotMatch, matcher, to: "to not", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    ///
+    /// Alias to toNot().
+    @discardableResult
+    public func notTo(_ matcher: Matcher<Value>, description: String? = nil) -> Self {
+        toNot(matcher, description: description)
+    }
+
+    // MARK: - AsyncMatchers
+    /// Tests the actual value using a matcher to match.
+    @discardableResult
+    public func to(_ matcher: AsyncMatcher<Value>, description: String? = nil) async -> Self {
+        let (pass, msg) = await execute(expression.toAsyncExpression(), .toMatch, matcher, to: "to", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    @discardableResult
+    public func toNot(_ matcher: AsyncMatcher<Value>, description: String? = nil) async -> Self {
+        let (pass, msg) = await execute(expression.toAsyncExpression(), .toNotMatch, matcher, to: "to not", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    ///
+    /// Alias to toNot().
+    @discardableResult
+    public func notTo(_ matcher: AsyncMatcher<Value>, description: String? = nil) async -> Self {
+        await toNot(matcher, description: description)
     }
 
     // see:
@@ -200,9 +244,9 @@ public struct SyncExpectation<Value>: Expectation {
 }
 
 public struct AsyncExpectation<Value>: Expectation {
-    public let expression: Expression<Value>
+    public let expression: AsyncExpression<Value>
 
-    /// The status of the test after predicates have been evaluated.
+    /// The status of the test after matchers have been evaluated.
     ///
     /// This property can be used for changing test behavior based whether an expectation has
     /// passed.
@@ -219,14 +263,16 @@ public struct AsyncExpectation<Value>: Expectation {
     /// - Remark: Similar functionality can be achieved using the `onFailure(throw:)` method.
     public let status: ExpectationStatus
 
-    private init(expression: Expression<Value>, status: ExpectationStatus) {
+    private init(expression: AsyncExpression<Value>, status: ExpectationStatus) {
         self.expression = expression
         self.status = status
     }
 
-    public init(expression: Expression<Value>) {
+    public init(expression: AsyncExpression<Value>) {
         self.init(expression: expression, status: .pending)
     }
+
+    public var location: SourceLocation { expression.location }
 
     /// Takes the result of a test and passes it to the assertion handler.
     ///
@@ -238,5 +284,49 @@ public struct AsyncExpectation<Value>: Expectation {
         handler.assert(pass, message: message, location: expression.location)
 
         return .init(expression: expression, status: status.applying(pass ? .passed : .failed))
+    }
+
+    /// Tests the actual value using a matcher to match.
+    @discardableResult
+    public func to(_ matcher: Matcher<Value>, description: String? = nil) async -> Self {
+        let (pass, msg) = execute(await expression.toSynchronousExpression(), .toMatch, matcher, to: "to", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    @discardableResult
+    public func toNot(_ matcher: Matcher<Value>, description: String? = nil) async -> Self {
+        let (pass, msg) = execute(await expression.toSynchronousExpression(), .toNotMatch, matcher, to: "to not", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    ///
+    /// Alias to toNot().
+    @discardableResult
+    public func notTo(_ matcher: Matcher<Value>, description: String? = nil) async -> Self {
+        await toNot(matcher, description: description)
+    }
+
+    /// Tests the actual value using a matcher to match.
+    @discardableResult
+    public func to(_ matcher: AsyncMatcher<Value>, description: String? = nil) async -> Self {
+        let (pass, msg) = await execute(expression, .toMatch, matcher, to: "to", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    @discardableResult
+    public func toNot(_ matcher: AsyncMatcher<Value>, description: String? = nil) async -> Self {
+        let (pass, msg) = await execute(expression, .toNotMatch, matcher, to: "to not", description: description)
+        return verify(pass, msg)
+    }
+
+    /// Tests the actual value using a matcher to not match.
+    ///
+    /// Alias to toNot().
+    @discardableResult
+    public func notTo(_ matcher: AsyncMatcher<Value>, description: String? = nil) async -> Self {
+        await toNot(matcher, description: description)
     }
 }

@@ -4,20 +4,20 @@ on: [push, pull_request]
 jobs:
   test:
     name: Build and Test Nimble-Snapshots
-    runs-on: macOS-12
+    runs-on: macOS-13
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v4.2.2
       
       - name: Setup Xcode version
         uses: maxim-lobanov/setup-xcode@v1.4.0
         with:
-          xcode-version: 14.0
+          xcode-version: 14.3.1
 
-      - name: Set up Ruby 2.7.2
-        uses: ruby/setup-ruby@v1.84.0
+      - name: Set up Ruby 3.3.0
+        uses: ruby/setup-ruby@v1.245.0
         with:
-          ruby-version: 2.7.2
+          ruby-version: 3.3.0
           bundler-cache: true
 
       - name: "Create output dir"
@@ -35,28 +35,28 @@ jobs:
             swiftlint lint --no-cache --reporter junit | tee result.xml
       
       - name: Store Swiftlint artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Swiftlint
           path: |
             result.xml
 
       - name: Store output artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Output
           path: |
             output
 
       - name: Store FailureDiffs artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: FailureDiffs
           path: |
             Bootstrap/BootstrapTests/FailureDiffs/        
 
       - name: Danger action
-        uses: MeilCli/danger-action@v5.4.11
+        uses: MeilCli/danger-action@v5.6.33
         if: github.event_name == 'pull_request'
         with:
           plugins_file: 'Gemfile'

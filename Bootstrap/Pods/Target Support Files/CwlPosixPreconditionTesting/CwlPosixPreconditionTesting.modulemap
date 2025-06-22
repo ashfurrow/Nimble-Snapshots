@@ -1,0 +1,6 @@
+framework module CwlPosixPreconditionTesting {
+  umbrella header "CwlPosixPreconditionTesting-umbrella.h"
+
+  export *
+  module * { export * }
+}
