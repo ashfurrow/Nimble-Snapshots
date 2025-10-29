@@ -40,13 +40,12 @@ $ pod install
 
 ## Carthage
 
-You need to be using Carthage 0.18 or higher. Your `Cartfile` (or `Cartfile.private`) should look
+You need to be using Carthage 0.40.0 or higher. Your `Cartfile` (or `Cartfile.private`) should look
 something like the following.
 
 ```rb
-github "Quick/Quick" ~> 4.0
-github "Quick/Nimble" ~> 9.2
-github "uber/ios-snapshot-test-case" "8.0.0"
+github "Quick/Nimble" "v13.8.0"
+github "uber/ios-snapshot-test-case" "main" # Temporarily pin to main due to known issues in 8.0.0
 github "ashfurrow/Nimble-Snapshots"
 ```
 
