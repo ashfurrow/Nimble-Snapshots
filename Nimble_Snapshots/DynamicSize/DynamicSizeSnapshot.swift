@@ -182,7 +182,7 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
                                     shouldIgnoreScale: Bool = false) -> MatcherResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
-    let testFileLocation = actualExpression.location.file
+    let testFileLocation = actualExpression.location.filePath
     let referenceImageDirectory = getDefaultReferenceDirectory(testFileLocation)
     let snapshotName = sanitizedTestName(name)
     let tolerance = tolerance ?? getTolerance()
@@ -203,7 +203,7 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
 
         resizer.resize(view: view, for: size)
 
-        let filename = "\(actualExpression.location.file)"
+        let filename = "\(actualExpression.location.filePath)"
 
         return FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic, usesDrawRect: usesDrawRect,
                                               snapshot: finalSnapshotName, record: isRecord,
