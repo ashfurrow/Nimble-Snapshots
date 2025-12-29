@@ -33,10 +33,12 @@ jobs:
       #  shell: bash
       
       - name: Swiftlint
+        if: always()      
         run: |
             swiftlint lint --no-cache --reporter junit | tee result.xml
       
       - name: Store Swiftlint artifacts
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: Swiftlint
@@ -44,6 +46,7 @@ jobs:
             result.xml
 
       - name: Store output artifacts
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: Output
