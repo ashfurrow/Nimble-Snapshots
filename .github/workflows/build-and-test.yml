@@ -24,11 +24,13 @@ jobs:
         run: mkdir output
       
       - name: Run tests in Swift 5.X
-        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone SE (3rd generation)' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
+        run: set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone SE (3rd generation)' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
 
-      - name: Run Carthage integration test
-        run: carthage bootstrap --use-xcframeworks --platform iOS,tvOS && xcodebuild
-        shell: bash
+      # Carthage integration test is disabled due to incompatibility issues with newer versions of Quick/Nimble
+      # https://github.com/ashfurrow/Nimble-Snapshots/issues/286
+      #- name: Run Carthage integration test
+      #  run: carthage bootstrap --use-xcframeworks --platform iOS,tvOS && xcodebuild
+      #  shell: bash
       
       - name: Swiftlint
         run: |

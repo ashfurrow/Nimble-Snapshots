@@ -183,15 +183,17 @@ private func parseFilename(filename: String) -> String {
 }
 
 func sanitizedTestName(_ name: String?) -> String {
-	guard let testName = currentTestName() else {
-		fatalError("Test matchers must be called from inside a test block")
-	}
+    guard let testName = currentTestName() else {
+        fatalError("Test matchers must be called from inside a test block")
+    }
 
     var filename = name ?? testName
     filename = filename.replacingOccurrences(of: "root example group, ", with: "")
     let characterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
     let components = filename.components(separatedBy: characterSet.inverted)
-    return components.joined(separator: "_")
+    // Remove empty components to avoid leading/trailing or duplicate underscores
+    let filtered = components.filter { !$0.isEmpty }
+    return filtered.joined(separator: "_")
 }
 
 func getPixelTolerance() -> CGFloat {
