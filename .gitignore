@@ -20,5 +20,6 @@ build
 
 # Swift Package Manager
 .swiftpm
+.build
 
 .DS_Store

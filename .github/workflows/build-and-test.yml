@@ -4,15 +4,15 @@ on: [push, pull_request]
 jobs:
   test:
     name: Build and Test Nimble-Snapshots
-    runs-on: macOS-13
+    runs-on: macOS-15
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v6
       
       - name: Setup Xcode version
-        uses: maxim-lobanov/setup-xcode@v1.4.0
+        uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
-          xcode-version: 14.3.1
+          xcode-version: 26.1.1
 
       - name: Set up Ruby 3.3.0
         uses: ruby/setup-ruby@v1.245.0
@@ -24,7 +24,7 @@ jobs:
         run: mkdir output
       
       - name: Run tests in Swift 5.X
-        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone 8' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
+        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone SE (3rd generation)' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
 
       - name: Run Carthage integration test
         run: carthage bootstrap --use-xcframeworks --platform iOS,tvOS && xcodebuild
@@ -35,28 +35,28 @@ jobs:
             swiftlint lint --no-cache --reporter junit | tee result.xml
       
       - name: Store Swiftlint artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Swiftlint
           path: |
             result.xml
 
       - name: Store output artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Output
           path: |
             output
 
       - name: Store FailureDiffs artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: FailureDiffs
           path: |
             Bootstrap/BootstrapTests/FailureDiffs/        
 
       - name: Danger action
-        uses: MeilCli/danger-action@v5.6.33
+        uses: MeilCli/danger-action@v6
         if: github.event_name == 'pull_request'
         with:
           plugins_file: 'Gemfile'
