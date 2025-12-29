@@ -51,6 +51,7 @@ jobs:
             output
 
       - name: Store FailureDiffs artifacts
+        if: failure()
         uses: actions/upload-artifact@v6
         with:
           name: FailureDiffs
