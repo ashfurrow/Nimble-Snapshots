@@ -53,7 +53,7 @@ final class BootstrapTests: QuickSpec {
                                                                 identifier: "boostrap"))
             }
 
-            it("has a valid snapshot with model and OS in name ") {
+            it("has a valid snapshot with model and OS in name") {
                 // expect(view).to(recordDeviceAgnosticSnapshot())
                 expect(view).to(haveValidDeviceAgnosticSnapshot())
 
@@ -61,24 +61,19 @@ final class BootstrapTests: QuickSpec {
                 expect(view).to(haveValidDeviceAgnosticSnapshot(named: "something custom with model and OS"))
             }
 
-            // The easiest way to test this is a to have a view that is changed by UIAppearance
-            // https://github.com/facebook/ios-snapshot-test-case/issues/91
-            // If this is not using drawRect it will fail
+            it("has a valid snapshot when draw rect is turned on") {
+                let view = CustomDrawRectView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+                view.backgroundColor = .white
+                // expect(view).to(recordSnapshot(usesDrawRect: true))
+                expect(view).to(haveValidSnapshot(usesDrawRect: true))
 
-            it("has a valid snapshot when draw rect is turned on ") {
-                UIButton.appearance().tintColor = .red
-                let button = UIButton(type: .contactAdd)
-
-                // expect(button).to(recordSnapshot(usesDrawRect: true))
-                expect(button).to(haveValidSnapshot(usesDrawRect: true))
             }
 
             it("has a valid snapshot when draw rect is turned on and is using pretty syntax") {
-                UIButton.appearance().tintColor = .red
-                let button = UIButton(type: .contactAdd)
-
-                // expect(button) == recordSnapshot(usesDrawRect: true)
-                expect(button) == snapshot(usesDrawRect: true)
+                let view = CustomDrawRectView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+                view.backgroundColor = .white
+                // expect(view) == recordSnapshot(usesDrawRect: true)
+                expect(view) == snapshot(usesDrawRect: true)
             }
 
             it("handles recording with recordSnapshot") {
@@ -93,5 +88,13 @@ final class BootstrapTests: QuickSpec {
                 expect(view) == snapshot()
             }
         }
+    }
+}
+
+final class CustomDrawRectView: UIView {
+    override func draw(_ rect: CGRect) {
+        guard let ctx = UIGraphicsGetCurrentContext() else { return }
+        ctx.setFillColor(UIColor.red.cgColor)
+        ctx.fill(CGRect(x: 5, y: 5, width: rect.width - 10, height: rect.height - 10))
     }
 }

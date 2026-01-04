@@ -42,7 +42,8 @@ public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = 
 
     let predicates: [Nimble.Matcher<T>] = sizes.map { category in
         let sanitizedName = sanitizedTestName(name)
-        let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
+        let categorySuffix = shortCategoryName(category)
+        let nameWithCategory = categorySuffix.isEmpty ? sanitizedName : "\(sanitizedName)_\(categorySuffix)"
 
         return Nimble.Matcher { actualExpression in
             mock.mockPreferredContentSizeCategory(category)
@@ -79,7 +80,8 @@ public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil
 
     let predicates: [Nimble.Matcher<T>] = sizes.map { category in
         let sanitizedName = sanitizedTestName(name)
-        let nameWithCategory = "\(sanitizedName)_\(shortCategoryName(category))"
+        let categorySuffix = shortCategoryName(category)
+        let nameWithCategory = categorySuffix.isEmpty ? sanitizedName : "\(sanitizedName)_\(categorySuffix)"
 
         return Nimble.Matcher { actualExpression in
             mock.mockPreferredContentSizeCategory(category)
@@ -110,26 +112,43 @@ private func updateTraitCollection<T: Snapshotable>(on expression: Nimble.Expres
 }
 
 private func updateTraitCollection(on element: Snapshotable) {
-    if let environment = element as? UITraitEnvironment {
-        if let vc = environment as? UIViewController {
+
+    guard let environment = element as? UITraitEnvironment else {
+        return
+    }
+
+    if let vc = environment as? UIViewController {
+        if vc.isViewLoaded {
             vc.beginAppearanceTransition(true, animated: false)
             vc.endAppearanceTransition()
         }
+    }
 
-        environment.traitCollectionDidChange(nil)
+    environment.traitCollectionDidChange(nil)
 
-        if let view = environment as? UIView {
-            view.subviews.forEach(updateTraitCollection(on:))
-        } else if let vc = environment as? UIViewController {
-            #if swift(>=4.2)
-            vc.children.forEach(updateTraitCollection(on:))
-            #else
-            vc.childViewControllers.forEach(updateTraitCollection(on:))
-            #endif
+    if let view = environment as? UIView {
+        for subview in view.subviews {
+            updateTraitCollection(on: subview)
+        }
+    } else if let vc = environment as? UIViewController {
+        #if swift(>=4.2)
+        for child in vc.children {
+            updateTraitCollection(on: child)
+        }
+        #else
+        for child in vc.childViewControllers {
+            updateTraitCollection(on: child)
+        }
+        #endif
 
-            if vc.isViewLoaded {
-                updateTraitCollection(on: vc.view)
-            }
+        if vc.isViewLoaded {
+            updateTraitCollection(on: vc.view)
         }
     }
+
+    if let view = (environment as? UIView) ?? ((environment as? UIViewController)?.view) {
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+    }
+    CATransaction.flush()
 }

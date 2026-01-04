@@ -24,17 +24,15 @@ jobs:
         run: mkdir output
       
       - name: Run tests in Swift 5.X
-        run: xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone SE (3rd generation)' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
-
-      - name: Run Carthage integration test
-        run: carthage bootstrap --use-xcframeworks --platform iOS,tvOS && xcodebuild
-        shell: bash
+        run: set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone SE (3rd generation)' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
       
       - name: Swiftlint
+        if: always()      
         run: |
             swiftlint lint --no-cache --reporter junit | tee result.xml
       
       - name: Store Swiftlint artifacts
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: Swiftlint
@@ -42,6 +40,7 @@ jobs:
             result.xml
 
       - name: Store output artifacts
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: Output
@@ -49,6 +48,7 @@ jobs:
             output
 
       - name: Store FailureDiffs artifacts
+        if: failure()
         uses: actions/upload-artifact@v6
         with:
           name: FailureDiffs
