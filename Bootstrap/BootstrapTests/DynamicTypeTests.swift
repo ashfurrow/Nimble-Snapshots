@@ -88,7 +88,6 @@ final class DynamicTypeTests: QuickSpec {
                 label.font = .preferredFont(forTextStyle: .body)
 
                 expect(label) == dynamicTypeSnapshot()
-                // expect(label) == recordDynamicTypeSnapshot()
             }
 
             it("works with adjustsFontForContentSizeCategory in a subview") {
@@ -101,7 +100,6 @@ final class DynamicTypeTests: QuickSpec {
                 view.addSubview(label)
 
                 expect(view) == dynamicTypeSnapshot()
-                // expect(view) == recordDynamicTypeSnapshot()
             }
 
             it("works with traitCollectionDidChange in a view controller from a storyboard") {
@@ -111,7 +109,6 @@ final class DynamicTypeTests: QuickSpec {
                 controller?.endAppearanceTransition()
 
                 expect(controller).to(haveValidDynamicTypeSnapshot())
-                // expect(controller) == recordDynamicTypeSnapshot()
             }
         }
     }
