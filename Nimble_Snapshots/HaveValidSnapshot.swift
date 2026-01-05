@@ -76,6 +76,97 @@ public class FBSnapshotTest: NSObject {
             fatalError("Failed unwrapping Snapshot Object")
         }
 
+        if usesDrawRect {
+            return performDeterministicSnapshot(
+                instance: instance,
+                snapshotController: snapshotController,
+                snapshot: snapshot,
+                identifier: identifier,
+                perPixelTolerance: perPixelTolerance,
+                tolerance: tolerance
+            )
+        } else {
+            return performStandardSnapshot(
+                snapshotObject: snapshotObject,
+                snapshotController: snapshotController,
+                snapshot: snapshot,
+                identifier: identifier,
+                perPixelTolerance: perPixelTolerance,
+                tolerance: tolerance
+            )
+        }
+    }
+    
+    // Helper method for deterministic snapshots
+    private class func performDeterministicSnapshot(
+        instance: Snapshotable,
+        snapshotController: FBSnapshotTestController,
+        snapshot: String,
+        identifier: String?,
+        perPixelTolerance: CGFloat,
+        tolerance: CGFloat
+    ) -> Bool {
+        var result = false
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        DeterministicDrawingHelper.normalizeForSnapshot(instance) { normalizedInstance in
+            guard let normalizedSnapshotObject = normalizedInstance.snapshotObject else {
+                result = false
+                semaphore.signal()
+                return
+            }
+            
+            // Force renderInContext for deterministic snapshots to ensure consistency
+            let originalUsesDrawViewHierarchyInRect = snapshotController.usesDrawViewHierarchyInRect
+            snapshotController.usesDrawViewHierarchyInRect = false
+            
+            result = performStandardSnapshot(
+                snapshotObject: normalizedSnapshotObject,
+                snapshotController: snapshotController,
+                snapshot: snapshot,
+                identifier: identifier,
+                perPixelTolerance: perPixelTolerance,
+                tolerance: tolerance
+            )
+            
+            snapshotController.usesDrawViewHierarchyInRect = originalUsesDrawViewHierarchyInRect
+            semaphore.signal()
+        }
+        
+        // Wait with timeout to prevent infinite hanging
+        let timeout = DispatchTime.now() + .seconds(2)
+        if semaphore.wait(timeout: timeout) == .timedOut {
+            guard let fallbackSnapshotObject = instance.snapshotObject else {
+                return false
+            }
+            // Use renderInContext for fallback
+            let originalUsesDrawViewHierarchyInRect = snapshotController.usesDrawViewHierarchyInRect
+            snapshotController.usesDrawViewHierarchyInRect = false
+            
+            let fallbackResult = performStandardSnapshot(
+                snapshotObject: fallbackSnapshotObject,
+                snapshotController: snapshotController,
+                snapshot: snapshot,
+                identifier: identifier,
+                perPixelTolerance: perPixelTolerance,
+                tolerance: tolerance
+            )
+            
+            snapshotController.usesDrawViewHierarchyInRect = originalUsesDrawViewHierarchyInRect
+            return fallbackResult
+        }
+        return result
+    }
+    
+    // Helper method for standard snapshots
+    private class func performStandardSnapshot(
+        snapshotObject: UIView,
+        snapshotController: FBSnapshotTestController,
+        snapshot: String,
+        identifier: String?,
+        perPixelTolerance: CGFloat,
+        tolerance: CGFloat
+    ) -> Bool {
         do {
             try snapshotController.compareSnapshot(ofViewOrLayer: snapshotObject,
                                                    selector: Selector(snapshot),
@@ -222,7 +313,8 @@ private func performSnapshotTest<T: Snapshotable>(_ name: String?,
     let filename = "\(actualExpression.location.filePath)"
 
     let result = FBSnapshotTest.compareSnapshot(instance, isDeviceAgnostic: isDeviceAgnostic,
-                                                usesDrawRect: usesDrawRect, snapshot: snapshotName, record: false,
+                                                usesDrawRect: usesDrawRect,
+                                                snapshot: snapshotName, record: false,
                                                 referenceDirectory: referenceImageDirectory, tolerance: tolerance,
                                                 perPixelTolerance: pixelTolerance,
                                                 filename: filename, identifier: identifier,
