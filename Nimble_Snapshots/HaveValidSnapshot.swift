@@ -96,7 +96,7 @@ public class FBSnapshotTest: NSObject {
             )
         }
     }
-    
+
     // Helper method for deterministic snapshots
     private class func performDeterministicSnapshot(
         instance: Snapshotable,
@@ -108,18 +108,18 @@ public class FBSnapshotTest: NSObject {
     ) -> Bool {
         var result = false
         let semaphore = DispatchSemaphore(value: 0)
-        
+
         DeterministicDrawingHelper.normalizeForSnapshot(instance) { normalizedInstance in
             guard let normalizedSnapshotObject = normalizedInstance.snapshotObject else {
                 result = false
                 semaphore.signal()
                 return
             }
-            
+
             // Force renderInContext for deterministic snapshots to ensure consistency
             let originalUsesDrawViewHierarchyInRect = snapshotController.usesDrawViewHierarchyInRect
             snapshotController.usesDrawViewHierarchyInRect = false
-            
+
             result = performStandardSnapshot(
                 snapshotObject: normalizedSnapshotObject,
                 snapshotController: snapshotController,
@@ -128,11 +128,11 @@ public class FBSnapshotTest: NSObject {
                 perPixelTolerance: perPixelTolerance,
                 tolerance: tolerance
             )
-            
+
             snapshotController.usesDrawViewHierarchyInRect = originalUsesDrawViewHierarchyInRect
             semaphore.signal()
         }
-        
+
         // Wait with timeout to prevent infinite hanging
         let timeout = DispatchTime.now() + .seconds(2)
         if semaphore.wait(timeout: timeout) == .timedOut {
@@ -142,7 +142,7 @@ public class FBSnapshotTest: NSObject {
             // Use renderInContext for fallback
             let originalUsesDrawViewHierarchyInRect = snapshotController.usesDrawViewHierarchyInRect
             snapshotController.usesDrawViewHierarchyInRect = false
-            
+
             let fallbackResult = performStandardSnapshot(
                 snapshotObject: fallbackSnapshotObject,
                 snapshotController: snapshotController,
@@ -151,13 +151,13 @@ public class FBSnapshotTest: NSObject {
                 perPixelTolerance: perPixelTolerance,
                 tolerance: tolerance
             )
-            
+
             snapshotController.usesDrawViewHierarchyInRect = originalUsesDrawViewHierarchyInRect
             return fallbackResult
         }
         return result
     }
-    
+
     // Helper method for standard snapshots
     private class func performStandardSnapshot(
         snapshotObject: UIView,

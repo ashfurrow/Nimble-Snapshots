@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "Nimble-Snapshots",
             dependencies: [
-                .product(name:"iOSSnapshotTestCase", package: "ios-snapshot-test-case"),
+                .product(name: "iOSSnapshotTestCase", package: "ios-snapshot-test-case"),
                 .product(name: "Nimble", package: "Nimble")
             ],
             path: "Nimble_Snapshots",

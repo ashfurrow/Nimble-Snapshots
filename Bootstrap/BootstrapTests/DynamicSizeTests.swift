@@ -94,10 +94,10 @@ final class DynamicSizeTests: QuickSpec {
 
                 it("has a valid snapshot to all sizes") {
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes,
-                                                                 resizeMode: .block(resizeBlock: { view, size in
+                                                                 resizeMode: .block { view, size in
                         view.frame = CGRect(origin: .zero, size: size)
                         view.layoutIfNeeded()
-                    })))
+                    }))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes,
 //                                                              resizeMode: .block(resizeBlock: { (view, size) in
 //                        view.frame = CGRect(origin: CGPoint.zero, size: size)
@@ -106,10 +106,10 @@ final class DynamicSizeTests: QuickSpec {
                 }
 
                 it("has a valid snapshot to all sizes (using == operator)") {
-                    expect(view) == snapshot(sizes: sizes, resizeMode: .block(resizeBlock: { view, size in
+                    expect(view) == snapshot(sizes: sizes, resizeMode: .block { view, size in
                         view.frame = CGRect(origin: .zero, size: size)
                         view.layoutIfNeeded()
-                    }))
+                    })
 //                    expect(view) == recordSnapshot(sizes: sizes, resizeMode: .block(resizeBlock: { (view, size) in
 //                        view.frame = CGRect(origin: CGPoint.zero, size: size)
 //                        view.layoutIfNeeded()

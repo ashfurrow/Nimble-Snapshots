@@ -128,14 +128,6 @@ public struct DynamicSizeSnapshot {
     let record: Bool
     let sizes: [String: CGSize]
     let resizeMode: ResizeMode
-
-    init(name: String?, identifier: String?, record: Bool, sizes: [String: CGSize], resizeMode: ResizeMode) {
-        self.name = name
-        self.identifier = identifier
-        self.record = record
-        self.sizes = sizes
-        self.resizeMode = resizeMode
-    }
 }
 
 public func snapshot(_ name: String? = nil,
@@ -264,7 +256,7 @@ public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil
     }
 }
 
-public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
+public func == (lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicSizeSnapshot) {
     if rhs.record {
         lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
                                          identifier: rhs.identifier,
@@ -278,7 +270,7 @@ public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicSizeSnapsh
     }
 }
 
-public func ==(lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: DynamicSizeSnapshot) async {
+public func == (lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: DynamicSizeSnapshot) async {
     if rhs.record {
         await lhs.to(recordDynamicSizeSnapshot(named: rhs.name,
                                                identifier: rhs.identifier,

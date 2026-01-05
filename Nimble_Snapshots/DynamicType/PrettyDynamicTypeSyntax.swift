@@ -9,14 +9,6 @@ public struct DynamicTypeSnapshot {
     let record: Bool
     let sizes: [UIContentSizeCategory]
     let deviceAgnostic: Bool
-
-    init(name: String?, identifier: String?, record: Bool, sizes: [UIContentSizeCategory], deviceAgnostic: Bool) {
-        self.name = name
-        self.identifier = identifier
-        self.record = record
-        self.sizes = sizes
-        self.deviceAgnostic = deviceAgnostic
-    }
 }
 
 public func dynamicTypeSnapshot(_ name: String? = nil,
@@ -41,7 +33,7 @@ public func recordDynamicTypeSnapshot(_ name: String? = nil,
                                deviceAgnostic: deviceAgnostic)
 }
 
-public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicTypeSnapshot) {
+public func == (lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicTypeSnapshot) {
     if let name = rhs.name {
         if rhs.record {
             lhs.to(recordDynamicTypeSnapshot(named: name, sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
@@ -58,7 +50,7 @@ public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicTypeSnapsh
     }
 }
 
-public func ==(lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: DynamicTypeSnapshot) async {
+public func == (lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: DynamicTypeSnapshot) async {
     if let name = rhs.name {
         if rhs.record {
             await lhs.to(recordDynamicTypeSnapshot(named: name, sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
