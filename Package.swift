@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "Nimble-Snapshots",
             dependencies: [
-                .product(name:"iOSSnapshotTestCase", package: "ios-snapshot-test-case"),
+                .product(name: "iOSSnapshotTestCase", package: "ios-snapshot-test-case"),
                 .product(name: "Nimble", package: "Nimble")
             ],
             path: "Nimble_Snapshots",
@@ -31,6 +31,7 @@ let package = Package(
                       "Info.plist",
                       "Nimble_Snapshots.xcconfig"],
             sources: ["CurrentTestCaseTracker.swift",
+                      "DeterministicDrawingHelper.swift",
                       "HaveValidSnapshot.swift",
                       "PrettySyntax.swift",
                       "DynamicSize",
@@ -43,6 +44,7 @@ let package = Package(
             ],
             path: "Nimble_Snapshots",
             exclude: ["CurrentTestCaseTracker.swift",
+                      "DeterministicDrawingHelper.swift",
                       "HaveValidSnapshot.swift",
                       "PrettySyntax.swift",
                       "DynamicSize",

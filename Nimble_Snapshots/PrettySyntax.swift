@@ -7,13 +7,6 @@ public struct Snapshot {
     let identifier: String?
     let record: Bool
     let usesDrawRect: Bool
-
-    init(name: String?, identifier: String?, record: Bool, usesDrawRect: Bool) {
-        self.name = name
-        self.identifier = identifier
-        self.record = record
-        self.usesDrawRect = usesDrawRect
-    }
 }
 
 public func snapshot(_ name: String? = nil,
@@ -28,7 +21,7 @@ public func recordSnapshot(_ name: String? = nil,
     return Snapshot(name: name, identifier: identifier, record: true, usesDrawRect: usesDrawRect)
 }
 
-public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: Snapshot) {
+public func == (lhs: Nimble.SyncExpectation<Snapshotable>, rhs: Snapshot) {
     if rhs.record {
         lhs.to(recordSnapshot(named: rhs.name, identifier: rhs.identifier, usesDrawRect: rhs.usesDrawRect))
     } else {
@@ -36,7 +29,7 @@ public func ==(lhs: Nimble.SyncExpectation<Snapshotable>, rhs: Snapshot) {
     }
 }
 
-public func ==(lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: Snapshot) async {
+public func == (lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: Snapshot) async {
     if rhs.record {
         await lhs.to(recordSnapshot(named: rhs.name, identifier: rhs.identifier, usesDrawRect: rhs.usesDrawRect))
     } else {
