@@ -93,7 +93,9 @@ final class BootstrapTests: QuickSpec {
 
 final class CustomDrawRectView: UIView {
     override func draw(_ rect: CGRect) {
-        guard let ctx = UIGraphicsGetCurrentContext() else { return }
+        guard let ctx = UIGraphicsGetCurrentContext() else {
+            return
+        }
         ctx.setFillColor(UIColor.red.cgColor)
         ctx.fill(CGRect(x: 5, y: 5, width: rect.width - 10, height: rect.height - 10))
     }

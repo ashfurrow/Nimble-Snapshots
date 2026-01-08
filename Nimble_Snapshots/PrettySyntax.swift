@@ -41,10 +41,10 @@ public func == (lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: Snapshot) async
 
 // swiftlint:disable:next identifier_name
 public func 📷(_ file: FileString = #file, line: UInt = #line, snapshottable: Snapshotable) {
-  expect(file: file, line: line, snapshottable).to(recordSnapshot())
+    expect(file: file, line: line, snapshottable).to(recordSnapshot())
 }
 
 // swiftlint:disable:next identifier_name
 public func 📷(_ name: String, file: FileString = #file, line: UInt = #line, snapshottable: Snapshotable) {
-  expect(file: file, line: line, snapshottable).to(recordSnapshot(named: name))
+    expect(file: file, line: line, snapshottable).to(recordSnapshot(named: name))
 }

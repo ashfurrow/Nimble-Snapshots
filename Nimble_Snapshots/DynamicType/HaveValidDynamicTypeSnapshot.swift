@@ -26,18 +26,18 @@ func combinePredicates<T>(_ predicates: [Nimble.Matcher<T>],
         return try predicates.reduce(result) { _, matcher -> MatcherResult in
             let result = try matcher.satisfies(actualExpression)
             return MatcherResult(status: MatcherStatus(bool: result.status == .matches),
-                                   message: result.message)
+                                 message: result.message)
         }
     }
 }
 
 public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil,
-                                         identifier: String? = nil,
-                                         usesDrawRect: Bool = false,
-                                         pixelTolerance: CGFloat? = nil,
-                                         tolerance: CGFloat? = nil,
-                                         sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                         isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
+                                                          identifier: String? = nil,
+                                                          usesDrawRect: Bool = false,
+                                                          pixelTolerance: CGFloat? = nil,
+                                                          tolerance: CGFloat? = nil,
+                                                          sizes: [UIContentSizeCategory] = allContentSizeCategories(),
+                                                          isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
     let mock = NBSMockedApplication()
 
     let predicates: [Nimble.Matcher<T>] = sizes.map { category in
@@ -72,10 +72,10 @@ public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = 
 }
 
 public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil,
-                                      identifier: String? = nil,
-                                      usesDrawRect: Bool = false,
-                                      sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                      isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
+                                                       identifier: String? = nil,
+                                                       usesDrawRect: Bool = false,
+                                                       sizes: [UIContentSizeCategory] = allContentSizeCategories(),
+                                                       isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
     let mock = NBSMockedApplication()
 
     let predicates: [Nimble.Matcher<T>] = sizes.map { category in
@@ -132,13 +132,13 @@ private func updateTraitCollection(on element: Snapshotable) {
         }
     } else if let vc = environment as? UIViewController {
         #if swift(>=4.2)
-        for child in vc.children {
-            updateTraitCollection(on: child)
-        }
+            for child in vc.children {
+                updateTraitCollection(on: child)
+            }
         #else
-        for child in vc.childViewControllers {
-            updateTraitCollection(on: child)
-        }
+            for child in vc.childViewControllers {
+                updateTraitCollection(on: child)
+            }
         #endif
 
         if vc.isViewLoaded {
