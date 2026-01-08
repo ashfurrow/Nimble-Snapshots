@@ -34,7 +34,7 @@ extension XCTestCase {
         #else
             let className: AnyClass? = NSClassFromString("QuickSpec")
         #endif
-        if let quickClass = className, self.isKind(of: quickClass) {
+        if let quickClass = className, isKind(of: quickClass) {
             let className = String(describing: type(of: self))
             if let range = name.range(of: className), range.lowerBound == name.startIndex {
                 return name.replacingCharacters(in: range, with: "")

@@ -10,6 +10,7 @@ public class NBSMockedApplication {
     deinit {
         stopMockingPreferredContentSizeCategory()
     }
+
     // swiftlint:disable line_length
     /* On iOS 9, UIFont.preferredFont(forTextStyle:) uses UIApplication.shared.preferredContentSizeCategory
      to get the content size category. However, this changed on iOS 10. While I haven't found what UIFont uses to get
@@ -92,7 +93,7 @@ extension UIApplication {
 
     static func nbs_swizzle() {
         let selector = #selector(getter: UIApplication.preferredContentSizeCategory)
-        let replacedSelector = #selector(getter: self.nbs_preferredContentSizeCategory)
+        let replacedSelector = #selector(getter: nbs_preferredContentSizeCategory)
 
         let originalMethod = class_getInstanceMethod(self, selector)
         let extendedMethod = class_getInstanceMethod(self, replacedSelector)
@@ -117,7 +118,7 @@ extension UITraitCollection {
     static func nbs_swizzlePreferredContentSizeCategory() {
         let selector = #selector(getter: UIApplication.preferredContentSizeCategory)
 
-        if !self.instancesRespond(to: selector) {
+        if !instancesRespond(to: selector) {
             return
         }
 
@@ -134,7 +135,7 @@ extension UITraitCollection {
     static func nbs_swizzleChangedContentSizeCategoryFromTraitCollection() {
         let selector = sel_registerName("_changedContentSizeCategoryFromTraitCollection:")
 
-        if !self.instancesRespond(to: selector) {
+        if !instancesRespond(to: selector) {
             return
         }
 

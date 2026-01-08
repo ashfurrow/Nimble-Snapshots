@@ -97,7 +97,7 @@ final class DynamicSizeTests: QuickSpec {
                                                                  resizeMode: .block { view, size in
                         view.frame = CGRect(origin: .zero, size: size)
                         view.layoutIfNeeded()
-                    }))
+                                                                 }))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes,
 //                                                              resizeMode: .block(resizeBlock: { (view, size) in
 //                        view.frame = CGRect(origin: CGPoint.zero, size: size)

@@ -1,7 +1,7 @@
 #if SWIFT_PACKAGE
-import iOSSnapshotTestCase
+    import iOSSnapshotTestCase
 #else
-import FBSnapshotTestCase
+    import FBSnapshotTestCase
 #endif
 
 import Foundation
@@ -9,14 +9,15 @@ import Nimble
 import QuartzCore
 import UIKit
 
-@objc public protocol Snapshotable {
+@objc
+public protocol Snapshotable {
     var snapshotObject: UIView? { get }
 }
 
 extension UIViewController: Snapshotable {
     public var snapshotObject: UIView? {
-        self.beginAppearanceTransition(true, animated: false)
-        self.endAppearanceTransition()
+        beginAppearanceTransition(true, animated: false)
+        endAppearanceTransition()
         return view
     }
 }
@@ -54,7 +55,7 @@ public class FBSnapshotTest: NSObject {
                                shouldIgnoreScale: Bool = false) -> Bool {
 
         let testName = parseFilename(filename: filename)
-        let snapshotController: FBSnapshotTestController = FBSnapshotTestController(test: self)
+        let snapshotController = FBSnapshotTestController(test: self)
         snapshotController.folderName = testName
         if isDeviceAgnostic {
             snapshotController.fileNameOptions = [.device, .OS, .screenSize, .screenScale]
@@ -69,7 +70,7 @@ public class FBSnapshotTest: NSObject {
         snapshotController.usesDrawViewHierarchyInRect = usesDrawRect
 
         let reason = "Missing value for referenceImagesDirectory - " +
-                     "Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)"
+            "Call FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR)"
         assert(snapshotController.referenceImagesDirectory != nil, reason)
 
         guard let snapshotObject = instance.snapshotObject else {
@@ -98,6 +99,7 @@ public class FBSnapshotTest: NSObject {
     }
 
     // Helper method for deterministic snapshots
+    // swiftlint:disable:next function_parameter_count
     private class func performDeterministicSnapshot(
         instance: Snapshotable,
         snapshotController: FBSnapshotTestController,
@@ -159,6 +161,7 @@ public class FBSnapshotTest: NSObject {
     }
 
     // Helper method for standard snapshots
+    // swiftlint:disable:next function_parameter_count
     private class func performStandardSnapshot(
         snapshotObject: UIView,
         snapshotController: FBSnapshotTestController,
@@ -176,7 +179,7 @@ public class FBSnapshotTest: NSObject {
 
             let image = try snapshotController.referenceImage(for: Selector(snapshot), identifier: identifier)
             attach(image: image, named: "Reference_\(snapshot)")
-        } catch let error {
+        } catch {
             let info = (error as NSError).userInfo
             if let ref = info[FBReferenceImageKey] as? UIImage {
                 attach(image: ref, named: "Reference_\(snapshot)")
@@ -245,8 +248,8 @@ func getDefaultReferenceDirectory(_ sourceFileName: FileString) -> String {
 
     guard let testDirectory = testPath else {
         fatalError("Could not infer reference image folder – You should provide a reference dir using " +
-                   "FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR) " +
-                   "or by setting the FB_REFERENCE_IMAGE_DIR environment variable")
+            "FBSnapshotTest.setReferenceImagesDirectory(FB_REFERENCE_IMAGE_DIR) " +
+            "or by setting the FB_REFERENCE_IMAGE_DIR environment variable")
     }
 
     // Recombine the path components and append our own image directory.
@@ -296,13 +299,13 @@ func getTolerance() -> CGFloat {
 }
 
 private func performSnapshotTest<T: Snapshotable>(_ name: String?,
-                                 identifier: String? = nil,
-                                 isDeviceAgnostic: Bool = false,
-                                 usesDrawRect: Bool = false,
-                                 actualExpression: Nimble.Expression<T>,
-                                 pixelTolerance: CGFloat? = nil,
-                                 tolerance: CGFloat?,
-                                 shouldIgnoreScale: Bool) -> MatcherResult {
+                                                  identifier: String? = nil,
+                                                  isDeviceAgnostic: Bool = false,
+                                                  usesDrawRect: Bool = false,
+                                                  actualExpression: Nimble.Expression<T>,
+                                                  pixelTolerance: CGFloat? = nil,
+                                                  tolerance: CGFloat?,
+                                                  shouldIgnoreScale: Bool) -> MatcherResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.filePath
@@ -321,15 +324,15 @@ private func performSnapshotTest<T: Snapshotable>(_ name: String?,
                                                 shouldIgnoreScale: shouldIgnoreScale)
 
     return MatcherResult(status: MatcherStatus(bool: result),
-                           message: .fail("expected a matching snapshot in \(snapshotName)"))
+                         message: .fail("expected a matching snapshot in \(snapshotName)"))
 }
 
 private func recordSnapshot<T: Snapshotable>(_ name: String?,
-                            identifier: String? = nil,
-                            isDeviceAgnostic: Bool = false,
-                            usesDrawRect: Bool = false,
-                            actualExpression: Nimble.Expression<T>,
-                            shouldIgnoreScale: Bool) -> MatcherResult {
+                                             identifier: String? = nil,
+                                             isDeviceAgnostic: Bool = false,
+                                             usesDrawRect: Bool = false,
+                                             actualExpression: Nimble.Expression<T>,
+                                             shouldIgnoreScale: Bool) -> MatcherResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.filePath
@@ -338,7 +341,7 @@ private func recordSnapshot<T: Snapshotable>(_ name: String?,
     let tolerance = getTolerance()
     let pixelTolerance = getPixelTolerance()
     let filename = "\(actualExpression.location.filePath)"
-    var message: String = ""
+    var message = ""
 
     if FBSnapshotTest.compareSnapshot(instance,
                                       isDeviceAgnostic: isDeviceAgnostic,
@@ -360,21 +363,21 @@ private func recordSnapshot<T: Snapshotable>(_ name: String?,
     }
 
     return MatcherResult(status: MatcherStatus(bool: false),
-                           message: .fail(message))
+                         message: .fail(message))
 }
 
 private func currentTestName() -> String? {
     return CurrentTestCaseTracker.shared.currentTestCase?.sanitizedName
 }
 
-internal var switchChecksWithRecords = false
+var switchChecksWithRecords = false
 
 public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
-                              identifier: String? = nil,
-                              usesDrawRect: Bool = false,
-                              pixelTolerance: CGFloat? = nil,
-                              tolerance: CGFloat? = nil,
-                              shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+                                               identifier: String? = nil,
+                                               usesDrawRect: Bool = false,
+                                               pixelTolerance: CGFloat? = nil,
+                                               tolerance: CGFloat? = nil,
+                                               shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Matcher { actualExpression in
         if switchChecksWithRecords {
@@ -396,11 +399,11 @@ public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
 }
 
 public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
-                                            identifier: String? = nil,
-                                            usesDrawRect: Bool = false,
-                                            pixelTolerance: CGFloat? = nil,
-                                            tolerance: CGFloat? = nil,
-                                            shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+                                                             identifier: String? = nil,
+                                                             usesDrawRect: Bool = false,
+                                                             pixelTolerance: CGFloat? = nil,
+                                                             tolerance: CGFloat? = nil,
+                                                             shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Matcher { actualExpression in
         if switchChecksWithRecords {
@@ -424,24 +427,27 @@ public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String?
 }
 
 public func recordSnapshot<T: Snapshotable>(named name: String? = nil,
-                           identifier: String? = nil,
-                           usesDrawRect: Bool = false,
-                           shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+                                            identifier: String? = nil,
+                                            usesDrawRect: Bool = false,
+                                            shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Matcher { actualExpression in
-        return recordSnapshot(name, identifier: identifier, usesDrawRect: usesDrawRect,
+        return recordSnapshot(name, identifier: identifier,
+                              usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression,
                               shouldIgnoreScale: shouldIgnoreScale)
     }
 }
 
 public func recordDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
-                                         identifier: String? = nil,
-                                         usesDrawRect: Bool = false,
-                                         shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+                                                          identifier: String? = nil,
+                                                          usesDrawRect: Bool = false,
+                                                          shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
 
     return Matcher { actualExpression in
-        return recordSnapshot(name, identifier: identifier, isDeviceAgnostic: true, usesDrawRect: usesDrawRect,
+        return recordSnapshot(name, identifier: identifier,
+                              isDeviceAgnostic: true,
+                              usesDrawRect: usesDrawRect,
                               actualExpression: actualExpression,
                               shouldIgnoreScale: shouldIgnoreScale)
     }

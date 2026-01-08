@@ -2,7 +2,7 @@ import ObjectiveC
 import QuartzCore
 import UIKit
 
-final class DeterministicDrawingHelper {
+enum DeterministicDrawingHelper {
 
     static func normalizeForSnapshot<T: Snapshotable>(_ view: T, completion: @escaping (T) -> Void) {
         guard let snapshotView = view.snapshotObject else {
