@@ -19,14 +19,8 @@ public final class DynamicTypeView: UIView {
 
         setNeedsUpdateConstraints()
 
-        #if swift(>=4.2)
-        let notName = UIContentSizeCategory.didChangeNotification
-        #else
-        let notName = NSNotification.Name.UIContentSizeCategoryDidChange
-        #endif
-
         NotificationCenter.default.addObserver(self, selector: #selector(updateFonts),
-                                               name: notName,
+                                               name: UIContentSizeCategory.didChangeNotification,
                                                object: nil)
     }
 
@@ -44,13 +38,7 @@ public final class DynamicTypeView: UIView {
 
     @objc
     func updateFonts(_ notification: Notification) {
-        #if swift(>=4.2)
-        let newValueKey = UIContentSizeCategory.newValueUserInfoKey
-        #else
-        let newValueKey = UIContentSizeCategoryNewValueKey
-        #endif
-
-        guard let category = notification.userInfo?[newValueKey] as? String else {
+        guard let category = notification.userInfo?[UIContentSizeCategory.newValueUserInfoKey] as? String else {
             return
         }
 
