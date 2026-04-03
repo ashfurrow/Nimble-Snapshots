@@ -20,40 +20,51 @@ jobs:
           ruby-version: 3.3.0
           bundler-cache: true
 
-      - name: "Create output dir"
+      - name: Create output dir
         run: mkdir output
-      
+
+      - name: Create iOS Simulator
+        run: |
+          DEVICE_ID=$(xcrun simctl create "CI-iPhone-SE-3" "iPhone SE (3rd generation)" "com.apple.CoreSimulator.SimRuntime.iOS-26-1")
+          xcrun simctl boot "$DEVICE_ID" || true
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+
       - name: Run tests in Swift 5.X
-        run: set -o pipefail && xcodebuild -workspace 'Bootstrap/Bootstrap.xcworkspace' -sdk 'iphonesimulator' -scheme 'Bootstrap' -destination 'name=iPhone SE (3rd generation)' SWIFT_VERSION=5.0 build test | tee output/xcodebuild_swift5.0.log
+        run: |
+          set -o pipefail && xcodebuild \
+            -workspace 'Bootstrap/Bootstrap.xcworkspace' \
+            -scheme 'Bootstrap' \
+            -sdk 'iphonesimulator' \
+            -destination "id=$DEVICE_ID" \
+            SWIFT_VERSION=5.0 \
+            build test | tee output/xcodebuild_swift5.0.log
       
       - name: Swiftlint
-        if: always()      
+        if: always()
         run: |
-            swiftlint lint --no-cache --reporter junit | tee result.xml
+          swiftlint lint --no-cache --reporter junit | tee result.xml
       
       - name: Store Swiftlint artifacts
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: Swiftlint
-          path: |
-            result.xml
+          path: result.xml
 
       - name: Store output artifacts
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: Output
-          path: |
-            output
+          path: output
 
       - name: Store FailureDiffs artifacts
         if: failure()
         uses: actions/upload-artifact@v6
         with:
           name: FailureDiffs
-          path: |
-            Bootstrap/BootstrapTests/FailureDiffs/        
+          path: Bootstrap/BootstrapTests/FailureDiffs/
 
       - name: Danger action
         uses: MeilCli/danger-action@v6
