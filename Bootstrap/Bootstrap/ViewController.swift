@@ -9,7 +9,7 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    @IBOutlet private weak var label: UILabel!
+    @IBOutlet private var label: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()

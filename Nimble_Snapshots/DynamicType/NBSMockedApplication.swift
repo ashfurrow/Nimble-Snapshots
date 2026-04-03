@@ -2,7 +2,6 @@ import Foundation
 import UIKit
 
 public class NBSMockedApplication {
-
     private var isSwizzled: Bool = false
 
     public init() {}
@@ -12,14 +11,13 @@ public class NBSMockedApplication {
     }
 
     // swiftlint:disable line_length
-    /* On iOS 9, UIFont.preferredFont(forTextStyle:) uses UIApplication.shared.preferredContentSizeCategory
+    /** On iOS 9, UIFont.preferredFont(forTextStyle:) uses UIApplication.shared.preferredContentSizeCategory
      to get the content size category. However, this changed on iOS 10. While I haven't found what UIFont uses to get
      the current category, swizzling preferredFontForTextStyle: to use UIFont.preferredFont(forTextStyle:compatibleWith:)
      (only available on iOS >= 10), passing an UITraitCollection with the desired contentSizeCategory.
      */
     // swiftlint:enable line_length
     public func mockPreferredContentSizeCategory(_ category: UIContentSizeCategory) {
-
         UIApplication.shared.nbs_preferredContentSizeCategory = category
 
         if !isSwizzled {
@@ -44,7 +42,6 @@ public class NBSMockedApplication {
 }
 
 extension UIFont {
-
     static func nbs_swizzle() {
         if !UITraitCollection.instancesRespond(to: #selector(getter: UIApplication.preferredContentSizeCategory)) {
             return
@@ -55,7 +52,7 @@ extension UIFont {
 
         let originalMethod = class_getClassMethod(self, selector)
         let extendedMethod = class_getClassMethod(self, replacedSelector)
-        if let originalMethod = originalMethod, let extendedMethod = extendedMethod {
+        if let originalMethod, let extendedMethod {
             method_exchangeImplementations(originalMethod, extendedMethod)
         }
     }
@@ -73,15 +70,14 @@ extension UIFont {
 }
 
 extension UIApplication {
-
     enum AssociatedKeys {
         static var contentSizeCategory: UInt8 = 0
     }
 
     @objc var nbs_preferredContentSizeCategory: UIContentSizeCategory? {
         get {
-            return objc_getAssociatedObject(self,
-                                            &AssociatedKeys.contentSizeCategory) as? UIContentSizeCategory
+            objc_getAssociatedObject(self,
+                                     &AssociatedKeys.contentSizeCategory) as? UIContentSizeCategory
         }
         set {
             objc_setAssociatedObject(self,
@@ -97,22 +93,21 @@ extension UIApplication {
 
         let originalMethod = class_getInstanceMethod(self, selector)
         let extendedMethod = class_getInstanceMethod(self, replacedSelector)
-        if let originalMethod = originalMethod, let extendedMethod = extendedMethod {
+        if let originalMethod, let extendedMethod {
             method_exchangeImplementations(originalMethod, extendedMethod)
         }
     }
 }
 
 extension UITraitCollection {
-
     @objc
     func nbs_preferredContentSizeCategory() -> UIContentSizeCategory {
-        return UIApplication.shared.preferredContentSizeCategory
+        UIApplication.shared.preferredContentSizeCategory
     }
 
     @objc
     func nbs__changedContentSizeCategory(fromTraitCollection arg: Any?) -> Bool {
-        return true
+        true
     }
 
     static func nbs_swizzlePreferredContentSizeCategory() {
@@ -127,7 +122,7 @@ extension UITraitCollection {
         let originalMethod = class_getInstanceMethod(self, selector)
         let extendedMethod = class_getInstanceMethod(self, replacedSelector)
 
-        if let originalMethod = originalMethod, let extendedMethod = extendedMethod {
+        if let originalMethod, let extendedMethod {
             method_exchangeImplementations(originalMethod, extendedMethod)
         }
     }
@@ -144,7 +139,7 @@ extension UITraitCollection {
         let originalMethod = class_getInstanceMethod(self, selector)
         let extendedMethod = class_getInstanceMethod(self, replacedSelector)
 
-        if let originalMethod = originalMethod, let extendedMethod = extendedMethod {
+        if let originalMethod, let extendedMethod {
             method_exchangeImplementations(originalMethod, extendedMethod)
         }
     }

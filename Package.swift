@@ -10,7 +10,8 @@ let package = Package(
     products: [
         .library(
             name: "Nimble-Snapshots",
-            targets: ["NimbleSnapshotsObjc"])
+            targets: ["NimbleSnapshotsObjc"]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/uber/ios-snapshot-test-case.git",

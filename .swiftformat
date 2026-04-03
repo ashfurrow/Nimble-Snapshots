@@ -1,0 +1,11 @@
+# file options
+--exclude Bootstrap/Pods
+
+# Rules
+--disable trailingCommas
+--disable unusedArguments
+--disable wrapMultilineStatementBraces
+--disable blankLinesBetweenImports
+
+# Import sorting
+--importgrouping access-control,alpha,testable-last

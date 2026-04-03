@@ -1,24 +1,24 @@
 import Nimble
-import UIKit
 import SwiftUI
+import UIKit
 
 public func allContentSizeCategories() -> [UIContentSizeCategory] {
-    return [
+    [
         .extraSmall, .small, .medium,
         .large, .extraLarge, .extraExtraLarge,
         .extraExtraExtraLarge, .accessibilityMedium,
         .accessibilityLarge, .accessibilityExtraLarge,
-        .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge
+        .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge,
     ]
 }
 
 func shortCategoryName(_ category: UIContentSizeCategory) -> String {
-    return category.rawValue.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
+    category.rawValue.replacingOccurrences(of: "UICTContentSizeCategory", with: "")
 }
 
 func combinePredicates<T>(_ predicates: [Nimble.Matcher<T>],
                           deferred: (() -> Void)? = nil) -> Nimble.Matcher<T> {
-    return Matcher { actualExpression in
+    Matcher { actualExpression in
         defer {
             deferred?()
         }
@@ -50,17 +50,16 @@ public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = 
             mock.mockPreferredContentSizeCategory(category)
             updateTraitCollection(on: actualExpression)
 
-            let predicate: Nimble.Matcher<T>
-            if isDeviceAgnostic {
-                predicate = haveValidDeviceAgnosticSnapshot(named: nameWithCategory, identifier: identifier,
-                                                            usesDrawRect: usesDrawRect, pixelTolerance: pixelTolerance,
-                                                            tolerance: tolerance)
+            let predicate: Nimble.Matcher<T> = if isDeviceAgnostic {
+                haveValidDeviceAgnosticSnapshot(named: nameWithCategory, identifier: identifier,
+                                                usesDrawRect: usesDrawRect, pixelTolerance: pixelTolerance,
+                                                tolerance: tolerance)
             } else {
-                predicate = haveValidSnapshot(named: nameWithCategory,
-                                              identifier: identifier,
-                                              usesDrawRect: usesDrawRect,
-                                              pixelTolerance: pixelTolerance,
-                                              tolerance: tolerance)
+                haveValidSnapshot(named: nameWithCategory,
+                                  identifier: identifier,
+                                  usesDrawRect: usesDrawRect,
+                                  pixelTolerance: pixelTolerance,
+                                  tolerance: tolerance)
             }
 
             return try predicate.satisfies(actualExpression)
@@ -80,7 +79,7 @@ public func haveValidDynamicTypeSnapshot<T: SwiftUI.View>(named name: String? = 
                                                           tolerance: CGFloat? = nil,
                                                           sizes: [UIContentSizeCategory] = allContentSizeCategories(),
                                                           isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
-    return Matcher { expression in
+    Matcher { expression in
         try haveValidDynamicTypeSnapshot(
             named: name,
             identifier: identifier,
@@ -111,13 +110,12 @@ public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil
             mock.mockPreferredContentSizeCategory(category)
             updateTraitCollection(on: actualExpression)
 
-            let predicate: Nimble.Matcher<T>
-            if isDeviceAgnostic {
-                predicate = recordDeviceAgnosticSnapshot(named: nameWithCategory,
-                                                         identifier: identifier,
-                                                         usesDrawRect: usesDrawRect)
+            let predicate: Nimble.Matcher<T> = if isDeviceAgnostic {
+                recordDeviceAgnosticSnapshot(named: nameWithCategory,
+                                             identifier: identifier,
+                                             usesDrawRect: usesDrawRect)
             } else {
-                predicate = recordSnapshot(named: nameWithCategory, identifier: identifier, usesDrawRect: usesDrawRect)
+                recordSnapshot(named: nameWithCategory, identifier: identifier, usesDrawRect: usesDrawRect)
             }
 
             return try predicate.satisfies(actualExpression)
@@ -135,7 +133,7 @@ public func recordDynamicTypeSnapshot<T: SwiftUI.View>(named name: String? = nil
                                                        usesDrawRect: Bool = false,
                                                        sizes: [UIContentSizeCategory] = allContentSizeCategories(),
                                                        isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
-    return Matcher { expression in
+    Matcher { expression in
         try recordDynamicTypeSnapshot(
             named: name,
             identifier: identifier,
@@ -148,14 +146,13 @@ public func recordDynamicTypeSnapshot<T: SwiftUI.View>(named name: String? = nil
     }
 }
 
-private func updateTraitCollection<T: Snapshotable>(on expression: Nimble.Expression<T>) {
+private func updateTraitCollection(on expression: Nimble.Expression<some Snapshotable>) {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! expression.evaluate()!
     updateTraitCollection(on: instance)
 }
 
 private func updateTraitCollection(on element: Snapshotable) {
-
     guard let environment = element as? UITraitEnvironment else {
         return
     }

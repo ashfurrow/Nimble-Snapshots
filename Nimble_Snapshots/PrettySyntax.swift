@@ -12,13 +12,13 @@ public struct Snapshot {
 public func snapshot(_ name: String? = nil,
                      identifier: String? = nil,
                      usesDrawRect: Bool = false) -> Snapshot {
-    return Snapshot(name: name, identifier: identifier, record: false, usesDrawRect: usesDrawRect)
+    Snapshot(name: name, identifier: identifier, record: false, usesDrawRect: usesDrawRect)
 }
 
 public func recordSnapshot(_ name: String? = nil,
                            identifier: String? = nil,
                            usesDrawRect: Bool = false) -> Snapshot {
-    return Snapshot(name: name, identifier: identifier, record: true, usesDrawRect: usesDrawRect)
+    Snapshot(name: name, identifier: identifier, record: true, usesDrawRect: usesDrawRect)
 }
 
 public func == (lhs: Nimble.SyncExpectation<Snapshotable>, rhs: Snapshot) {
