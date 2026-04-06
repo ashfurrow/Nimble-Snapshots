@@ -1,6 +1,8 @@
 import Nimble
 import UIKit
-import SwiftUI
+#if canImport(SwiftUI)
+    import SwiftUI
+#endif
 
 public func allContentSizeCategories() -> [UIContentSizeCategory] {
     return [
@@ -72,28 +74,30 @@ public func haveValidDynamicTypeSnapshot<T: Snapshotable>(named name: String? = 
     }
 }
 
-public func haveValidDynamicTypeSnapshot<T: SwiftUI.View>(named name: String? = nil,
-                                                          size: SnapshotSize = .intrinsic,
-                                                          identifier: String? = nil,
-                                                          usesDrawRect: Bool = false,
-                                                          pixelTolerance: CGFloat? = nil,
-                                                          tolerance: CGFloat? = nil,
-                                                          sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                                          isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
-    return Matcher { expression in
-        try haveValidDynamicTypeSnapshot(
-            named: name,
-            identifier: identifier,
-            usesDrawRect: usesDrawRect,
-            pixelTolerance: pixelTolerance,
-            tolerance: tolerance,
-            sizes: sizes,
-            isDeviceAgnostic: isDeviceAgnostic
-        ).satisfies(Expression(expression: {
-            try expression.evaluate()?.snapshotable(size: size)
-        }, location: expression.location))
+#if canImport(SwiftUI)
+    public func haveValidDynamicTypeSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                                                              size: SnapshotSize = .intrinsic,
+                                                              identifier: String? = nil,
+                                                              usesDrawRect: Bool = false,
+                                                              pixelTolerance: CGFloat? = nil,
+                                                              tolerance: CGFloat? = nil,
+                                                              sizes: [UIContentSizeCategory] = allContentSizeCategories(),
+                                                              isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
+        return Matcher { expression in
+            try haveValidDynamicTypeSnapshot(
+                named: name,
+                identifier: identifier,
+                usesDrawRect: usesDrawRect,
+                pixelTolerance: pixelTolerance,
+                tolerance: tolerance,
+                sizes: sizes,
+                isDeviceAgnostic: isDeviceAgnostic
+            ).satisfies(Expression(expression: {
+                try expression.evaluate()?.snapshotable(size: size)
+            }, location: expression.location))
+        }
     }
-}
+#endif
 
 public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil,
                                                        identifier: String? = nil,
@@ -129,24 +133,26 @@ public func recordDynamicTypeSnapshot<T: Snapshotable>(named name: String? = nil
     }
 }
 
-public func recordDynamicTypeSnapshot<T: SwiftUI.View>(named name: String? = nil,
-                                                       size: SnapshotSize = .intrinsic,
-                                                       identifier: String? = nil,
-                                                       usesDrawRect: Bool = false,
-                                                       sizes: [UIContentSizeCategory] = allContentSizeCategories(),
-                                                       isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
-    return Matcher { expression in
-        try recordDynamicTypeSnapshot(
-            named: name,
-            identifier: identifier,
-            usesDrawRect: usesDrawRect,
-            sizes: sizes,
-            isDeviceAgnostic: isDeviceAgnostic
-        ).satisfies(Expression(expression: {
-            try expression.evaluate()?.snapshotable(size: size)
-        }, location: expression.location))
+#if canImport(SwiftUI)
+    public func recordDynamicTypeSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                                                           size: SnapshotSize = .intrinsic,
+                                                           identifier: String? = nil,
+                                                           usesDrawRect: Bool = false,
+                                                           sizes: [UIContentSizeCategory] = allContentSizeCategories(),
+                                                           isDeviceAgnostic: Bool = false) -> Nimble.Matcher<T> {
+        return Matcher { expression in
+            try recordDynamicTypeSnapshot(
+                named: name,
+                identifier: identifier,
+                usesDrawRect: usesDrawRect,
+                sizes: sizes,
+                isDeviceAgnostic: isDeviceAgnostic
+            ).satisfies(Expression(expression: {
+                try expression.evaluate()?.snapshotable(size: size)
+            }, location: expression.location))
+        }
     }
-}
+#endif
 
 private func updateTraitCollection<T: Snapshotable>(on expression: Nimble.Expression<T>) {
     // swiftlint:disable:next force_try force_unwrapping

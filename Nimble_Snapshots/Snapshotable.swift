@@ -1,4 +1,7 @@
+#if canImport(SwiftUI)
+import Foundation
 import SwiftUI
+import UIKit
 
 /// Controls the rendering size of a SwiftUI snapshot.
 public enum SnapshotSize {
@@ -40,3 +43,4 @@ extension SwiftUI.View {
         return controller
     }
 }
+#endif
