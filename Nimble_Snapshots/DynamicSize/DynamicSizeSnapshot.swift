@@ -12,16 +12,16 @@ public enum ResizeMode {
     func viewResizer() -> ViewResizer {
         switch self {
         case .frame:
-            return FrameViewResizer()
+            FrameViewResizer()
 
         case .constrains:
-            return ConstraintViewResizer()
+            ConstraintViewResizer()
 
         case let .block(resizeBlock: block):
-            return BlockViewResizer(block: block)
+            BlockViewResizer(block: block)
 
         case let .custom(viewResizer: resizer):
-            return resizer
+            resizer
         }
     }
 }
@@ -38,7 +38,6 @@ struct FrameViewResizer: ViewResizer {
 }
 
 struct BlockViewResizer: ViewResizer {
-
     let resizeBlock: (UIView, CGSize) -> Void
 
     init(block: @escaping (UIView, CGSize) -> Void) {
@@ -51,7 +50,6 @@ struct BlockViewResizer: ViewResizer {
 }
 
 class ConstraintViewResizer: ViewResizer {
-
     typealias SizeConstrainsWrapper = (heightConstrain: NSLayoutConstraint, widthConstrain: NSLayoutConstraint)
 
     func resize(view: UIView, for size: CGSize) {
@@ -95,13 +93,13 @@ class ConstraintViewResizer: ViewResizer {
         #endif
 
         for constrain in view.constraints {
-            if constrain.firstAttribute == heightLayout &&
-                constrain.relation == equalRelation && constrain.secondItem == nil {
+            if constrain.firstAttribute == heightLayout,
+               constrain.relation == equalRelation, constrain.secondItem == nil {
                 height = constrain
             }
 
-            if constrain.firstAttribute == widthLayout &&
-                constrain.relation == equalRelation && constrain.secondItem == nil {
+            if constrain.firstAttribute == widthLayout,
+               constrain.relation == equalRelation, constrain.secondItem == nil {
                 width = constrain
             }
         }
@@ -134,7 +132,7 @@ public func snapshot(_ name: String? = nil,
                      identifier: String? = nil,
                      sizes: [String: CGSize],
                      resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
-    return DynamicSizeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, resizeMode: resizeMode)
+    DynamicSizeSnapshot(name: name, identifier: identifier, record: false, sizes: sizes, resizeMode: resizeMode)
 }
 
 public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
@@ -146,32 +144,32 @@ public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = 
                                                           tolerance: CGFloat? = nil,
                                                           resizeMode: ResizeMode = .frame,
                                                           shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
-    return Matcher { actualExpression in
-        return performDynamicSizeSnapshotTest(name,
-                                              identifier: identifier,
-                                              sizes: sizes,
-                                              isDeviceAgnostic: isDeviceAgnostic,
-                                              usesDrawRect: usesDrawRect,
-                                              actualExpression: actualExpression,
-                                              tolerance: tolerance,
-                                              pixelTolerance: pixelTolerance,
-                                              isRecord: false,
-                                              resizeMode: resizeMode,
-                                              shouldIgnoreScale: shouldIgnoreScale)
+    Matcher { actualExpression in
+        performDynamicSizeSnapshotTest(name,
+                                       identifier: identifier,
+                                       sizes: sizes,
+                                       isDeviceAgnostic: isDeviceAgnostic,
+                                       usesDrawRect: usesDrawRect,
+                                       actualExpression: actualExpression,
+                                       tolerance: tolerance,
+                                       pixelTolerance: pixelTolerance,
+                                       isRecord: false,
+                                       resizeMode: resizeMode,
+                                       shouldIgnoreScale: shouldIgnoreScale)
     }
 }
 
-func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
-                                                     identifier: String? = nil,
-                                                     sizes: [String: CGSize],
-                                                     isDeviceAgnostic: Bool = false,
-                                                     usesDrawRect: Bool = false,
-                                                     actualExpression: Nimble.Expression<T>,
-                                                     tolerance: CGFloat? = nil,
-                                                     pixelTolerance: CGFloat? = nil,
-                                                     isRecord: Bool,
-                                                     resizeMode: ResizeMode,
-                                                     shouldIgnoreScale: Bool = false) -> MatcherResult {
+func performDynamicSizeSnapshotTest(_ name: String?,
+                                    identifier: String? = nil,
+                                    sizes: [String: CGSize],
+                                    isDeviceAgnostic: Bool = false,
+                                    usesDrawRect: Bool = false,
+                                    actualExpression: Nimble.Expression<some Snapshotable>,
+                                    tolerance: CGFloat? = nil,
+                                    pixelTolerance: CGFloat? = nil,
+                                    isRecord: Bool,
+                                    resizeMode: ResizeMode,
+                                    shouldIgnoreScale: Bool = false) -> MatcherResult {
     // swiftlint:disable:next force_try force_unwrapping
     let instance = try! actualExpression.evaluate()!
     let testFileLocation = actualExpression.location.filePath
@@ -185,12 +183,10 @@ func performDynamicSizeSnapshotTest<T: Snapshotable>(_ name: String?,
     let result = sizes.map { sizeName, size -> Bool in
         // swiftlint:disable:next force_unwrapping
         let view = instance.snapshotObject!
-        let finalSnapshotName: String
-
-        if let identifier = identifier {
-            finalSnapshotName = "\(snapshotName)_\(identifier)_\(sizeName)"
+        let finalSnapshotName = if let identifier {
+            "\(snapshotName)_\(identifier)_\(sizeName)"
         } else {
-            finalSnapshotName = "\(snapshotName)_\(sizeName)"
+            "\(snapshotName)_\(sizeName)"
         }
 
         resizer.resize(view: view, for: size)
@@ -233,7 +229,7 @@ public func recordSnapshot(_ name: String? = nil,
                            identifier: String? = nil,
                            sizes: [String: CGSize],
                            resizeMode: ResizeMode = .frame) -> DynamicSizeSnapshot {
-    return DynamicSizeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, resizeMode: resizeMode)
+    DynamicSizeSnapshot(name: name, identifier: identifier, record: true, sizes: sizes, resizeMode: resizeMode)
 }
 
 public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil,
@@ -243,16 +239,16 @@ public func recordDynamicSizeSnapshot<T: Snapshotable>(named name: String? = nil
                                                        usesDrawRect: Bool = false,
                                                        resizeMode: ResizeMode = .frame,
                                                        shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
-    return Matcher { actualExpression in
-        return performDynamicSizeSnapshotTest(name,
-                                              identifier: identifier,
-                                              sizes: sizes,
-                                              isDeviceAgnostic: isDeviceAgnostic,
-                                              usesDrawRect: usesDrawRect,
-                                              actualExpression: actualExpression,
-                                              isRecord: true,
-                                              resizeMode: resizeMode,
-                                              shouldIgnoreScale: shouldIgnoreScale)
+    Matcher { actualExpression in
+        performDynamicSizeSnapshotTest(name,
+                                       identifier: identifier,
+                                       sizes: sizes,
+                                       isDeviceAgnostic: isDeviceAgnostic,
+                                       usesDrawRect: usesDrawRect,
+                                       actualExpression: actualExpression,
+                                       isRecord: true,
+                                       resizeMode: resizeMode,
+                                       shouldIgnoreScale: shouldIgnoreScale)
     }
 }
 

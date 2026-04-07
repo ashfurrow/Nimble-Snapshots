@@ -7,9 +7,7 @@ import UIKit
 
 @MainActor
 final class DynamicTypeTests: QuickSpec {
-
     override func spec() {
-
         describe("in some context") {
             var view: UIView!
 
@@ -116,6 +114,6 @@ final class DynamicTypeTests: QuickSpec {
 
 private extension OperatingSystemVersion {
     var iOS10: Bool {
-        return majorVersion == 10 && minorVersion == 3
+        majorVersion == 10 && minorVersion == 3
     }
 }

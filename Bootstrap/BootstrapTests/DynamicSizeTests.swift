@@ -7,15 +7,12 @@ import UIKit
 
 @MainActor
 final class DynamicSizeTests: QuickSpec {
-
     override func spec() {
-
         describe("in some context") {
-
             var view: UIView!
             let sizes = ["SmallSize": CGSize(width: 44, height: 44),
-                "MediumSize": CGSize(width: 88, height: 88),
-                "LargeSize": CGSize(width: 132, height: 132)]
+                         "MediumSize": CGSize(width: 88, height: 88),
+                         "LargeSize": CGSize(width: 132, height: 132)]
 
             beforeEach {
                 setNimbleTolerance(0)
@@ -95,8 +92,8 @@ final class DynamicSizeTests: QuickSpec {
                 it("has a valid snapshot to all sizes") {
                     expect(view).to(haveValidDynamicSizeSnapshot(sizes: sizes,
                                                                  resizeMode: .block { view, size in
-                        view.frame = CGRect(origin: .zero, size: size)
-                        view.layoutIfNeeded()
+                                                                     view.frame = CGRect(origin: .zero, size: size)
+                                                                     view.layoutIfNeeded()
                                                                  }))
 //                    expect(view).to(recordDynamicSizeSnapshot(sizes: sizes,
 //                                                              resizeMode: .block(resizeBlock: { (view, size) in
@@ -139,7 +136,6 @@ final class DynamicSizeTests: QuickSpec {
 //                    expect(view) == recordSnapshot(sizes: sizes, resizeMode: .custom(viewResizer: resizer))
                 }
             }
-
         }
     }
 }

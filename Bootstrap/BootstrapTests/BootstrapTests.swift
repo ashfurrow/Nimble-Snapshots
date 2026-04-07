@@ -5,9 +5,7 @@ import UIKit
 
 @MainActor
 final class BootstrapTests: QuickSpec {
-
     override func spec() {
-
         describe("in some context") {
             var view: UIView!
 
@@ -66,7 +64,6 @@ final class BootstrapTests: QuickSpec {
                 view.backgroundColor = .white
                 // expect(view).to(recordSnapshot(usesDrawRect: true))
                 expect(view).to(haveValidSnapshot(usesDrawRect: true))
-
             }
 
             it("has a valid snapshot when draw rect is turned on and is using pretty syntax") {

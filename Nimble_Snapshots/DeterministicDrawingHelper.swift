@@ -3,7 +3,6 @@ import QuartzCore
 import UIKit
 
 enum DeterministicDrawingHelper {
-
     static func normalizeForSnapshot<T: Snapshotable>(_ view: T, completion: @escaping (T) -> Void) {
         guard let snapshotView = view.snapshotObject else {
             completion(view)

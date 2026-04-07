@@ -7,7 +7,6 @@
 
     @MainActor
     final class SwiftUISnapshotableTests: QuickSpec {
-
         override func spec() {
             describe("SwiftUI snapshot helpers") {
                 it("sets requested fixed size") {
@@ -19,7 +18,7 @@
                     expect(snapshotView).toNot(beNil())
                     expect(snapshotView?.bounds.width).to(beCloseTo(targetSize.width, within: 0.5))
                     expect(snapshotView?.bounds.height).to(beCloseTo(targetSize.height, within: 0.5))
-                    
+
                     expect(snapshotable).to(haveValidSnapshot())
                 }
 
@@ -31,7 +30,7 @@
                     expect(snapshotView).toNot(beNil())
                     expect(snapshotView?.bounds.width).to(beCloseTo(expected.width, within: 0.5))
                     expect(snapshotView?.bounds.height).to(beCloseTo(expected.height, within: 0.5))
-                    
+
                     expect(snapshotable).to(haveValidSnapshot())
                 }
 
@@ -48,7 +47,7 @@
                     expect(size?.height).to(beLessThanOrEqualTo(deviceSize.height))
                     expect(size?.width).to(beCloseTo(80, within: 1))
                     expect(size?.height).to(beCloseTo(50, within: 1))
-                    
+
                     expect(snapshotable).to(haveValidSnapshot())
                 }
 

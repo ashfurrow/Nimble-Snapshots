@@ -21,7 +21,7 @@ public final class CurrentTestCaseTracker: NSObject, XCTestObservation {
 
 extension XCTestCase {
     var sanitizedName: String? {
-        let fullName = self.name
+        let fullName = name
         let characterSet = CharacterSet(charactersIn: "[]+-")
         #if swift(>=4)
             let name = fullName.components(separatedBy: characterSet).joined()
