@@ -8,7 +8,7 @@
 
 import UIKit
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func isExpectedDevice(nativeResolution: CGSize) -> Bool {
-        return UIDevice.current.userInterfaceIdiom == .phone &&
+        UIDevice.current.userInterfaceIdiom == .phone &&
             nativeResolution == CGSize(width: 750, height: 1334)
     }
 }

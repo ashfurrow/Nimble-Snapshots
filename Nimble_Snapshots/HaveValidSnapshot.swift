@@ -7,8 +7,10 @@
 import Foundation
 import Nimble
 import QuartzCore
-import SwiftUI
 import UIKit
+#if canImport(SwiftUI)
+    import SwiftUI
+#endif
 
 @objc
 public protocol Snapshotable {
@@ -394,26 +396,28 @@ public func haveValidSnapshot<T: Snapshotable>(named name: String? = nil,
     }
 }
 
-public func haveValidSnapshot<T: SwiftUI.View>(named name: String? = nil,
-                                               size: SnapshotSize = .intrinsic,
-                                               identifier: String? = nil,
-                                               usesDrawRect: Bool = false,
-                                               pixelTolerance: CGFloat? = nil,
-                                               tolerance: CGFloat? = nil,
-                                               shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
-    Matcher { expression in
-        try haveValidSnapshot(
-            named: name,
-            identifier: identifier,
-            usesDrawRect: usesDrawRect,
-            pixelTolerance: pixelTolerance,
-            tolerance: tolerance,
-            shouldIgnoreScale: shouldIgnoreScale
-        ).satisfies(Expression(expression: {
-            try expression.evaluate()?.snapshotable(size: size)
-        }, location: expression.location))
+#if canImport(SwiftUI)
+    public func haveValidSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                                                   size: SnapshotSize = .intrinsic,
+                                                   identifier: String? = nil,
+                                                   usesDrawRect: Bool = false,
+                                                   pixelTolerance: CGFloat? = nil,
+                                                   tolerance: CGFloat? = nil,
+                                                   shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+        Matcher { expression in
+            try haveValidSnapshot(
+                named: name,
+                identifier: identifier,
+                usesDrawRect: usesDrawRect,
+                pixelTolerance: pixelTolerance,
+                tolerance: tolerance,
+                shouldIgnoreScale: shouldIgnoreScale
+            ).satisfies(Expression(expression: {
+                try expression.evaluate()?.snapshotable(size: size)
+            }, location: expression.location))
+        }
     }
-}
+#endif
 
 public func haveValidDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
                                                              identifier: String? = nil,
@@ -454,21 +458,23 @@ public func recordSnapshot<T: Snapshotable>(named name: String? = nil,
     }
 }
 
-public func recordSnapshot<T: SwiftUI.View>(named name: String? = nil,
-                                            size: SnapshotSize = .intrinsic,
-                                            identifier: String? = nil,
-                                            usesDrawRect: Bool = false,
-                                            shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
-    Matcher { expression in
-        try recordSnapshot(named: name,
-                           identifier: identifier,
-                           usesDrawRect: usesDrawRect,
-                           shouldIgnoreScale: shouldIgnoreScale)
-            .satisfies(Expression(expression: {
-                try expression.evaluate()?.snapshotable(size: size)
-            }, location: expression.location))
+#if canImport(SwiftUI)
+    public func recordSnapshot<T: SwiftUI.View>(named name: String? = nil,
+                                                size: SnapshotSize = .intrinsic,
+                                                identifier: String? = nil,
+                                                usesDrawRect: Bool = false,
+                                                shouldIgnoreScale: Bool = false) -> Nimble.Matcher<T> {
+        Matcher { expression in
+            try recordSnapshot(named: name,
+                               identifier: identifier,
+                               usesDrawRect: usesDrawRect,
+                               shouldIgnoreScale: shouldIgnoreScale)
+                .satisfies(Expression(expression: {
+                    try expression.evaluate()?.snapshotable(size: size)
+                }, location: expression.location))
+        }
     }
-}
+#endif
 
 public func recordDeviceAgnosticSnapshot<T: Snapshotable>(named name: String? = nil,
                                                           identifier: String? = nil,

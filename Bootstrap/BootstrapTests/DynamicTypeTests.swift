@@ -114,6 +114,6 @@ final class DynamicTypeTests: QuickSpec {
 
 private extension OperatingSystemVersion {
     var iOS10: Bool {
-        return majorVersion == 10 && minorVersion == 3
+        majorVersion == 10 && minorVersion == 3
     }
 }
