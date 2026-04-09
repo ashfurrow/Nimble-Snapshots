@@ -4,6 +4,13 @@
 
 - Nothing yet!
 
+## 9.9.0
+
+- Add SwiftUI support for standard and dynamic type snapshot matchers @dogo
+- Fixes non-deterministic behavior in snapshot tests when using usesDrawRect: true @dogo
+- Fixes deprecated use of SourceLocation.file @paulz
+- Fixes Dynamic Type trait updates and sanitize test artifacts @dogo
+
 ## 9.8.0
 
 - Adds Nimble.Expression to correct Xcode 16 beta build issue. See [#282](https://github.com/ashfurrow/Nimble-Snapshots/pull/282) - @Ripcord715
