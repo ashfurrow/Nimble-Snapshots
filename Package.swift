@@ -35,6 +35,7 @@ let package = Package(
                       "DeterministicDrawingHelper.swift",
                       "HaveValidSnapshot.swift",
                       "PrettySyntax.swift",
+                      "Snapshotable.swift",
                       "DynamicSize",
                       "DynamicType"]
         ),
@@ -48,6 +49,7 @@ let package = Package(
                       "DeterministicDrawingHelper.swift",
                       "HaveValidSnapshot.swift",
                       "PrettySyntax.swift",
+                      "Snapshotable.swift",
                       "DynamicSize",
                       "DynamicType",
                       "Info.plist",
