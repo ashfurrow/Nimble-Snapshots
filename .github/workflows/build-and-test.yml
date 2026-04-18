@@ -43,7 +43,7 @@ jobs:
       - name: Build SPM test harness (compile-only)
         run: |
           set -o pipefail && xcodebuild \
-            -scheme 'SPMTestHarness' \
+            -scheme 'SPMTestHarness-Package' \
             -destination "id=$DEVICE_ID" \
             build | tee ../output/xcodebuild_spm.log
         working-directory: SPMTestHarness
