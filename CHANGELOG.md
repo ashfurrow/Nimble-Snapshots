@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+## 9.9.1
+
+- Fixes SPM compiler issue @ashfurrow
+
 ## 9.9.0
 
 - Add SwiftUI support for standard and dynamic type snapshot matchers @dogo
