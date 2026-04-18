@@ -39,7 +39,15 @@ jobs:
             -destination "id=$DEVICE_ID" \
             SWIFT_VERSION=5.0 \
             build test | tee output/xcodebuild_swift5.0.log
-      
+
+      - name: Build SPM test harness (compile-only)
+        run: |
+          set -o pipefail && xcodebuild \
+            -scheme 'SPMTestHarness' \
+            -destination "id=$DEVICE_ID" \
+            build | tee ../output/xcodebuild_spm.log
+        working-directory: SPMTestHarness
+
       - name: Swiftlint
         if: always()
         run: |
