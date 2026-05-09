@@ -11,11 +11,14 @@
 		095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478C1D47794300880922 /* HaveValidSnapshot.swift */; };
 		095B47901D47794300880922 /* CurrentTestCaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */; };
 		095B47911D47794300880922 /* PrettySyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095B478E1D47794300880922 /* PrettySyntax.swift */; };
+		D90000042C00000100000000 /* Snapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90000062C00000100000000 /* Snapshotable.swift */; };
+		D90000052C00000100000000 /* DeterministicDrawingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90000072C00000100000000 /* DeterministicDrawingHelper.swift */; };
 		D47CB5F91EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */; };
 		D47CB5FA1EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */; };
 		D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */; };
 		D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47A1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift */; };
 		D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F7D47D1ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift */; };
+		D90000012C00000100000000 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = D90000022C00000100000000 /* CwlPreconditionTesting */; };
 		DD078918272AE92500F605C3 /* FBSnapshotTestCase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD078917272AE92500F605C3 /* FBSnapshotTestCase.xcframework */; };
 		DD07891A272AE92A00F605C3 /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD078919272AE92A00F605C3 /* Nimble.xcframework */; };
 		DD83832926E555BC0040266F /* NBSMockedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD83832826E555BC0040266F /* NBSMockedApplication.swift */; };
@@ -30,6 +33,8 @@
 		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = "<group>"; };
 		1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Nimble_Snapshots.xcconfig; sourceTree = "<group>"; };
 		A0862BFC229C43EE004E82D2 /* Nimble-Snapshots.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Nimble-Snapshots.podspec"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D90000062C00000100000000 /* Snapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshotable.swift; sourceTree = "<group>"; };
+		D90000072C00000100000000 /* DeterministicDrawingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeterministicDrawingHelper.swift; sourceTree = "<group>"; };
 		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
 		D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestObservationCenter+CurrentTestCaseTracker.m"; sourceTree = "<group>"; };
 		D4F7D4781ED764CD00B4D2FE /* DynamicSizeSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicSizeSnapshot.swift; sourceTree = "<group>"; };
@@ -45,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D90000012C00000100000000 /* CwlPreconditionTesting in Frameworks */,
 				DD07891A272AE92A00F605C3 /* Nimble.xcframework in Frameworks */,
 				DD078918272AE92500F605C3 /* FBSnapshotTestCase.xcframework in Frameworks */,
 			);
@@ -78,11 +84,13 @@
 				D4F7D4771ED764CD00B4D2FE /* DynamicSize */,
 				D4F7D4791ED764CD00B4D2FE /* DynamicType */,
 				095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */,
+				D90000072C00000100000000 /* DeterministicDrawingHelper.swift */,
 				095B478C1D47794300880922 /* HaveValidSnapshot.swift */,
 				095B47721D4773F000880922 /* Info.plist */,
 				095B47701D4773F000880922 /* Nimble_Snapshots.h */,
 				1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */,
 				095B478E1D47794300880922 /* PrettySyntax.swift */,
+				D90000062C00000100000000 /* Snapshotable.swift */,
 				D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */,
 				D47CB5F81EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.m */,
 			);
@@ -137,6 +145,9 @@
 			dependencies = (
 			);
 			name = Nimble_Snapshots;
+			packageProductDependencies = (
+				D90000022C00000100000000 /* CwlPreconditionTesting */,
+			);
 			productName = Nimble_Snapshots;
 			productReference = 095B476D1D4773F000880922 /* Nimble_Snapshots.framework */;
 			productType = "com.apple.product-type.framework";
@@ -165,6 +176,9 @@
 				Base,
 			);
 			mainGroup = 095B47631D4773F000880922;
+			packageReferences = (
+				D90000032C00000100000000 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */,
+			);
 			productRefGroup = 095B476E1D4773F000880922 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -211,8 +225,10 @@
 				D4F7D47F1ED764CD00B4D2FE /* HaveValidDynamicTypeSnapshot.swift in Sources */,
 				095B478F1D47794300880922 /* HaveValidSnapshot.swift in Sources */,
 				095B47901D47794300880922 /* CurrentTestCaseTracker.swift in Sources */,
+				D90000052C00000100000000 /* DeterministicDrawingHelper.swift in Sources */,
 				D4F7D4821ED764CD00B4D2FE /* PrettyDynamicTypeSyntax.swift in Sources */,
 				D4F7D47E1ED764CD00B4D2FE /* DynamicSizeSnapshot.swift in Sources */,
+				D90000042C00000100000000 /* Snapshotable.swift in Sources */,
 				DD83832926E555BC0040266F /* NBSMockedApplication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,6 +455,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D90000032C00000100000000 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mattgallagher/CwlPreconditionTesting.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D90000022C00000100000000 /* CwlPreconditionTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D90000032C00000100000000 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
+			productName = CwlPreconditionTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 095B47641D4773F000880922 /* Project object */;
 }
