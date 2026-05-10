@@ -34,15 +34,16 @@ public func recordDynamicTypeSnapshot(_ name: String? = nil,
 }
 
 public func == (lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicTypeSnapshot) {
+    let shouldRecord = rhs.record || switchChecksWithRecords
     if let name = rhs.name {
-        if rhs.record {
+        if shouldRecord {
             lhs.to(recordDynamicTypeSnapshot(named: name, sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
         } else {
             lhs.to(haveValidDynamicTypeSnapshot(named: name, sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
         }
 
     } else {
-        if rhs.record {
+        if shouldRecord {
             lhs.to(recordDynamicTypeSnapshot(sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
         } else {
             lhs.to(haveValidDynamicTypeSnapshot(sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
@@ -51,15 +52,16 @@ public func == (lhs: Nimble.SyncExpectation<Snapshotable>, rhs: DynamicTypeSnaps
 }
 
 public func == (lhs: Nimble.AsyncExpectation<Snapshotable>, rhs: DynamicTypeSnapshot) async {
+    let shouldRecord = rhs.record || switchChecksWithRecords
     if let name = rhs.name {
-        if rhs.record {
+        if shouldRecord {
             await lhs.to(recordDynamicTypeSnapshot(named: name, sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
         } else {
             await lhs.to(haveValidDynamicTypeSnapshot(named: name, sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
         }
 
     } else {
-        if rhs.record {
+        if shouldRecord {
             await lhs.to(recordDynamicTypeSnapshot(sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))
         } else {
             await lhs.to(haveValidDynamicTypeSnapshot(sizes: rhs.sizes, isDeviceAgnostic: rhs.deviceAgnostic))

@@ -153,7 +153,7 @@ public func haveValidDynamicSizeSnapshot<T: Snapshotable>(named name: String? = 
                                        actualExpression: actualExpression,
                                        tolerance: tolerance,
                                        pixelTolerance: pixelTolerance,
-                                       isRecord: false,
+                                       isRecord: switchChecksWithRecords,
                                        resizeMode: resizeMode,
                                        shouldIgnoreScale: shouldIgnoreScale)
     }
