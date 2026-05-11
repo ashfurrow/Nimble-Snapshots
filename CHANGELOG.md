@@ -4,6 +4,11 @@
 
 - Nothing yet!
 
+## 9.10.0
+
+- Fixes Carthage builds @dogo
+- Adds `recordAllSnapshots()` to DynamicSize and DynamicType @dogo
+
 ## 9.9.1
 
 - Fixes SPM compiler issue @ashfurrow
