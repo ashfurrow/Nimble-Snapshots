@@ -14,8 +14,9 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/uber/ios-snapshot-test-case.git",
-                 .upToNextMajor(from: "8.0.0")),
+        // use the same color space to fix always failing image comparison
+        .package(url: "https://github.com/tinder-owenthomas/ios-snapshot-test-case.git",
+                 branch: "oht/allow-comparison-of-optimized-pngs-with-unoptimized-pngs"),
         .package(url: "https://github.com/Quick/Nimble.git",
                  .upToNextMajor(from: "13.0.0"))
     ],
