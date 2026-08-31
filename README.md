@@ -44,7 +44,7 @@ You need to be using Carthage 0.40.0 or higher. Your `Cartfile` (or `Cartfile.pr
 something like the following.
 
 ```rb
-github "Quick/Nimble" "v13.8.0"
+github "Quick/Nimble" "v14.0.0"
 github "uber/ios-snapshot-test-case" "main" # Temporarily pin to main due to known issues in 8.0.0
 github "ashfurrow/Nimble-Snapshots"
 ```
