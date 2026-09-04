@@ -4,6 +4,10 @@
 
 - Nothing yet!
 
+@@ 9.10.1
+
+- Updates to Nimble 14.0 @ddanielczyk
+
 ## 9.10.0
 
 - Fixes Carthage builds @dogo
