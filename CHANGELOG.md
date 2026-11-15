@@ -2,7 +2,7 @@
 
 ## Next
 
-- Nothing yet!
+- Default branch renamed from `master` to `main`. Projects pinning `master` should switch to `main` or a tagged release.
 
 @@ 9.10.1
 
