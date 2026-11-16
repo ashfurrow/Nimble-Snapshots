@@ -101,6 +101,13 @@ directory instead, call `setNimbleTestFolder()` with the name of the directory
 in your unit test's path that we should use. For example, if the tests are in
 `App/AppTesting/`, you can call it with `AppTesting`.
 
+Reference image names are derived from the name of the running test. Quick 7
+changed its default test names to a human-readable style (for example
+`in some context, has a valid snapshot`), so upgrading from Quick 6 renames the
+images it looks for. To keep using your existing reference images, set the
+`QUICK_USE_ENCODED_TEST_SELECTOR_NAMES` environment variable in your
+test scheme's environment variables. Otherwise, re-record them.
+
 If you have any questions or run into any trouble, feel free to open an issue
 on this repo.
 
