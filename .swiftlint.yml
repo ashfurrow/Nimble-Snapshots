@@ -41,7 +41,6 @@ disabled_rules:
   - identifier_name
 
 excluded:
-  - Bootstrap/Pods
   - Carthage
 
 reporter: "xcode"      

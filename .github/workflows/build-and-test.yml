@@ -42,7 +42,7 @@ jobs:
       - name: Run tests in Swift 5.X
         run: |
           set -o pipefail && xcodebuild \
-            -workspace 'Bootstrap/Bootstrap.xcworkspace' \
+            -project 'Bootstrap/Bootstrap.xcodeproj' \
             -scheme 'Bootstrap' \
             -sdk 'iphonesimulator' \
             -destination "id=$DEVICE_ID" \

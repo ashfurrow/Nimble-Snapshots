@@ -1,5 +1,4 @@
 ![GitHub Actions CI](https://github.com/ashfurrow/Nimble-Snapshots/actions/workflows/build-and-test.yml/badge.svg?branch=main)
-[![Cocoapods compatible](https://img.shields.io/cocoapods/v/Nimble-Snapshots.svg)](https://cocoapods.org/?q=Nimble-Snapshots)
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-brightgreen)](https://swift.org/package-manager)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/github/license/ashfurrow/Nimble-Snapshots.svg)](https://github.com/ashfurrow/Nimble-Snapshots/blob/main/LICENSE)
@@ -14,29 +13,6 @@ Originally derived from [Expecta Matchers for FBSnapshotTestCase](https://github
 
 Installing
 ----------
-
-## CocoaPods
-
-You need to be using CocoaPods 0.36 Beta 1 or higher. Your `Podfile` should look
-something like the following.
-
-```rb
-platform :ios, '10.0'
-
-source 'https://github.com/CocoaPods/Specs.git'
-
-# Whichever pods you need for your app go here.
-
-target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
-  pod 'Nimble-Snapshots'
-  pod 'Quick' # if you want to use it with Quick
-end
-```
-
-Then run:
-```
-$ pod install
-```
 
 ## Carthage
 
@@ -85,7 +61,7 @@ import Nimble_Snapshots
 import UIKit
 
 class MySpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("in some context") {
             it("has valid snapshot") {
                 let view = ... // some view you want to test
@@ -118,7 +94,7 @@ handy emoji operator.
 📷(view, "some custom name")
 ```
 
-By default, this pod will put the reference images inside a `ReferenceImages`
+By default, this library will put the reference images inside a `ReferenceImages`
 directory; we try to put this in a place that makes sense (inside your unit
 tests directory). If we can't figure it out, or if you want to use your own
 directory instead, call `setNimbleTestFolder()` with the name of the directory

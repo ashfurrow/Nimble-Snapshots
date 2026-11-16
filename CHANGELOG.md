@@ -2,6 +2,7 @@
 
 ## Next
 
+- **CocoaPods support removed.** The CocoaPods trunk is becoming read-only, so the podspec is gone and no further versions will be published to CocoaPods. Existing pod versions keep working; use Swift Package Manager or Carthage going forward. The Bootstrap test project now uses Swift packages (Quick 7, Nimble 14), with resolved versions committed.
 - Default branch renamed from `master` to `main`. Projects pinning `master` should switch to `main` or a tagged release.
 
 @@ 9.10.1
