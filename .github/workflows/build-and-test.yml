@@ -1,10 +1,19 @@
 name: Testing
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Superseded PR runs are cancelled; runs on main always complete.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
     name: Build and Test Nimble-Snapshots
     runs-on: macOS-15
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
