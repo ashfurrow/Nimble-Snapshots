@@ -7,7 +7,7 @@ import UIKit
 
 @MainActor
 final class DynamicTypeTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("in some context") {
             var view: UIView!
 

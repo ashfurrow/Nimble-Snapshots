@@ -1,5 +1,4 @@
 # file options
---exclude Bootstrap/Pods
 
 # Rules
 --disable trailingCommas

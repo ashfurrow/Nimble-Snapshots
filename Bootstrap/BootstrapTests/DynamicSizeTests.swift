@@ -7,7 +7,7 @@ import UIKit
 
 @MainActor
 final class DynamicSizeTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("in some context") {
             var view: UIView!
             let sizes = ["SmallSize": CGSize(width: 44, height: 44),

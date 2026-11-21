@@ -1,5 +1,4 @@
 ![GitHub Actions CI](https://github.com/ashfurrow/Nimble-Snapshots/actions/workflows/build-and-test.yml/badge.svg?branch=main)
-[![Cocoapods compatible](https://img.shields.io/cocoapods/v/Nimble-Snapshots.svg)](https://cocoapods.org/?q=Nimble-Snapshots)
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-brightgreen)](https://swift.org/package-manager)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/github/license/ashfurrow/Nimble-Snapshots.svg)](https://github.com/ashfurrow/Nimble-Snapshots/blob/main/LICENSE)
@@ -14,29 +13,6 @@ Originally derived from [Expecta Matchers for FBSnapshotTestCase](https://github
 
 Installing
 ----------
-
-## CocoaPods
-
-You need to be using CocoaPods 0.36 Beta 1 or higher. Your `Podfile` should look
-something like the following.
-
-```rb
-platform :ios, '10.0'
-
-source 'https://github.com/CocoaPods/Specs.git'
-
-# Whichever pods you need for your app go here.
-
-target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
-  pod 'Nimble-Snapshots'
-  pod 'Quick' # if you want to use it with Quick
-end
-```
-
-Then run:
-```
-$ pod install
-```
 
 ## Carthage
 
@@ -85,7 +61,7 @@ import Nimble_Snapshots
 import UIKit
 
 class MySpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("in some context") {
             it("has valid snapshot") {
                 let view = ... // some view you want to test
@@ -118,12 +94,19 @@ handy emoji operator.
 📷(view, "some custom name")
 ```
 
-By default, this pod will put the reference images inside a `ReferenceImages`
+By default, this library will put the reference images inside a `ReferenceImages`
 directory; we try to put this in a place that makes sense (inside your unit
 tests directory). If we can't figure it out, or if you want to use your own
 directory instead, call `setNimbleTestFolder()` with the name of the directory
 in your unit test's path that we should use. For example, if the tests are in
 `App/AppTesting/`, you can call it with `AppTesting`.
+
+Reference image names are derived from the name of the running test. Quick 7
+changed its default test names to a human-readable style (for example
+`in some context, has a valid snapshot`), so upgrading from Quick 6 renames the
+images it looks for. To keep using your existing reference images, set the
+`QUICK_USE_ENCODED_TEST_SELECTOR_NAMES` environment variable in your
+test scheme's environment variables. Otherwise, re-record them.
 
 If you have any questions or run into any trouble, feel free to open an issue
 on this repo.

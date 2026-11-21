@@ -32,7 +32,6 @@
 		095B478D1D47794300880922 /* CurrentTestCaseTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentTestCaseTracker.swift; sourceTree = "<group>"; };
 		095B478E1D47794300880922 /* PrettySyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettySyntax.swift; sourceTree = "<group>"; };
 		1A6755DD1F2A8D8E00D71721 /* Nimble_Snapshots.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Nimble_Snapshots.xcconfig; sourceTree = "<group>"; };
-		A0862BFC229C43EE004E82D2 /* Nimble-Snapshots.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Nimble-Snapshots.podspec"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D90000062C00000100000000 /* Snapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshotable.swift; sourceTree = "<group>"; };
 		D90000072C00000100000000 /* DeterministicDrawingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeterministicDrawingHelper.swift; sourceTree = "<group>"; };
 		D47CB5F71EC9973C00D5588D /* XCTestObservationCenter+CurrentTestCaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestObservationCenter+CurrentTestCaseTracker.h"; sourceTree = "<group>"; };
@@ -62,7 +61,6 @@
 		095B47631D4773F000880922 = {
 			isa = PBXGroup;
 			children = (
-				A0862BFC229C43EE004E82D2 /* Nimble-Snapshots.podspec */,
 				095B476F1D4773F000880922 /* Nimble_Snapshots */,
 				095B476E1D4773F000880922 /* Products */,
 				DD078917272AE92500F605C3 /* FBSnapshotTestCase.xcframework */,

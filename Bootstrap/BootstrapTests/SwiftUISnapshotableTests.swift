@@ -7,7 +7,7 @@
 
     @MainActor
     final class SwiftUISnapshotableTests: QuickSpec {
-        override func spec() {
+        override class func spec() {
             describe("SwiftUI snapshot helpers") {
                 it("sets requested fixed size") {
                     let targetSize = CGSize(width: 120, height: 45)
