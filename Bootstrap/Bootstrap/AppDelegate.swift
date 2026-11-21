@@ -16,14 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // There are device specific tests, so we need to be tight on the devices running tests
         let version = ProcessInfo.processInfo.operatingSystemVersion
-        let minVersion = OperatingSystemVersion(majorVersion: 13, minorVersion: 0, patchVersion: 0)
+        let minVersion = OperatingSystemVersion(majorVersion: 15, minorVersion: 0, patchVersion: 0)
         assert(ProcessInfo.processInfo.isOperatingSystemAtLeast(minVersion),
-               "The tests should be run at least on iOS 13.0, not \(version.majorVersion), \(version.minorVersion)")
+               "The tests should be run at least on iOS 15.0, not \(version.majorVersion), \(version.minorVersion)")
 
         let stringFromSize: (CGSize) -> String = { NSCoder.string(for: $0) }
         let nativeResolution = UIScreen.main.nativeBounds.size
         assert(isExpectedDevice(nativeResolution: nativeResolution),
-               "The tests should be run on an iPhone SE (3rd generation), not a device with " +
+               "The tests should be run on an iPhone 17, not a device with " +
                    "native resolution \(stringFromSize(nativeResolution))")
 
         return true
@@ -31,6 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func isExpectedDevice(nativeResolution: CGSize) -> Bool {
         UIDevice.current.userInterfaceIdiom == .phone &&
-            nativeResolution == CGSize(width: 750, height: 1334)
+            nativeResolution == CGSize(width: 1206, height: 2622)
     }
 }

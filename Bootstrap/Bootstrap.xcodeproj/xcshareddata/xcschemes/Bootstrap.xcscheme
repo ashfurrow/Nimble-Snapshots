@@ -75,11 +75,6 @@
             value = "$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/FailureDiffs"
             isEnabled = "YES">
          </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "QUICK_USE_ENCODED_TEST_SELECTOR_NAMES"
-            value = "YES"
-            isEnabled = "YES">
-         </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
