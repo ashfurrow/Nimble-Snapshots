@@ -2,6 +2,7 @@
 
 ## Next
 
+- **Breaking:** `SnapshotSize.intrinsic`, the default size for SwiftUI snapshots, no longer includes the device's safe area (such as the status bar or Dynamic Island inset) in the snapshot size. The same view now has the same size on every device. This requires iOS or tvOS 16.4 or later. Reference images recorded with `.intrinsic`, including SwiftUI snapshots that use the default size, need to be re-recorded. Fixes [#317](https://github.com/ashfurrow/Nimble-Snapshots/issues/317).
 - **CocoaPods support removed.** The CocoaPods trunk is becoming read-only, so the podspec is gone and no further versions will be published to CocoaPods. Existing pod versions keep working; use Swift Package Manager or Carthage going forward. The Bootstrap test project now uses Swift packages (Quick 7, Nimble 14), with resolved versions committed.
 - Minimum deployment target raised to iOS 15 and tvOS 15, as required by Xcode 27. 
 - Default branch renamed from `master` to `main`. Projects pinning `master` should switch to `main` or a tagged release.

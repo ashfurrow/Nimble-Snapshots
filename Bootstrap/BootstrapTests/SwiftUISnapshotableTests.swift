@@ -34,9 +34,7 @@
                     expect(snapshotable).to(haveValidSnapshot())
                 }
 
-                // Skipped until the `.intrinsic` size stops including the device's safe area.
-                // See https://github.com/ashfurrow/Nimble-Snapshots/issues/317
-                xit("fits intrinsic size to content") {
+                it("fits intrinsic size to content") {
                     let snapshotable = FixedSizeView().snapshotable(size: .intrinsic)
                     let snapshotView = snapshotable.snapshotObject
                     let size = snapshotView?.bounds.size
@@ -48,7 +46,7 @@
                     expect(size?.width).to(beLessThanOrEqualTo(deviceSize.width))
                     expect(size?.height).to(beLessThanOrEqualTo(deviceSize.height))
                     expect(size?.width).to(beCloseTo(80, within: 1))
-                    expect(size?.height).to(beCloseTo(50, within: 1))
+                    expect(size?.height).to(beCloseTo(30, within: 1))
 
                     expect(snapshotable).to(haveValidSnapshot())
                 }
